@@ -1,0 +1,432 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); */
+
+@font-face {
+    font-family: Genshin;
+    src: url(../fonts/DellaRespira-Regular.ttf);
+  }
+
+body{
+    font-family: Genshin, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    color: white;
+}
+
+.genshinMap{
+    margin: 1.5em auto;
+    height: 60vh;
+}
+
+.pagination li a{
+    color: rgb(196, 196, 196);
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.genshin-logo{
+    width: 30px;
+    height: 30px;
+    vertical-align:middle;
+}
+
+.brand-logo span{
+    font-size: 16px;
+    font-weight: bolder;
+    padding-left: .5em;
+    color: white;
+}
+
+nav{
+    height: 50px;
+    line-height: 3em;
+}
+
+
+ul li a{
+    color: rgb(188, 187, 214);
+    font-size: 1.1em;
+    position: relative;
+}
+
+nav ul a:hover{
+    color: white;
+    background: none;
+}
+
+ul li a.active{
+    color: white;
+}
+
+ul li a.active::after{
+    content: '';
+    background: rgb(80, 175, 253);
+    height: 5px;
+    width: 100%;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+.character-container{
+    margin: 7em auto;
+    padding: 3em;
+    width: 900px;
+}
+
+.charNav{
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.elemList, .weapList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1em;
+}
+
+.charNav img{
+    box-sizing: content-box;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: .3em;
+    border-radius: 40%;
+}
+
+.elemList img.active, .weapList img.active{
+    background: #576d77;
+}
+
+.characters-list{
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+
+.character-portrait{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: .4em;
+    justify-content: center;
+    align-items: center;
+    min-width: 12.5%;
+}
+
+.character-icon{
+    height: 70px;
+    width: 70px;
+    background: #546e7a;
+}
+
+.character-name{
+    color: #cfd8dc;
+    padding: .5em;
+}
+
+.character-element{
+    box-sizing: content-box;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 20px;
+    height: 20px;
+    background: #263238;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+
+
+/***Modal**/
+.modal .modal-content{
+    padding: 1em;
+
+}
+
+.modal{
+    width: 900px;
+    font-family: Genshin;
+    min-height: 76%;
+    background: rgb(199, 189, 240);
+}
+
+.character-modal-portrait{
+    height: 500px;
+    margin-top: 2em;
+}
+
+.common-info div{
+    height: 100px;
+}
+
+.weapon img, .element img{
+    height: 30px;
+}
+
+.element img{
+    background: #263238;
+    border-radius: 50%;
+    padding: .2em;
+}
+
+.rarity img{
+    height: 25px;
+}
+
+.modal-charName{
+    padding: 0;
+    margin: 0;
+}
+
+
+.main-info{
+    margin: 0 auto;
+}
+
+/****Post Styles******************/
+
+.post-container{
+    color: rgb(188, 187, 214);
+    border-radius: 1em;
+    padding: 1em;
+    display: flex;
+    gap: 2em;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1em 0;
+    background: #37474F;
+    box-shadow: 2px 2px 10px 3px #181F22;
+}
+    
+.post-img{
+    width: 300px;
+}
+
+.post-content{
+    flex-grow: 2;
+    width: 500px;
+}
+
+.post-title{
+    font-size: 2em;
+    color: #2196F3;
+}
+
+
+.chip{
+    background:#2196F3;
+    color: white;
+}
+
+/***Singe Post********/
+
+.single-post-title{
+    color: white;
+}
+
+.single-post-container{
+
+    background: #37474F;
+    border-radius: 2em;
+    padding: 2em;
+    margin: 2em 0;
+    box-shadow: 2px 2px 10px 3px #181F22;
+    color: rgb(188, 187, 214);
+
+}
+
+/*****Comments*********/
+
+.comment{
+        display: flex;
+        align-items: center;
+        gap: 4em;
+        padding: .5em 2em;
+        margin-top: .5em;
+        line-height: 1.5em;
+        color: rgb(188, 187, 214);
+        border-radius: 1em;
+        word-break: break-word;
+}
+
+.comment:nth-child(even){
+    background: #273a44;
+}
+
+.comment:nth-child(odd){
+    background: #313f46;
+}
+
+.comment>img{
+    border-radius: 50%;
+    border: 3px solid black;
+    width: 120px;
+    height: 120px;
+}
+
+.c-name{
+    font-size: 2em;
+    line-height: 0;
+    color: white;
+}
+
+/*******Form Comment***********/
+
+.form-comment-container{
+    padding: 2em 4em;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+textarea.materialize-textarea{
+    color: white;
+}
+
+.input-field input[type=text],
+.input-field input[type=password]{
+    color: #fff !important;
+}
+
+  .input-field label {
+    color: rgb(187, 187, 187);
+  }
+
+/********End of Post***************/
+/*****Login Modal********/
+#login_modal{
+    width: 500px;
+    height: 500px;
+    background: transparent;
+    box-shadow: none;
+}
+
+.loginform{
+    position: absolute;
+    background: #37474F;
+    width: 300px;
+    height: 400px;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0px 2px #657b86;
+    text-align: center;
+
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    overflow: hidden;
+}
+
+.logo{
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: -150px;
+    background: #263238;
+    border-radius: 50%;
+}
+
+.btnLogin{
+    width: 100%;
+}
+
+
+/***End of modal******/
+/*******Tier List***************/
+
+.tier-container{
+    display: flex;
+    background: #263238;
+    border-radius: 5px;
+}
+
+.tier{
+    padding: 3em 2em;
+    color: black;
+    font-weight: bold;
+}
+
+.tier-characters{
+    display: flex;
+    flex-wrap: wrap;
+}
+/**********End of Tier List*******************/
+
+
+@media (max-width: 992px){
+    .character-portrait{
+
+        width: 16.62%;
+    }
+
+    .character-container{
+        width: 675px;
+    }
+    
+    .modal{
+        width: 675px;
+    }
+}
+
+@media (max-width: 750px){
+    .character-portrait{
+        padding: 1em;
+        width: 25%;
+    }
+    .character-container{
+        width: 450px;
+    }
+
+    .modal{
+        width: 450px;
+    }
+}
+
+@media (max-width: 600px){
+    .character-portrait{
+        padding: .1em;
+        width: 33.3%;
+    }
+    .character-container{
+        width: 350px;
+        padding: 1em;
+
+    }
+    .modal{
+        width: 350px;
+    }
+    .comment{
+        flex-direction: column;
+        gap: 1em;
+        margin-top: 1.5em;
+    }
+}

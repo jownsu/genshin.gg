@@ -1,0 +1,131 @@
+@font-face {
+  font-family: Genshin;
+  src: url(../fonts/DellaRespira-Regular.ttf);
+}
+
+body{
+  font-family: Genshin, sans-serif;
+  background: #263238;
+}
+.bgShape{
+    background: #37474F;
+    width: 100vw;
+    height: 100vh;
+    clip-path: polygon(0 0, 85% 0, 47% 100%, 0% 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
+.wrapper{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
+
+.paimon{
+    height: 90vh;
+}
+
+.logoHome{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 25px;
+  left: 25px;
+}
+
+/********Login Form****************/
+
+.loginform{
+    position: relative;
+    background: #37474F;
+    height: 400px;
+    width: 300px;
+    border-radius: 1em;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5em;
+    align-items: center;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0px 2px #657b86;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+    z-index: 12;
+}
+
+.logo{
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    top: -150px;
+    background: #263238;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* .forgotpass{
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+} */
+
+.btnLogin{
+  width: 100%;
+}
+/**********End of Login Form****************/
+
+/*******Signup Form**************/
+
+.signup-container{
+  color: #fff;
+  position: relative;
+  background: #37474F;
+  width: 450px;
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  box-shadow: 5px 5px 0px 2px #657b86;
+  text-align: center;
+}
+
+
+/*******End of sign up form*****************/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.input-field input[type=text],
+.input-field input[type=password]{
+    color: #fff !important;
+}
+
+.input-field label {
+  color: rgb(187, 187, 187);
+}
+
+  /* icon prefix focus color */
+  /* .input-field .prefix.active {
+    color: #fff !important;
+  } */
+
+.input-field .prefix{
+  color: white;
+}
+

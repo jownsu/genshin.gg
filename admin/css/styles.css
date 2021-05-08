@@ -1,0 +1,331 @@
+@font-face {
+  font-family: Genshin;
+  src: url(../fonts/DellaRespira-Regular.ttf);
+}
+
+body{
+  font-family: Genshin, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.notif::after{
+  content: '';
+  height: 10px;
+  width: 10px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.material-icons{
+  position: relative;
+}
+
+
+.pagination li a{
+  color: rgb(196, 196, 196);
+}
+
+.chip{
+  background:#2196F3;
+  color: white;
+}
+
+.brand-name{
+  font-size: 16px;
+  font-weight: bolder;
+  padding-left: .5em;
+  color: white;
+}
+
+.sidenav{
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-brand a{
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; 
+}
+
+.sidenav a{
+  color: white !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.sidenav .logout{
+  color: #F44336 !important
+}
+
+.sidenav li{
+  height: 64px !important;
+}
+
+
+.genshin-logo{
+  width: 35px;
+  height: 35px;
+  vertical-align:middle;
+}
+
+header, main, footer {
+  padding-left: 300px;
+}
+
+
+
+.table-container{
+  padding: 2em;
+}
+
+.table-thumbnails{
+  width: 35px;
+  height: 35px;
+}
+
+.table-star{
+  width: 75px;
+  height: 20px;
+}
+.table-img-thumbnail{
+  width: 75px;
+  height: 75px;
+}
+
+/*****add user table*********/
+.add-user-container{
+  padding: 2em;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.user-display-picture{
+  width: 150px;
+  height: 150px;
+  border: 5px solid black;
+  border-radius: 50%;
+}
+
+/********end of add user table*****************/
+/***Modal********/
+
+
+#character-thumbnails{
+  padding: 2em;
+  width: 900px;
+  min-height: 76%;
+  background: rgb(199, 189, 240);
+}
+
+/***End of modal********/
+
+/***Edit Char*****/
+
+
+
+.edit-portrait, .modal-portrait{
+  height: 250px;
+}
+
+.edit-thumbnail, .modal-thumbnail{
+  height: 100px;
+  width: 100px;
+}
+
+.modal-thumbnail, .modal-portrait{
+  padding: .5em;
+}
+
+.modal-image:hover{
+  transform: scale(1.1);
+  transition: .5s;
+}
+
+.modal-image.active{
+  transform: scale(1.1);
+  background: silver;
+}
+
+.editCharacterPhotosContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-portrait.active{
+  transform: scale(1.1);
+  background: silver;
+}
+
+
+/***End of Edit Char*****/
+
+/***Dashboard****/
+
+.card-container{
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.card{
+  height: 100px;
+  width: 225px;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card.anemo{
+  background: linear-gradient(to right, #11998e, #38ef7d); 
+}
+.card.cryo{
+  background: linear-gradient(to right, #2193b0, #6dd5ed);
+}
+.card.dendro{
+  background: linear-gradient(to right, #56ab2f, #a8e063);
+}
+.card.electro{
+  background: linear-gradient(to right, #7f00ff, #e100ff);
+}
+.card.geo{
+  background: linear-gradient(to right, #cac531, #f3fd65);
+}
+.card.hydro{
+  background: linear-gradient(to left, #0575e6, #021b79);
+}
+.card.pyro{
+  background: linear-gradient(to right, #f12711, #f5af19);
+}
+
+.card-element{
+  height: 75px;
+  width: 75px;
+  filter: invert(100%);
+}
+
+
+.card-info{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  align-items: flex-end;
+}
+
+.card-count{
+  font-size: 3em;
+}
+
+/***End of Dashboard****/
+
+/**input fieilds****/
+
+.datepicker-day-button{
+  color: black !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input[type=text]:not(.browser-default):disabled+label{
+  color: white;
+}
+
+  /* label color */
+  .input-field input[type=text], .input-field input[type=password]{
+    color: #fff !important;
+  }
+  .input-field label {
+    color: rgb(187, 187, 187);
+  }
+
+  textarea.materialize-textarea{
+    color: white;
+}
+ 
+      
+
+
+/*******End of input fields**************/
+
+.row .col{
+  padding: 0;
+}
+
+
+  @media (max-width: 420px){
+
+    .table-container{
+      padding: 1em;
+    }
+  }
+  
+  
+  @media (max-width: 992px){
+    .user-table thead tr th:nth-child(2){
+      padding: 50px 0px;
+    }
+    .char-table thead tr th:nth-child(2){
+      padding: 40px 0px;
+    }
+    .char-table thead tr th{
+      padding: 20px 0px;
+    }
+    .post-table thead tr th{
+      padding: 18px 0px;
+    }
+
+
+
+    /**Modal*/
+    .modal{
+      width: 675px;
+    }
+    /*******Login********************/
+    .login-container{
+      background: red;
+  }
+}
+@media (max-width: 750px){
+  .modal{
+      width: 450px;
+  }
+}
+
+@media (max-width: 600px){
+  .modal{
+      width: 350px;
+  }
+}
+
+  @media only screen and (max-width : 992px) {
+    header, main, footer {
+      padding-left: 0;
+    }
+  }
