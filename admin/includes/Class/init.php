@@ -1,8 +1,8 @@
 <?php
 
 define('DS', DIRECTORY_SEPARATOR);
-define('SITE_ROOT', "E:".DS."xampp".DS."htdocs".DS."Projects".DS."genshin.gg");
-define('IMAGES_ROOT', "E:".DS."xampp".DS."htdocs".DS."Projects".DS."genshin.gg".DS."admin".DS."images");
+define('SITE_ROOT', dirname(__DIR__, 3));
+define('IMAGES_ROOT', dirname(__DIR__, 2) . DS . "images");
 
 require_once("Database.php");
 require_once("Db_objects.php");
