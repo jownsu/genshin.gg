@@ -44,13 +44,10 @@ class Comment extends Db_objects{
     static function count_comments_by_post_id($id){
         global $db;
 
-        $id = $db->escape_string($id);
-
         $sql = "SELECT COUNT(*) FROM " . self::$db_table . " WHERE post_id = " . $id;
 
-        $result = $db->query($sql);
-        $row = mysqli_fetch_array($result);
-        return array_shift($row);
+        $db->query($sql);
+        return $db->fetchColumn();
     }
 
     function author_image_path(){

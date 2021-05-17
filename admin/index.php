@@ -53,7 +53,7 @@
   <div class="card pyro">
     <img src="images/pyro.png" alt="pyro" class="card-element">
     <div class="card-info">
-      <span class="card-count"> <?= Character::count_by_element('pyro') ?> </span>
+      <span class="card-count"> <?= Character::count_by_element('Pyro') ?> </span>
       <span class="card-name">Pyro</span>
     </div>
   </div>

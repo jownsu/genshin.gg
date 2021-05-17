@@ -35,7 +35,7 @@
                         <?php endforeach ?>
                     </td>
                     <td><?= $post->username ?></td>
-                    <td><?= $post->status ?></td>
+                    <td><?= $post->post_status ?></td>
                     <td><a href="comments.php?id=<?= $post->post_id ?> "><?= Comment::count_comments_by_post_id($post->post_id) ?></a></td>
                     <td>
                         <a href="edit_post.php?id=<?= $post->post_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>

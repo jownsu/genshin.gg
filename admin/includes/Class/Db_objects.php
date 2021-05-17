@@ -31,15 +31,22 @@ class Db_objects{
     }
 
 
-    static function find_query($sql){
+    static function find_query($sql, $binds = array()){
         global $db;
-        $result = $db->query($sql);
+        $db->query($sql);
+        
+        if(isset($binds)){
+            foreach($binds as $key => $value){
+                $db->bind("{$key}", "{$value}");
+            }
+        }
+
+        $result = $db->execute();
 
         $obj_arr = array();
-        if($result){
-            while($row = mysqli_fetch_array($result)){
-                $obj_arr[] = self::instantiate($row);
-            }
+
+        while($row = $result->fetch()){
+            $obj_arr[] = self::instantiate($row);
         }
  
         return $obj_arr;
@@ -63,13 +70,11 @@ class Db_objects{
     }
 
     protected function get_properties(){
-        global $db;
-        
         $properties = array();
 
         foreach(static::$db_table_fields as $field){
             if($this->has_attribute($field)){
-                $properties[$field] = $db->escape_string($this->$field);
+                $properties[$field] = $this->$field;
             }
         }
 
@@ -81,9 +86,8 @@ class Db_objects{
         global $db;
 
         $sql = "SELECT COUNT(*) FROM " . static::$db_table;
-        $result = $db->query($sql);
-        $row = mysqli_fetch_array($result);
-        return array_shift($row);
+        $db->query($sql);
+        return $db->fetchColumn();
     }
 
     function create(){
@@ -92,9 +96,16 @@ class Db_objects{
         $properties = $this->get_properties();
 
         $sql = "INSERT INTO " . static::$db_table . " (". implode(", ", static::$db_table_fields) .") ";
-        $sql .= "VALUES ('". implode("', '", $properties ) ."')";
+        $sql .= "VALUES (:". implode(", :", static::$db_table_fields) .")";
 
-        return $db->query($sql) ? true : false;
+        $db->query($sql);
+
+        foreach($properties as $key => $value){
+            $db->bind(":{$key}", "{$value}");
+        }
+
+        return $db->execute() ? true : false;
+
     }
 
     function update(){
@@ -103,15 +114,20 @@ class Db_objects{
         $properties = $this->get_properties();
         $update_set_pair = array();
 
-        foreach($properties as $key => $value){
-            $update_set_pair[] = "{$key} = '{$value}'";
+        foreach(array_keys($properties) as $key){
+            $update_set_pair[] = "{$key} = :{$key}";
         }
 
         $sql = "UPDATE " . static::$db_table . " SET ";
-        $sql .= implode(', ', $update_set_pair) . "WHERE " . static::$db_table_id . " = " . $this->{static::$db_table_id};
+        $sql .= implode(', ', $update_set_pair) . " WHERE " . static::$db_table_id . " = " . $this->{static::$db_table_id};
+        
+        $db->query($sql);
 
-        return $db->query($sql) ? true : false;
+        foreach($properties as $key => $value){
+            $db->bind(":{$key}", "{$value}");
+        }
 
+        return $db->execute() ? true : false;
     }
 
     function delete(){
@@ -119,7 +135,8 @@ class Db_objects{
 
         $sql = "DELETE FROM " . static::$db_table . " WHERE " . static::$db_table_id . " = " . $this->{static::$db_table_id};
 
-        return $db->query($sql) ? true : false;
+        $db->query($sql);
+        return $db->execute() ? true : false;
     }
 
 

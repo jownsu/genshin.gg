@@ -26,20 +26,17 @@ class User extends Db_objects{
     static function verify_user($username, $password){
         global $db;
 
-        $user = $db->escape_string($username);
-        $pass = $db->escape_string($password);
-
         $sql = "SELECT * FROM " . self::$db_table;
-        $sql .= " WHERE username = '" . $user . "' LIMIT 1";
+        $sql .= " WHERE username = :username LIMIT 1";
 
-        $result = self::find_query($sql);
+        $result = self::find_query($sql, [':username' => $username]);
         $user = !empty($result) ? array_shift($result) : false;
 
         if(!$user){
             return false;
         }
 
-        return password_verify($pass, $user->password) ? $user : false;
+        return password_verify($password, $user->password) ? $user : false;
     }
 
     function set_password($pwd){
@@ -68,9 +65,8 @@ class User extends Db_objects{
 
         $sql = "SELECT COUNT(*) FROM " . self::$db_table . " WHERE status = 'Inactive'";
 
-        $result = $db->query($sql);
-        $row = mysqli_fetch_array($result);
-        return array_shift($row);
+        $db->query($sql);
+        return $db->fetchColumn();
     }
 
 

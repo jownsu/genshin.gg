@@ -3,7 +3,7 @@
 class Post extends Db_objects{
 
     protected static $db_table = "posts";
-    protected static $db_table_fields = ['title', 'description', 'image', 'date', 'author_id', 'tags', 'status'];
+    protected static $db_table_fields = ['title', 'description', 'image', 'date', 'author_id', 'tags', 'post_status'];
     protected static $db_table_id = "post_id";
 
     public $post_id;
@@ -12,7 +12,7 @@ class Post extends Db_objects{
     public $image;
     public $date;
     public $tags;
-    public $status;
+    public $post_status;
     public $author_id;
 
     public $username;
@@ -26,8 +26,9 @@ class Post extends Db_objects{
     static function find_published_post_by_page($paginate){
         $sql = "SELECT * FROM " . self::$db_table; 
         $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
-        $sql .= " WHERE posts.status = 'Published' ";
+        $sql .= " WHERE posts.post_status = 'Published' ";
         $sql .= "LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
+        
         return self::find_query($sql);
     }
 
@@ -60,9 +61,8 @@ class Post extends Db_objects{
         global $db;
 
         $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE status = 'Published'";
-        $result = $db->query($sql);
-        $row = mysqli_fetch_array($result);
-        return array_shift($row);
+        $db->query($sql);
+        return $db->fetchColumn();
     }
 
     function create_post(){

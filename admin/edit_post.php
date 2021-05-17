@@ -16,7 +16,7 @@
         $post->title       = trim($_POST['title']);
         $post->description = trim($_POST['description']);
         $post->tags        = implode(", ", $_POST['tags']);
-        $post->status      = $_POST['status'];
+        $post->post_status      = $_POST['status'];
 
         if($post->update()){
             $session->set_message("<p class='green-text'>The Post ${$post->title} was Updated!</p>");
@@ -69,7 +69,7 @@
                     <div class="input-field col s12">
                         <select name="status">
                             <?php foreach(POST_STATUS as $status): ?>
-                                <option value="<?= $status ?>" <?= $post->status == $status ? 'selected' : '' ?>><?= $status ?></option>
+                                <option value="<?= $status ?>" <?= $post->post_status == $status ? 'selected' : '' ?>><?= $status ?></option>
                             <?php endforeach ?>
                         </select>
                         <label>Status</label>

@@ -160,11 +160,11 @@ class Character extends Db_objects{
 
     static function count_by_element($element){
         global $db;
-        $element = ucfirst(strtolower($db->escape_string($element)));
+        $element = ucfirst(strtolower($element));
 
-        $sql = "SELECT COUNT(*) FROM characters WHERE element = '" . $element . "'";
-        $result = $db->query($sql);
-        $row = mysqli_fetch_array($result);
-        return array_shift($row);
+        $sql = "SELECT COUNT(*) FROM " . self::$db_table . " WHERE element = ?";
+        $db->query($sql);
+        $db->bind(1, $element);
+        return $db->fetchColumn();
     }
 }
