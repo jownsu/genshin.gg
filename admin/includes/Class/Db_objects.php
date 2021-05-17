@@ -15,8 +15,8 @@ class Db_objects{
         UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload.',
     );
     
-    static function find_by_page($paginate){
-        $sql = "SELECT * FROM " . static::$db_table . " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
+    static function find_by_page($paginate, $sqlExtend = ""){
+        $sql = "SELECT * FROM " . static::$db_table . " " . $sqlExtend . " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
         return self::find_query($sql);
     }
 

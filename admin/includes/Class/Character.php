@@ -37,6 +37,10 @@ class Character extends Db_objects{
         return self::find_all("ORDER BY name");
     }
 
+    static function find_characters_by_name_and_page($paginate){
+        return self::find_by_page($paginate, "ORDER BY name");
+    }
+
     function set_thumbnail($file){
 
         if(!$this->check_files($file)){

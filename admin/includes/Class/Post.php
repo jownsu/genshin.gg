@@ -32,7 +32,7 @@ class Post extends Db_objects{
         return self::find_query($sql);
     }
 
-    static function find_by_page($paginate){
+    static function find_by_page($paginate, $sqlExtend=""){
         $sql = "SELECT * FROM " . self::$db_table;
         $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
         $sql .= "LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
