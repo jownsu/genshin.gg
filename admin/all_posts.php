@@ -8,13 +8,20 @@
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
     $total_count = Post::count_all();
     $paginate = new Paginate($total_count, $page, 7);
-    $posts = Post::find_by_page($paginate);
+    $posts = Post::find_posts_by_page($paginate);
     if(empty($posts)){
         header("location: all_posts.php");
     }
 ?>
     <div class="table-container">
         <h2>All Posts</h2>
+        <form method="GET" class="row" style="margin-bottom:0">
+            <div class="input-field col l4 m8 s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="search" id="search">
+                <label for="search">Search...</label>
+            </div>
+        </form>
         <table class="highlight centered responsive-table post-table">
             <thead>
                 <tr>

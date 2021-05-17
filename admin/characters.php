@@ -3,18 +3,32 @@
 <?php
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
 
-    $total_count = Character::count_all();
-    $paginate = new Paginate($total_count, $page, 3);
-    $characters = Character::find_characters_by_name_and_page($paginate);
-    if(empty($characters)){
-        header("location: characters.php");
+    if(isset($_GET['search']) && $_GET['search'] != ""){
+        $search = trim($_GET['search']);
+        $search_count = Character::search_count(['name'], $search);
+        $paginate = new Paginate($search_count, $page, 10);
+        $characters = Character::search_query(['name'], $search, $paginate);
+    }else{
+
+        $total_count = Character::count_all();
+        $paginate = new Paginate($total_count, $page, 10);
+        $characters = Character::find_characters_by_name_and_page($paginate);
     }
+
 
 ?>
     <div class="table-container">
 
         <h2>Characters</h2>
         <a href="add_character.php" class="btn-small green waves-effect">Add new character</a>
+        <form method="GET" class="row" style="margin-bottom:0">
+            <div class="input-field col l4 m8 s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="search" id="search">
+                <label for="search">Search...</label>
+            </div>
+        </form>
+        </div>
         <table class="highlight centered responsive-table char-table">
             <thead>
                 <tr>
@@ -29,6 +43,10 @@
             </thead>
             <tbody class="delete-bubbling-container">
             <?php
+
+                if(empty($characters)){
+                    die("No Records Found");
+                }
                 foreach($characters as $character):
             ?>
                 <tr>
@@ -45,7 +63,6 @@
                     </td>
                 </tr>
             <?php endforeach ?>
-                
             </tbody>
         </table>
         <ul class="pagination center-align">

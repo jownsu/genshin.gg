@@ -11,6 +11,13 @@
 
         <h2>Users</h2>
         <a href="add_user.php" class="btn-small green waves-effect">Add new user</a>
+        <form method="GET" class="row" style="margin-bottom:0">
+            <div class="input-field col l4 m8 s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="search" id="search">
+                <label for="search">Search...</label>
+            </div>
+        </form>
         <table class="highlight centered responsive-table user-table">
             <thead>
                 <tr>

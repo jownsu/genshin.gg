@@ -15,19 +15,54 @@ class Db_objects{
         UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload.',
     );
     
-    static function find_by_page($paginate, $sqlExtend = ""){
+    static function find_by_page($paginate, $sqlExtend = "", $binds = array()){
         $sql = "SELECT * FROM " . static::$db_table . " " . $sqlExtend . " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
-        return self::find_query($sql);
+        return self::find_query($sql, $binds);
     }
 
     static function find_by_id($id){
-        $result = self::find_query("SELECT * FROM " . static::$db_table . " WHERE " . static::$db_table_id . " = ". $id . " LIMIT 1");
+        $sql = "SELECT * FROM " . static::$db_table . " WHERE " . static::$db_table_id . " = :id LIMIT 1";
+        $result = self::find_query($sql, [':id' => $id]);
         return !empty($result) ? array_shift($result) : false;
     }
 
-    static function find_all($sql = ""){
-        $result = self::find_query("SELECT * FROM " . static::$db_table . " " . $sql);
+    static function find_all($sql = "", $binds = array()){
+        $result = self::find_query("SELECT * FROM " . static::$db_table . " " . $sql, $binds);
         return !empty($result) ? $result : false;
+    }
+
+    static function search_query($tables, $search, $paginate = null){
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+        $sql = " WHERE " . implode(' AND ', $likeSql);
+
+        if(isset($paginate)){
+            $result = self::find_by_page($paginate, $sql, [':search' => "%{$search}%"]);
+            return !empty($result) ? $result : false;
+        }else{
+            $result = self::find_all($sql, [':search' => "%{$search}%"]);
+            return !empty($result) ? $result : false;
+        }
+    }
+
+    static function search_count($tables, $search){
+        global $db;
+
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE " . implode(' AND ', $likeSql);
+
+        $db->query($sql);
+        $db->bind(':search' , "%{$search}%");
+        return $db->fetchColumn();
+
     }
 
 

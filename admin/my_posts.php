@@ -12,6 +12,13 @@
     <div class="table-container">
         <h2>My Posts</h2>
         <a href="add_post.php" class="btn-small green waves-effect">Add new post</a>
+        <form method="GET" class="row" style="margin-bottom:0">
+            <div class="input-field col l4 m8 s12">
+                <i class="material-icons prefix">search</i>
+                <input type="text" name="search" id="search">
+                <label for="search">Search...</label>
+            </div>
+        </form>
         <table class="highlight centered responsive-table post-table">
             <thead>
                 <tr>
