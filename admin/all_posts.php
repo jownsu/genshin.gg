@@ -1,11 +1,16 @@
 <?php require_once("includes/header.php"); ?>
 <?php 
+    if($session->role != 'Admin'){
+        header("Location: index.php");
+    }
+
 
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
     $total_count = Post::count_all();
     $paginate = new Paginate($total_count, $page, 7);
-    if($session->role == 'Admin'){
-        $posts = Post::find_by_page($paginate);
+    $posts = Post::find_by_page($paginate);
+    if(empty($posts)){
+        header("location: all_posts.php");
     }
 ?>
     <div class="table-container">

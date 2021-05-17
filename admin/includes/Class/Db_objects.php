@@ -40,15 +40,13 @@ class Db_objects{
                 $db->bind("{$key}", "{$value}");
             }
         }
-
+        
         $result = $db->execute();
 
         $obj_arr = array();
-
-        while($row = $result->fetch()){
-            $obj_arr[] = self::instantiate($row);
-        }
- 
+            while($row = $result->fetch()){
+                $obj_arr[] = self::instantiate($row);
+            }
         return $obj_arr;
     }
 

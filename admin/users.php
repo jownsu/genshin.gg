@@ -30,6 +30,9 @@
                 $total_count = User::count_all();
                 $paginate = new Paginate($total_count, $page, 3);
                 $users = User::find_by_page($paginate);
+                if(empty($users)){
+                    header("location: users.php");
+                }
                 foreach($users as $user):
             ?>
 

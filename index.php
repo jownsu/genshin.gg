@@ -8,12 +8,13 @@
     $total_count = Post::count_published_post();
     $paginate = new Paginate($total_count, $page, 3);
     $posts = Post::find_published_post_by_page($paginate);
+    if(empty($posts)){
+        header("location: index.php");
+    }
 ?>
 
     <main>
         <div class="container">
-
-
             <h6>All Posts</h6>
             <?php foreach($posts as $post): ?>
             <div class="post-container">
@@ -45,8 +46,6 @@
                         <li class="waves-effect"><a href="index.php?page=<?= $paginate->next() ?>"><i class="material-icons">chevron_right</i></a></li>
                     <?php endif ?>
                 </ul>
-            
-
         </div>
   
     </main>

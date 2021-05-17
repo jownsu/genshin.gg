@@ -6,7 +6,9 @@
     $total_count = Character::count_all();
     $paginate = new Paginate($total_count, $page, 3);
     $characters = Character::find_characters_by_name_and_page($paginate);
-    //$characters = Character::find_character_by_page($page, 3);
+    if(empty($characters)){
+        header("location: characters.php");
+    }
 
 ?>
     <div class="table-container">

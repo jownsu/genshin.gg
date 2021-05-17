@@ -5,6 +5,9 @@
     $total_count = Post::count_all();
     $paginate = new Paginate($total_count, $page, 7);
     $posts = Post::find_by_author($paginate, $session->id);
+    if(empty($posts)){
+        header("location: my_posts.php");
+    }
 ?>
     <div class="table-container">
         <h2>My Posts</h2>

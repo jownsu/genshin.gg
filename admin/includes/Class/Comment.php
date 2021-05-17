@@ -20,17 +20,17 @@ class Comment extends Db_objects{
         
         $sql = "SELECT * FROM " . self::$db_table;
         $sql .= " INNER JOIN users ON " . self::$db_table . ".user_id = users.user_id ";
-        $sql .= "WHERE " . self::$db_table . ".post_id = " . $id;
+        $sql .= "WHERE " . self::$db_table . ".post_id = :id";
         $sql .= " ORDER BY " . self::$db_table . ".date DESC ";
         $sql .= "LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
         
-        $result = self::find_query($sql);
+        $result = self::find_query($sql, [":id" => $id]);
 
         return !empty($result) ? $result : false;
     }
 
     static function find_by_id($id){
-        $result = self::find_query("SELECT * FROM " . static::$db_table . " WHERE comment_id = ". $id . " LIMIT 1");
+        $result = self::find_query("SELECT * FROM " . static::$db_table . " WHERE comment_id = :id LIMIT 1", [":id", $id]);
         return !empty($result) ? array_shift($result) : false;
     }
 

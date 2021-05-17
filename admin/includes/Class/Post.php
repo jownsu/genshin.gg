@@ -42,17 +42,17 @@ class Post extends Db_objects{
     static function find_by_author($paginate, $id){
         $sql = "SELECT * FROM " . self::$db_table;
         $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
-        $sql .= "WHERE " . self::$db_table . ".author_id = " . $id;
+        $sql .= "WHERE " . self::$db_table . ".author_id = :id";
         $sql .= " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
-        return self::find_query($sql);
+        return self::find_query($sql, [":id" => $id]);
     }
 
     static function find_by_id($id){
         $sql = "SELECT * FROM " . self::$db_table;
         $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
-        $sql .= "WHERE posts.post_id = ". $id . " LIMIT 1";
+        $sql .= "WHERE posts.post_id = :id LIMIT 1";
 
-        $result = self::find_query($sql);
+        $result = self::find_query($sql, [':id' => $id]);
         return !empty($result) ? array_shift($result) : false;
     }
 
@@ -60,7 +60,7 @@ class Post extends Db_objects{
     static function count_published_post(){
         global $db;
 
-        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE status = 'Published'";
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE post_status = 'Published'";
         $db->query($sql);
         return $db->fetchColumn();
     }
