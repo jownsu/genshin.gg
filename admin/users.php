@@ -5,6 +5,19 @@
         header("Location: index.php");
     }
 
+    $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
+    if(isset($_GET['search']) && $_GET['search'] != ""){
+        $search = trim($_GET['search']);
+        $search_count = User::search_count(['username', 'firstname', 'lastname'], $search);
+        $paginate = new Paginate($search_count, $page, 10);
+        $users = User::search_query(['username', 'firstname', 'lastname'], $search, $paginate);
+    }else{
+        $total_count = User::count_all();
+        $paginate = new Paginate($total_count, $page, 3);
+        $users = User::find_by_page($paginate);
+    }
+
+
 ?>
 
     <div class="table-container">
@@ -32,13 +45,9 @@
             </thead>
             <tbody class="delete-bubbling-container">
             <?php
-                $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
 
-                $total_count = User::count_all();
-                $paginate = new Paginate($total_count, $page, 3);
-                $users = User::find_by_page($paginate);
                 if(empty($users)){
-                    header("location: users.php");
+                    die("No records found");
                 }
                 foreach($users as $user):
             ?>

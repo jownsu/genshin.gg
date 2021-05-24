@@ -37,7 +37,7 @@ class Db_objects{
         foreach($tables as $table){
             $likeSql[] = "{$table} LIKE :search";
         }
-        $sql = " WHERE " . implode(' AND ', $likeSql);
+        $sql = " WHERE " . implode(' OR ', $likeSql);
 
         if(isset($paginate)){
             $result = self::find_by_page($paginate, $sql, [':search' => "%{$search}%"]);
@@ -57,7 +57,7 @@ class Db_objects{
             $likeSql[] = "{$table} LIKE :search";
         }
 
-        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE " . implode(' AND ', $likeSql);
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE " . implode(' OR ', $likeSql);
 
         $db->query($sql);
         $db->bind(':search' , "%{$search}%");

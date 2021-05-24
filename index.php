@@ -4,19 +4,36 @@
 <?php
 
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
-
-    $total_count = Post::count_published_post();
-    $paginate = new Paginate($total_count, $page, 3);
-    $posts = Post::find_published_post_by_page($paginate);
-    if(empty($posts)){
-        header("location: index.php");
+    if(isset($_GET['search']) && $_GET['search'] != ""){
+        $search = trim($_GET['search']);
+        $search_count = Post::search_count_by_published_post(['title'], $search);
+        $paginate = new Paginate($search_count, $page, 10);
+        $posts = Post::search_published_post(['title'], $search, $paginate);
+    }else{
+        $total_count = Post::count_published_post();
+        $paginate = new Paginate($total_count, $page, 3);
+        $posts = Post::find_published_post_by_page($paginate);
     }
+
+
+
 ?>
 
     <main>
         <div class="container">
             <h6>All Posts</h6>
-            <?php foreach($posts as $post): ?>
+            <form method="GET" class="row" style="margin-bottom:0">
+                <div class="input-field col l4 m8 s12">
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" name="search" id="search">
+                    <label for="search">Search...</label>
+                </div>
+            </form>
+            <?php 
+                if(empty($posts)){
+                    die('No records found');
+                }
+                foreach($posts as $post): ?>
             <div class="post-container">
                 <img src="<?= $post->post_image_path() ?>" alt="" class="post-img">
                 <div class="post-content">

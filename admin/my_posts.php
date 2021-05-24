@@ -2,12 +2,18 @@
 <?php 
 
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
-    $total_count = Post::count_all();
-    $paginate = new Paginate($total_count, $page, 7);
-    $posts = Post::find_by_author($paginate, $session->id);
-    if(empty($posts)){
-        header("location: my_posts.php");
+    if(isset($_GET['search']) && $_GET['search'] != ""){
+        $search = trim($_GET['search']);
+        $search_count = Post::search_count_by_author(['title'], $search, $session->id);
+        $paginate = new Paginate($search_count, $page, 10);
+        $posts = Post::search_post_by_author(['title'], $search, $session->id, $paginate);
+    }else{
+        $total_count = Post::count_posts_by_author($session->id);
+        $paginate = new Paginate($total_count, $page, 10);
+        $posts = Post::find_by_author($paginate, $session->id);
     }
+
+
 ?>
     <div class="table-container">
         <h2>My Posts</h2>
@@ -32,7 +38,11 @@
                 </tr>
             </thead>
             <tbody class="delete-bubbling-container">
-                <?php foreach($posts as $post): ?>
+                <?php 
+                    if(empty($posts)){
+                        die("No records found");
+                    }
+                    foreach($posts as $post): ?>
 
                 <tr>
                     <td><?= $post->post_id ?></td>

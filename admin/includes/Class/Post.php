@@ -35,16 +35,14 @@ class Post extends Db_objects{
     static function find_posts_by_page($paginate, $sqlExtend="", $bind = array()){
         $sql = "SELECT * FROM " . self::$db_table;
         $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
-        $sql .= "LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
-        return self::find_query($sql);
+        $sql .= $sqlExtend;
+        $sql .= " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
+        return self::find_query($sql, $bind);
     }
     
     static function find_by_author($paginate, $id){
-        $sql = "SELECT * FROM " . self::$db_table;
-        $sql .= " INNER JOIN users ON " . self::$db_table . ".author_id = users.user_id ";
-        $sql .= "WHERE " . self::$db_table . ".author_id = :id";
-        $sql .= " LIMIT " . $paginate->items_per_page . " OFFSET " . $paginate->offset();
-        return self::find_query($sql, [":id" => $id]);
+        $sql = "WHERE " . self::$db_table . ".author_id = :id";
+        return self::find_posts_by_page($paginate, $sql, [":id" => $id]);
     }
 
     static function find_by_id($id){
@@ -56,12 +54,88 @@ class Post extends Db_objects{
         return !empty($result) ? array_shift($result) : false;
     }
 
+    static function search_post_by_page($tables, $search, $paginate, $whereSqlExtend = ""){
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+        $sql = "WHERE " . implode(' OR ', $likeSql);
+        $sql .= " " . $whereSqlExtend;
+        $result = self::find_posts_by_page($paginate, $sql, [':search' => "%{$search}%"]);
+        return !empty($result) ? $result : false;
+    }
+
+    static function search_published_post($tables, $search, $paginate){
+        $sql = " AND posts.post_status = 'Published'";
+        $result = self::search_post_by_page($tables, $search, $paginate, $sql);
+        return !empty($result) ? $result : false;
+    }
+
+    static function search_post_by_author($tables, $search, $id, $paginate){
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+        $sql = "WHERE " . implode(' OR ', $likeSql);
+        $sql .= " AND " . self::$db_table . ".author_id = :id";
+
+        $result = self::find_posts_by_page($paginate, $sql, [':search' => "%{$search}%", ':id' => $id]);
+        return !empty($result) ? $result : false;
+    }
+
 
     static function count_published_post(){
         global $db;
 
         $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE post_status = 'Published'";
         $db->query($sql);
+        return $db->fetchColumn();
+    }
+
+    static function search_count_by_author($tables, $search, $id){
+        global $db;
+
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE " . implode(' OR ', $likeSql);
+        $sql .= " AND " . self::$db_table . ".author_id = :id";
+        $db->query($sql);
+        $db->bind(':search' , "%{$search}%");
+        $db->bind(':id' , $id);
+        return $db->fetchColumn();
+
+    }
+
+    static function search_count_by_published_post($tables, $search){
+        global $db;
+
+        $likeSql = array();
+
+        foreach($tables as $table){
+            $likeSql[] = "{$table} LIKE :search";
+        }
+
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table . " WHERE " . implode(' OR ', $likeSql);
+        $sql .= " AND ". self::$db_table .".post_status = 'Published'";
+        $db->query($sql);
+        $db->bind(':search' , "%{$search}%");
+        return $db->fetchColumn();
+
+    }
+
+    static function count_posts_by_author($id){
+        global $db;
+
+        $sql = "SELECT COUNT(*) FROM " . static::$db_table;
+        $sql .= " WHERE " . self::$db_table . ".author_id = :id";
+        $db->query($sql);
+        $db->bind(':id', $id);
         return $db->fetchColumn();
     }
 
