@@ -6,10 +6,11 @@
     }
 
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
+
     if(isset($_GET['search']) && $_GET['search'] != ""){
         $search = trim($_GET['search']);
         $search_count = User::search_count(['username', 'firstname', 'lastname'], $search);
-        $paginate = new Paginate($search_count, $page, 10);
+        $paginate = new Paginate($search_count, $page, 3);
         $users = User::search_query(['username', 'firstname', 'lastname'], $search, $paginate);
     }else{
         $total_count = User::count_all();
@@ -27,7 +28,7 @@
         <form method="GET" class="row" style="margin-bottom:0">
             <div class="input-field col l4 m8 s12">
                 <i class="material-icons prefix">search</i>
-                <input type="text" name="search" id="search">
+                <input type="text" name="search" id="search" value="<?= isset($search) ? $search : '' ?>">
                 <label for="search">Search...</label>
             </div>
         </form>
@@ -71,15 +72,15 @@
         
         <ul class="pagination center-align">
             <?php if($paginate->has_previous()):?>
-                <li class="waves-effect"><a href="users.php?page=<?= $paginate->previous() ?>"><i class="material-icons">chevron_left</i></a></li>
+                <li class="waves-effect"><a href="users.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $paginate->previous() ?>"><i class="material-icons">chevron_left</i></a></li>
             <?php endif ?>
 
             <?php for($i = 1; $i <= $paginate->total_page(); $i++): ?>
-                <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="users.php?page=<?= $i ?>"><?= $i ?></a></li>
+                <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="users.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
 
             <?php if($paginate->has_next()):?>
-                <li class="waves-effect"><a href="users.php?page=<?= $paginate->next() ?>"><i class="material-icons">chevron_right</i></a></li>
+                <li class="waves-effect"><a href="users.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $paginate->next() ?>"><i class="material-icons">chevron_right</i></a></li>
             <?php endif ?>
         </ul>
     </div>
