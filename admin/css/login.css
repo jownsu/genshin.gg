@@ -88,7 +88,6 @@ body{
   background: #37474F;
   width: 450px;
   border-radius: 1em;
-  display: flex;
   flex-direction: column;
   border: 2px solid black;
   box-shadow: 5px 5px 0px 2px #657b86;
@@ -97,6 +96,31 @@ body{
 
 
 /*******End of sign up form*****************/
+
+/******Forgot password Form***************/
+
+
+.forgot-password-container{
+  padding: 1em;
+  color: #fff;
+  background: #37474F;
+  width: 400px;
+  border-radius: 1em;
+  gap: .5em;
+  border: 2px solid black;
+  box-shadow: 5px 5px 0px 2px #657b86;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+/******End of forgot password form***************/
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus

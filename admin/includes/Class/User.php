@@ -39,6 +39,22 @@ class User extends Db_objects{
         return password_verify($password, $user->password) ? $user : false;
     }
 
+    static function find_forgotten_user($username, $security_question, $security_answer){
+        global $db;
+
+        $sql = "SELECT * FROM " . self::$db_table;
+        $sql .= " WHERE username = :username AND security_question = :security_question LIMIT 1";
+
+        $result = self::find_query($sql, [':username' => $username, ':security_question' => $security_question]);
+        $user = !empty($result) ? array_shift($result) : false;
+
+        if(!$user){
+            return false;
+        }
+
+        return password_verify($security_answer, $user->security_answer) ? $user : false;
+    }
+
     function set_password($pwd){
         $this->password = password_hash($pwd, PASSWORD_DEFAULT);
     }

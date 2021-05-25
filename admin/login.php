@@ -83,6 +83,34 @@ if(isset($_POST['submit-signup'])){
     $email = "";
 }
 
+if(isset($_POST['submit-changepassword'])){
+    $username          = $_POST['username'];
+    $security_question = $_POST['security_question'];
+    $security_answer   = $_POST['security_answer'];
+    $new_password      = $_POST['new_password'];
+    $confirm_password  = $_POST['confirm_password'];
+
+    if(empty($username) || empty($security_question) || empty($security_answer) || empty($new_password) || empty($confirm_password)){
+        $session->set_message("<p class='red-text'>Fields cannot be empty</p>");
+    }else{
+        if($new_password != $confirm_password){
+            $session->set_message("<p class='red-text'>Password not match</p>");
+        }else{
+            $user = User::find_forgotten_user($username, $security_question, $security_answer);
+
+            if($user){
+                $user->set_password($new_password);
+                if($user->update()){
+                    $session->set_message("<p class='green-text'>Password changed successfully</p>");
+                    header("Location: login.php");
+                }
+            }else{
+                $session->set_message("<p class='red-text'>Information of User not match</p>");
+            }
+        }
+    }
+}
+
 ?>
 
 
@@ -108,7 +136,7 @@ if(isset($_POST['submit-signup'])){
 
     <div class="wrapper">
         <img src="images/Paimon.png" alt="Paimon" class="paimon hide-on-med-and-down">
-        <div class="login-container <?= isset($_GET['signup']) ? 'hide' : ''?>">
+        <div class="login-container <?= (isset($_GET['signup']) || isset($_GET['forgotpassword'])) ? 'hide' : ''?>">
             <div class="loginform">
                 <!-- <img src="images/logo.png" alt="logo" class="logo"> -->
                 <div class="logo"></div>
@@ -127,7 +155,7 @@ if(isset($_POST['submit-signup'])){
                     <p class="red-text"><?= $session->message ?></p>
                     <input type="submit" value="login" class="btn blue darken-2 btnLogin" name="submit-login">
                 </form>
-                <a href="#" class="forgotpass">Forgot Password</a>
+                <a href="login.php?forgotpassword" class="forgotpass">Forgot Password</a>
                 <a href="login.php?signup" class="toggleForm btn-small green darken-2">Sign up</a>
             </div>
         </div>
@@ -224,11 +252,44 @@ if(isset($_POST['submit-signup'])){
                     <?= $session->message ?>
 
                     <input type="submit" value="Sign Up" name="submit-signup" class="btn-small blue darken-2">
-                    <p>Already Have an Account? <a href="login.php">Log in</button></p>
+                    <p>Already Have an Account? <a href="login.php">Log in</a></p>
             </div>
             </form>
         </div>
-    </div>
+
+            <div class="forgot-password-container <?= isset($_GET['forgotpassword']) ? '' : 'hide'?>">
+                <h5>Forgot Password</h5>
+                <form method="POST">
+                    <div class="input-field">
+                        <input type="text" id="username" name="username" value="<?= $username ?>">
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="input-field">
+                        <select name="security_question" id="sq">
+                        <?php foreach(SECURTY_QUESTIONS as $sq): ?>
+                            <option value="<?= $sq ?>"><?= $sq ?></option>
+                        <?php endforeach ?>
+                        </select>
+                        <label for="sq">Security Question</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="security_answer" id="security_answer">
+                        <label for="security_answer">Security Answer</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="new_password" id="new_password">
+                        <label for="new_password">New Password</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" name="confirm_password" id="confirm_password">
+                        <label for="confirm_password">Confirm Password</label>
+                    </div>
+                    <p class="red-text"><?= $session->message ?></p>
+                    <input type="submit" value="Change Password" class="btn blue darken-2 btnLogin" name="submit-changepassword">
+                    <a href="login.php">Login</a>
+                </form>
+            </div>
+        </div>
 
 </main>
 
