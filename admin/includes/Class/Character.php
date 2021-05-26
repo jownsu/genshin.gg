@@ -60,19 +60,31 @@ class Character extends Db_objects{
     }
 
     function create_character(){
+
         if(!empty($this->errors)){
             return false;
         }
+
+
         
-        // if(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail_tmpName)){
-        //     $this->errors[] = "The file {$this->thumbnail} existed";
-        //     return false;
-        // }
+        if(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)){
+            $thumbnailCount = 1;
+            list($name, $extension) = explode('.', $this->thumbnail);
+            while(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)) {
+                $this->thumbnail = $name . "(" . $thumbnailCount . ")" . '.' . $extension;    
+                $thumbnailCount++;
+            }
+        }
+
+        if(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)){
+            $portraitCount = 1;
+            list($name, $extension) = explode('.', $this->portrait);
+            while(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) {
+                $this->portrait = $name . "(" . $portraitCount . ")" . '.' . $extension;    
+                $portraitCount++;
+            }
+        }
         
-        // if(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait_tmpName)){
-        //     $this->errors[] = "The file {$this->portrait} existed";
-        //     return false;
-        // }
 
         // if(empty($this->thumbnail)){
         //     $this->thumbnail = "thumbnail_placeholder.png";
@@ -114,7 +126,7 @@ class Character extends Db_objects{
     }
 
     function Thumbnail(){
-        return empty($this->thumbnail) ? $this->image_path() . "Characters" . DS . $this->thumbnail_placeholder : $this->image_path() . "Characters" . DS . $this->thumbnail;
+        return (empty($this->thumbnail)) || !file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail) ? $this->image_path() . "Characters" . DS . $this->thumbnail_placeholder : $this->image_path() . "Characters" . DS . $this->thumbnail;
     }
 
     function Element(){
@@ -122,7 +134,7 @@ class Character extends Db_objects{
     }
 
     function Portrait(){
-        return empty($this->portrait) ? $this->image_path() . "Portraits" . DS . $this->portrait_placeholder : $this->image_path() . "Portraits" . DS  . $this->portrait;
+        return (empty($this->portrait) || !file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) ? $this->image_path() . "Portraits" . DS . $this->portrait_placeholder : $this->image_path() . "Portraits" . DS  . $this->portrait;
     }
 
     function Weapon(){
@@ -161,6 +173,7 @@ class Character extends Db_objects{
     function get_errors(){
         return $this->errors;
     }
+
 
     static function count_by_element($element){
         global $db;
