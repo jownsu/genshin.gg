@@ -55,7 +55,7 @@
 
             <h4>Edit Character</h4>
             <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="targetId" value="<?= $character->id ?>">
+                <input type="hidden" id="targetId" value="<?= $character->char_id ?>">
                 <div class="row">
                     <div class="col l6 s12">
                         <div class="row">

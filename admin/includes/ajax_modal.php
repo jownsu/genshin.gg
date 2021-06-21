@@ -1,8 +1,6 @@
 <div class="modal modal-fixed-footer" id="modalPhotos">
-        <div class="modal-content">
-            
+        <div class="modal-content" id="modalPhotosContent">
         </div>
-
         <div class="modal-footer">
             <button id="modal-update" class="modal-close btn green disabled">Update</button>
         </div>
@@ -10,7 +8,7 @@
 
 <script>
 
-    var modalPhotos = document.querySelector(".modal-content");
+    var modalPhotosContent = document.querySelector("#modalPhotosContent");
     var btnUpdate = document.querySelector("#modal-update");
     var id = document.querySelector("#targetId").value;
 
@@ -20,7 +18,7 @@
     var imageCategory;
     var targetImage;
 
-    modalPhotos.addEventListener('click', e => {
+    modalPhotosContent.addEventListener('click', e => {
         e.preventDefault();
         var target = e.target;
         if(target.tagName == "IMG"){
@@ -38,25 +36,25 @@
         e.preventDefault();
         let target = e.target.className;
         targetImage = e.target;
-            modalPhotos.innerHTML = "";
+            modalPhotosContent.innerHTML = "";
             let targetImg = e.target.dataset.test;
             switch (targetImg) {
                 case "thumbnail":
                         var thumbnails = <?= json_encode(get_all_thumbnails()) ?>;
                         thumbnails.forEach(thumbnail => {
-                            modalPhotos.innerHTML += "<img class='edit-thumbnail modal-image' src='"+ thumbnail +"'>";
+                            modalPhotosContent.innerHTML += "<img class='edit-thumbnail modal-image' src='"+ thumbnail +"'>";
                         })
                     break;
                 case "portrait":
                         var portraits = <?= json_encode(get_all_portraits()) ?>;
                         portraits.forEach(portrait => {
-                            modalPhotos.innerHTML += "<img class='edit-portrait modal-image' src='"+ portrait +"'>";
+                            modalPhotosContent.innerHTML += "<img class='edit-portrait modal-image' src='"+ portrait +"'>";
                         })
                     break;
                 case "user":
                     var users = <?= json_encode(get_all_user_images()) ?>;
                         users.forEach(user => {
-                            modalPhotos.innerHTML += "<img class='edit-thumbnail modal-image' src='"+ user +"'>";
+                            modalPhotosContent.innerHTML += "<img class='edit-thumbnail modal-image' src='"+ user +"'>";
                         })
                     break;
                 default:
