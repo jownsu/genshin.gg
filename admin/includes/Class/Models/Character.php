@@ -31,7 +31,7 @@ class Character extends Model{
         $character->constellation  = trim($data['constellation']) ?? "";
         $character->birthday       = $data['birthday']['month'] ?? "" . " " . $data['birthday']['day'] ?? "";
         $character->sex            = trim($data['sex']) ?? "";
-        // $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
+        $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
         // $character->skillTalents   = json_encode($data['skillTalents']) ?? "";
         // $character->passiveTalents = json_encode($data['passiveTalents']) ?? "";
         // $character->constellations = json_encode($data['constellations']) ?? "";
@@ -59,8 +59,6 @@ class Character extends Model{
         // $character->passiveTalents = json_encode($input['passiveTalents']);
         // $character->constellations = json_encode($input['constellations']);
         $character->tier           = trim($input['tier']);
-
-
 
         if($character->update()){
             rename("images/characters/" . $oldName, "images/characters/" . strtolower($input['name']) );
