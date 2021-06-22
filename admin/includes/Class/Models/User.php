@@ -8,13 +8,7 @@ class User extends Model{
     private $image_directory = "Users";
 
     static function verify_user($username, $password){
-        global $db;
-
-        $sql = "SELECT * FROM " . self::$db_table;
-        $sql .= " WHERE username = :username LIMIT 1";
-
-        $result = self::find_query($sql, [':username' => $username]);
-        $user = !empty($result) ? array_shift($result) : false;
+        $user = self::where(["username = " . $username])->get_single();
 
         if(!$user){
             return false;

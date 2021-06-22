@@ -15,7 +15,7 @@
         $character->nickname      = trim($_POST['nickname']);
         $character->rarity        = trim($_POST['rarity']);
         $character->weapon        = trim($_POST['weapon']);
-        $character->element       = trim($_POST['element']);
+        $character->vision        = trim($_POST['vision']);
         $character->sex           = trim($_POST['sex']);
         $character->set_birthday($_POST['birthday-month'], $_POST['birthday-day']);
         $character->constellation = trim($_POST['constellation']);
@@ -92,12 +92,12 @@
                                 <label>Weapon</label>
                             </div>
                             <div class="input-field col l6 s12">
-                                <select id="element" name="element">
+                                <select id="element" name="vision">
                                 <?php foreach(ELEMENTS as $element): ?>
-                                    <option value="<?= $element ?>" <?= $element == $character->element ? 'selected' : '' ?>><?= $element ?></option>
+                                    <option value="<?= $element ?>" <?= $element == $character->vision ? 'selected' : '' ?>><?= $element ?></option>
                                 <?php endforeach ?> 
                                 </select>
-                                <label>Element</label>
+                                <label>Vision</label>
                             </div>
                         </div>
                         <div class="row">
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <div class="col l6 s12 editCharacterPhotosContainer">
-                        <a href="#modalPhotos" class="modal-trigger"><img class="edit-thumbnail btnModalImg" data-test="thumbnail" src="<?= $character->Thumbnail() ?>" alt="<?= $character->name ?>"></a>
+                        <img class="edit-thumbnail" src="<?= $character->Thumbnail() ?>" alt="<?= $character->name ?>">
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Upload Thumbnail</span>
@@ -182,7 +182,7 @@
                                 <input type="text" class="file-path validate" accept="image/*">
                             </div>
                         </div>
-                        <a href="#modalPhotos" class="modal-trigger"><img class="edit-portrait btnModalImg" data-test="portrait" src="<?= $character->Portrait() ?>" alt="<?= $character->name ?>"></a>
+                        <img class="edit-portrait" src="<?= $character->Portrait() ?>" alt="<?= $character->name ?>">
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Upload Portrait</span>

@@ -10,7 +10,7 @@ class Character extends Model{
     private $thumbnail_tmpName;
     private $portrait_tmpName;
 
-    private $thumbnail_placeholder = "thumbnail_placeholder.png";
+    private $icon_placeholder = "icon_placeholder.png";
     private $portrait_placeholder = "portrait_placeholder.png";
 
 
@@ -89,15 +89,19 @@ class Character extends Model{
     }
 
     function Thumbnail(){
-        return (empty($this->thumbnail)) || !file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail) ? $this->image_path() . "Characters" . DS . $this->thumbnail_placeholder : $this->image_path() . "Characters" . DS . $this->thumbnail;
+        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . $this->name . DS . 'icon') 
+        ? $this->image_path() . "characters" . DS . $this->icon_placeholder 
+        : $this->image_path() . "characters" . DS . $this->name . DS . 'icon';
     }
 
-    function Element(){
-        return $this->image_path() . "Elements" . DS . $this->element . ".png";
+    function Vision(){
+        return $this->image_path() . "Elements" . DS . $this->vision . ".png";
     }
 
     function Portrait(){
-        return (empty($this->portrait) || !file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) ? $this->image_path() . "Portraits" . DS . $this->portrait_placeholder : $this->image_path() . "Portraits" . DS  . $this->portrait;
+        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . $this->name . DS . 'portrait') 
+        ? $this->image_path() . "characters" . DS . $this->portrait_placeholder 
+        : $this->image_path() . "characters" . DS . $this->name . DS . 'portrait';
     }
 
     function Weapon(){
@@ -105,7 +109,7 @@ class Character extends Model{
     }
 
     function Rarity(){
-        return $this->image_path() . $this->rarity . ".png";
+        return $this->rarity == 5 ? $this->image_path() . "5 Star.png" : $this->image_path() . "4 Star.png";
     }
 
     function get_release_date(){
@@ -141,7 +145,7 @@ class Character extends Model{
     static function count_by_element($element){
         $element = ucfirst(strtolower($element));
 
-        $count = self::count()->where(["element = $element"])->get();
+        $count = self::count()->where(["vision = $element"])->get();
 
         return $count ? $count : 0;
     }

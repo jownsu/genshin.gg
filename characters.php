@@ -41,7 +41,7 @@
                     <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                         <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                         <span class="character-name"><?= $character->name ?></span>
-                        <img src="<?= $character->Element() ?>" alt="<?= $character->element ?>" class="character-element">
+                        <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                     </a>
 
                     <?php endforeach ?>

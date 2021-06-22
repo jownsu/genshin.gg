@@ -24,6 +24,7 @@ if(isset($_POST['submit-login'])){
             }
         }
 
+
     }else{
         $session->set_message("<p class='red-text'>Incorrect Username or Password</p>");
     }
