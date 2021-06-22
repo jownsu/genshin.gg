@@ -54,7 +54,7 @@
                     <td><?= $character->name ?></td>
                     <td><img src="<?= $character->Rarity() ?>" alt="<?= $character->rarity ?>" class="table-star"></td>
                     <td><img src="<?= $character->Weapon() ?>" alt="<?= $character->weapon ?>" class="table-thumbnails tooltipped" data-position="top" data-tooltip="<?= $character->weapon ?>"></td>
-                    <td><img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="table-thumbnails tooltipped" data-position="top" data-tooltip="<?= $character->vision ?>""></td>
+                    <td><img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="table-thumbnails tooltipped" data-position="top" data-tooltip="<?= $character->vision ?>""></td>
                     <td>
                             <a href="edit-character.php?id=<?= $character->char_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
                             <input type="hidden" name="charId" value="<?= $character->char_id ?>">

@@ -16,6 +16,22 @@ class Post extends Model{
         return $author;
     }
 
+    static function add($data){
+        global $session;
+        
+        $post = new Post();
+
+        $post->title        = trim($data['title']) ?? "";
+        $post->description  = trim($data['description']) ?? "";
+        $post->tags         = isset($data['tags']) ? implode(", ", $data['tags']) : '';
+        $post->post_status  = trim($data['status']) ?? "";
+        $post->date         = date("F d, Y");
+        $post->user_id      = $session->id;
+
+        return $post->create() ? $post : false;
+    }
+
+
     function create_post(){
         if(!empty($this->errors)){
             return false;

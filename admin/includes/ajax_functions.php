@@ -87,7 +87,7 @@ if(isset($_POST['idType'])){
 function deleteUser($id){
     global $session;
 
-    $user = User::find_by_id($id);
+    $user = User::find($id);
     if($user){
         $user->delete();
     }
@@ -96,7 +96,7 @@ function deleteUser($id){
 function deleteChar($id){
     global $session;
 
-    $character = Character::find_by_id($id);
+    $character = Character::find($id);
 
     if($character){
         $character->delete_character();
@@ -106,7 +106,7 @@ function deleteChar($id){
 function deletePost($id){
     global $session;
 
-    $post = Post::find_by_id($id);
+    $post = Post::find($id);
     if($post){
         $post->delete();
     }
@@ -115,7 +115,7 @@ function deletePost($id){
 function deleteComment($id){
     global $session;
 
-    $comment = Comment::find_by_id($id);
+    $comment = Comment::find($id);
     if($comment){
         $comment->delete();
     }

@@ -14,6 +14,35 @@ class Character extends Model{
     private $portrait_placeholder = "portrait_placeholder.png";
 
 
+
+
+    static function add($data){
+
+        $character = new Character();
+
+        $character->name           = trim($data['name']) ?? "";
+        $character->nickname       = trim($data['nickname']) ?? "";
+        $character->vision         = trim($data['vision']) ?? "";
+        $character->weapon         = trim($data['weapon']) ?? "";
+        $character->rarity         = trim($data['rarity']) ?? "";
+        $character->nation         = trim($data['nation']) ?? "";
+        $character->description    = trim($data['description']) ?? "";
+        $character->affiliation    = trim($data['affiliation']) ?? "";
+        $character->constellation  = trim($data['constellation']) ?? "";
+        $character->birthday       = $data['birthday']['month'] ?? "" . " " . $data['birthday']['day'] ?? "";
+        $character->sex            = trim($data['sex']) ?? "";
+        $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
+        $character->skillTalents   = json_encode($data['skillTalents']) ?? "";
+        $character->passiveTalents = json_encode($data['passiveTalents']) ?? "";
+        $character->constellations = json_encode($data['constellations']) ?? "";
+        $character->tier           = trim($data['tier']) ?? "";
+
+        return $character->create() ? $character : false;
+    }
+
+
+
+
     function set_thumbnail($file){
 
         if(!$this->check_files($file)){
@@ -32,7 +61,7 @@ class Character extends Model{
         $this->portrait_tmpName = $file['tmp_name'];
     }
 
-    function create_character(){
+    function create_characterrrr(){
 
         if(!empty($this->errors)){
             return false;
@@ -40,23 +69,23 @@ class Character extends Model{
 
 
         
-        if(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)){
-            $thumbnailCount = 1;
-            list($name, $extension) = explode('.', $this->thumbnail);
-            while(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)) {
-                $this->thumbnail = $name . "(" . $thumbnailCount . ")" . '.' . $extension;    
-                $thumbnailCount++;
-            }
-        }
+        // if(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)){
+        //     $thumbnailCount = 1;
+        //     list($name, $extension) = explode('.', $this->thumbnail);
+        //     while(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)) {
+        //         $this->thumbnail = $name . "(" . $thumbnailCount . ")" . '.' . $extension;    
+        //         $thumbnailCount++;
+        //     }
+        // }
 
-        if(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)){
-            $portraitCount = 1;
-            list($name, $extension) = explode('.', $this->portrait);
-            while(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) {
-                $this->portrait = $name . "(" . $portraitCount . ")" . '.' . $extension;    
-                $portraitCount++;
-            }
-        }
+        // if(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)){
+        //     $portraitCount = 1;
+        //     list($name, $extension) = explode('.', $this->portrait);
+        //     while(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) {
+        //         $this->portrait = $name . "(" . $portraitCount . ")" . '.' . $extension;    
+        //         $portraitCount++;
+        //     }
+        // }
 
         if($this->create()){
             $this->move_files();

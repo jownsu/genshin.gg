@@ -7,6 +7,27 @@ class User extends Model{
     private $image_placeholder = "userplaceholder.jpg";
     private $image_directory = "Users";
 
+
+    static function add($data){
+
+        $user = new User();
+
+        $user->username          = trim($data['username']);
+        $user->firstname         = trim($data['firstname']);
+        $user->lastname          = trim($data['lastname']);
+        $user->email             = trim($data['email']);
+        $user->gender            = trim($data['gender']);
+        $user->birthday          = $data['birthday']['month'] . ' ' . $data['birthday']['day'] . ' ' . $data['birthday']['year'];
+        $user->status            = trim($data['status']);
+        $user->role              = trim($data['role']);
+        $user->security_question = trim($data['security_question']);
+        $user->set_password($password); 
+        $user->set_security_answer($security_answer);
+
+        return $user->create() ? $user : false;
+        
+    }
+
     static function verify_user($username, $password){
         $user = self::where(["username = " . $username])->get_single();
 

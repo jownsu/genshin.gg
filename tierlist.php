@@ -57,7 +57,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($S_tier as $character): ?>
-                        <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
@@ -72,7 +72,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($A_tier as $character): ?>
-                        <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
@@ -87,7 +87,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($B_tier as $character): ?>
-                        <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
@@ -102,7 +102,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($C_tier as $character): ?>
-                        <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
@@ -117,7 +117,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($D_tier as $character): ?>
-                        <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
@@ -128,70 +128,6 @@ require_once("includes/navigation.php"); ?>
             </div>
 
         </div>
-
-        <div id="charInfoModal" class="modal modalCharInfo black-text">
-
-            <div class='modal-content'>
-                <div class='row'>
-                    <div class='col l4 m12 s12 center-align'>
-                        <img src='admin/images/Portraits/portrait_placeholder.png' alt='' class='character-modal-portrait' id="portrait">
-                    </div>
-                <div class='col l6 m12 s12 offset-l2 center-align'>
-
-                <div class='row'>
-                    <div class='col s12'>
-                        <h1 class='modal-charName' id='name'>Unknown</h1>
-                        <h5 class='modal-charNickname' id='nickname'>???</h5>
-                    </div>
-
-                    <div class='common-info'>
-                        <div class='col s4 rarity'>
-                            <p>Rarity</p>
-                            <img src='' alt='' id='rarity'>
-                        </div>
-                        <div class='col s4 weapon'>
-                            <p>Weapon</p>
-                            <img src='' alt='' id='weapon'>
-                        </div>
-                        <div class='col s4 element'>
-                            <p>Element</p>
-                            <img src='' alt='' id='element'>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class='col s12 main-info'>
-                    <table>
-                        <tr>
-                            <th>Sex</th>
-                            <td id="sex">???</td>
-                        </tr>
-                        <tr>
-                            <th>Birthday</th>
-                            <td id="birthday">???</td>
-                        </tr>
-                        <tr>
-                            <th>Constellation</th>
-                            <td id="constellation">???</td>
-                        </tr>
-                        <tr>
-                            <th>Nation</th>
-                            <td id="nation">???</td>
-                        </tr>
-                        <tr>
-                            <th>Affiliation</th>
-                            <td id="affiliation">???</td>
-                        </tr>
-                        <tr>
-                            <th>Release Date</th>
-                            <td id='release_date'>???</td>
-                        </tr>
-                    </table>
-                </div>
-
-                </div>
-
-            </div>
 
     </main>
     <script>

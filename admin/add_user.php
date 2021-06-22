@@ -1,6 +1,7 @@
 <?php require_once("includes/header.php"); ?>
 <?php
     if(isset($_POST['submit'])){
+
         $firstname                = trim($_POST['firstname']);
         $lastname                 = trim($_POST['lastname']);
         $username                 = trim($_POST['username']);
@@ -25,22 +26,9 @@
             }elseif($security_answer != $confirm_security_answer){
                 $session->set_message("<p class='red-text'>Security answer not match</p>");
             }else{
-
-                $user = new User();
-                $user->username          = $username;
-                $user->set_password($password); 
-                $user->firstname         = $firstname;
-                $user->lastname          = $lastname;
-                $user->email              = $email;
-                $user->gender             = $gender;
-                $user->set_birthday($birthday_month, $birthday_day, $birthday_year);
-                $user->status            = $status;
-                $user->role              = $role;
-                $user->security_question = $security_question;
-                $user->set_security_answer($security_answer);
                 
-                if($user->create()){
-                    $session->set_message("<p class='green-text'> User Added </p>");
+                if($user = User::add($_POST)){
+                    $session->set_message("<p class='green-text'> User $user->username Added </p>");
                     header('location: users.php');
                 }else{
                     $session->set_message("<p class='red-text'>There is an error adding the user</p>");
@@ -72,16 +60,16 @@
                 </div>
                 
                 <div class="input-field col l2 s4">
-                    <select name="birthday-month" id="birthday-month">
+                    <select name="birthday[month]" id="birthday-month">
                         <?php foreach(MONTHS as $month): ?>
                             <option value="<?= $month ?>"><?=  $month ?></option>
                         <?php endforeach ?>
                     </select>
-                    <label for="release-date-month">Birthday</label>
+                    <label for="birthday-month">Birthday</label>
                 </div>
 
                 <div class="input-field col l2 s4">
-                    <select name="birthday-day" id="birthday-day">
+                    <select name="birthday[day]" id="birthday-day">
                         <?php foreach(DAYS as $day): ?>
                             <option value="<?= $day ?>"><?= $day ?></option>
                         <?php endforeach ?>
@@ -89,7 +77,7 @@
                 </div>
 
                 <div class="input-field col l2 s4">
-                    <select name="birthday-year" id="birthday-year">
+                    <select name="birthday[year]" id="birthday-year">
                         <?php foreach(B_YEARS as $year): ?>
                             <option value="<?= $year ?>"><?= $year ?></option>
                         <?php endforeach ?>

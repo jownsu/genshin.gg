@@ -2,31 +2,18 @@
 <?php
     if(isset($_POST['submit'])){
 
-        $title        =  trim($_POST['title']);
-        $description  =  trim($_POST['description']);
-        $tags         =  isset($_POST['tags']) ? $_POST['tags'] : '';
-        $status       =  $_POST['status'];
-        $date         =  date("F d, Y");
-        $author       =  $session->username;
-
-        if(empty($title) || empty($description) || empty($tags)){
+        if(empty($_POST['title']) || empty($_POST['description']) || empty($_POST['tags'])){
             $session->set_message("<p class='red-text'>Fields cannot be empty</p>");
         }else{
-            $post = new Post();
 
-            $post->title       = $title;
-            $post->description = $description;
-            $post->tags        = implode(", ", $tags);
-            $post->status      = $status;
-            $post->date        = $date;
-            $post->author      = $author;
+            // $post->set_image($_FILES['file-post-image']);
     
-            $post->set_image($_FILES['file-post-image']);
-    
-            if($post->create_post()){
-                $session->set_message("<p class='green-text'> Post ${$post->title} was Added </p>");
-                header("location: posts.php");
+            if($post = Post::add($_POST)){
+                $session->set_message("<p class='green-text'> Post $post->title was Added </p>");
+                header("location: my_posts.php");
             }else{
+                echo("error");
+                print_r($_POST);
                 //$session->set_message("<p class='red-text'>" . implode("<br>", $post->errors) . "</p>");
             }
         }

@@ -101,6 +101,27 @@ class Model{
 
     /*****End of pre-defined Select Query Methods********************/
 
+    /***********Automated function via POST********************/
+    static function add($data){
+        if(empty($data) || empty($data->name)) return false;
+        // if(self::where(["name = $data->name"])->get_single()) return "$data->name already exists";
+
+         $calling_class = get_called_class();
+         $obj = new $calling_class;
+
+         foreach(array_keys(get_object_vars($obj)) as $key){
+            //  if(is_array($data->$key)){
+            //     $obj->$key = implode(", ", $data->$key);
+            //     continue;
+            //  }
+            $obj->$key = $data->$key ?? "";
+        }
+
+         return $obj->create() ? true : false;
+     }
+
+    /*******************************/
+
 
     /******Pre-defined Count Methods**************/
 
