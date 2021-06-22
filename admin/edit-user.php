@@ -3,7 +3,7 @@
 
 
     if((isset($_GET['id']) && $_GET['id'] == $session->id) || $session->role == 'Admin'){
-        $user = User::find_by_id($_GET['id']);
+        $user = User::find($_GET['id']);
         if(!$user){
             header("location: users.php");
         }

@@ -12,7 +12,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
             </div>
             <?php
-                $characters = Character::find_characters_by_name();
+                $characters = Character::orderBy('name')->get();
                 $S_tier = array_filter($characters, function($c){
                     return $c->tier == 'S';
                 });

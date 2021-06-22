@@ -6,7 +6,7 @@
 
     if(isset($_GET['id'])){
         $post_id = $_GET['id'];
-        $post = Post::find_by_id($post_id);
+        $post = Post::find($post_id);
         if(!$post){
             header('Location: index.php');
         }
@@ -21,7 +21,7 @@
 
             <div class="single-post-container">
                 <h4 class="single-post-title">Title: <?= $post->title ?></h4>
-                <p>Posted by <?= $post->username . " " .$post->date ?></p>
+                <p>Posted by <?= $post->author()->username . " " .$post->date ?></p>
                 <?php
                  $tags = $post->post_tags();
                  foreach($tags as $tag): ?>
@@ -31,22 +31,26 @@
                 <p><?= $post->description ?></p>   
             </div>
             <?php
-                $total_count = Comment::count_comments_by_post_id($post->post_id);
-                $paginate = new Paginate($total_count, $page, 3);
-                $comments = Comment::find_comments_by_page($post->post_id, $paginate);
+                $whereSQL = ["post_id = $post_id"];
+                $items_per_page = 3;
+
+                $comments = Comment::where($whereSQL)->orderBy('date', 'desc')->paginate($items_per_page)->get();
+                $total_page = Comment::count()->where($whereSQL)->total_page($items_per_page);
             ?>
 
-            <p><span id="commentCount"><?= $total_count ?></span> Comment/s</p>
+            <p><span id="commentCount"><?= Comment::count()->where($whereSQL)->get() ?></span> Comment/s</p>
 
             <div class="comments-container">
                 
                 <?php 
                 if(!empty($comments)):
-                    foreach($comments as $comment): ?>
+                    foreach($comments as $comment):
+                        $author = $comment->author();
+                    ?>
                         <div class="comment">
-                            <img src="<?= $comment->author_image_path() ?>" alt="<?= $comment->username ?>">
+                            <img src="<?= $author->user_image_path() ?>" alt="<?= $author->username ?>">
                             <div class="comment-details">
-                                <p class="c-name"><?= $comment->username ?></p>
+                                <p class="c-name"><?= $author->username ?></p>
                                 <p><?= $comment->date ?></p>
                                 <p><?= $comment->description ?></p>
                             </div>
@@ -69,16 +73,20 @@
             </div>
 
         <ul class="pagination center-align">
-            <?php if($paginate->has_previous()):?>
-                <li class="waves-effect"><a href="single-post.php?id=<?= $post_id . "&page=" .  $paginate->previous() ?>"><i class="material-icons">chevron_left</i></a></li>
+            <?php if($page > 1):?>
+                <li class="waves-effect"><a href="single-post.php?id=<?= $post_id . "&page=" .  ($page - 1) ?>"><i class="material-icons">chevron_left</i></a></li>
             <?php endif ?>
 
-            <?php for($i = 1; $i <= $paginate->total_page(); $i++): ?>
+            <?php for($i = 1; $i <= $total_page; $i++): ?>
                 <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="single-post.php?id=<?= $post_id . "&page=" . $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
 
-            <?php if($paginate->has_next()):?>
-                <li class="waves-effect"><a href="single-post.php?id=<?= $post_id . "&page=" .  $paginate->next() ?>"> <i class="material-icons">chevron_right</i></a></li>
+            <?php if($page < $total_page):?>
+                <li class="waves-effect">
+                    <a href="single-post.php?id=<?= $post_id . "&page=" .  ($page + 1) ?>">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
             <?php endif ?>
         </ul>
 

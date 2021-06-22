@@ -2,7 +2,7 @@
 <?php
 
     if(isset($_GET['id'])){
-        $character = Character::find_by_id($_GET['id']);
+        $character = Character::find($_GET['id']);
         if(!$character){
             header("location: characters.php");
         }

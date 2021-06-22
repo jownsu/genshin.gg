@@ -35,7 +35,7 @@
                 <div class="char-modal">
                 <div class="characters-list">
                     <?php 
-                        $characters = Character::find_characters_by_name();
+                        $characters = Character::orderBy('name')->get();
                         foreach($characters as $character):;
                     ?>
                     <a href="#charInfoModal" class='character-portrait modal-trigger' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">

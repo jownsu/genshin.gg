@@ -1,11 +1,11 @@
 <?php require_once("includes/header.php"); ?>
 <?php
     if(isset($_GET['id'])){
-        $post = Post::find_by_id($_GET['id']);
+        $post = Post::find($_GET['id']);
         if(!$post){
             header('location: my_posts.php');
         }
-        if($session->id != $post->author_id){
+        if($session->id != $post->author()->user_id){
             header('location: my_posts.php');
         }
     }else{
@@ -39,7 +39,7 @@
     <div class="container">
         <h4>Edit post</h4>
 
-        <h6>Posted by: <?= $post->username ?> on <?= $post->date ?></h6>
+        <h6>Posted by: <?= $post->author()->username ?> on <?= $post->date ?></h6>
 
         <div class="row">
             <div class="col s12">

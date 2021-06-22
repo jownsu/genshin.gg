@@ -2,18 +2,18 @@
 
 <?php
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
+    $item_per_page = 5;
 
     if(isset($_GET['search']) && $_GET['search'] != ""){
         $search = trim($_GET['search']);
-        $search_count = Character::search_count(['name'], $search);
-        $paginate = new Paginate($search_count, $page, 10);
-        $characters = Character::search_query(['name'], $search, $paginate);
-    }else{
-        $total_count = Character::count_all();
-        $paginate = new Paginate($total_count, $page, 10);
-        $characters = Character::find_characters_by_name_and_page($paginate);
-    }
 
+        $characters = Character::where(["name LIKE %$search%"])->orderBy('name')->paginate($item_per_page)->get();
+        $total_page = Character::count()->where(["name LIKE %$search%"])->total_page($item_per_page);
+
+    }else{
+        $characters = Character::orderBy('name')->paginate($item_per_page)->get();
+        $total_page = Character::count()->total_page($item_per_page);
+    }
 
 ?>
     <div class="table-container">
@@ -65,16 +65,16 @@
             </tbody>
         </table>
         <ul class="pagination center-align">
-            <?php if($paginate->has_previous()):?>
-                <li class="waves-effect"><a href="characters.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $paginate->previous() ?>"><i class="material-icons">chevron_left</i></a></li>
+            <?php if( $page > 1 ):?>
+                <li class="waves-effect"><a href="characters.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $page - 1 ?>"><i class="material-icons">chevron_left</i></a></li>
             <?php endif ?>
 
-            <?php for($i = 1; $i <= $paginate->total_page(); $i++): ?>
+            <?php for($i = 1; $i <= $total_page; $i++): ?>
                 <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="characters.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
 
-            <?php if($paginate->has_next()):?>
-                <li class="waves-effect"><a href="characters.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $paginate->next() ?>"><i class="material-icons">chevron_right</i></a></li>
+            <?php if( $page < $total_page ):?>
+                <li class="waves-effect"><a href="characters.php?<?= isset($search) ? 'search='.$search : '' ?>&page=<?= $page + 1 ?>"><i class="material-icons">chevron_right</i></a></li>
             <?php endif ?>
         </ul>
     </div>

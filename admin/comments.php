@@ -4,17 +4,18 @@
         $postId = $_GET['id'];
 
         $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
-        $total_count = Comment::count_comments_by_post_id($postId);
+        $items_per_page = 2;
+        $whereSQL = ["post_id = {$postId}"];
 
-        $paginate = new Paginate($total_count, $page);
+        $comments = Comment::where($whereSQL)->paginate($items_per_page)->get();
+        $total_page = Comment::count()->where($whereSQL)->total_page($items_per_page);
 
-        $comments = Comment::find_comments_by_page($postId, $paginate);
-        $post = Post::find_by_id($postId);
+        $post = Post::find($postId);
         if(empty($post)){
-            header('location: posts.php');
+            header('location: index.php');
         }
     }else{
-        header('location: posts.php');
+        header('location: index.php');
     }
 
 
@@ -22,7 +23,7 @@
     <div class="table-container">
         <h2>Comments</h2>
         <h5>Title: <a href="../single-post.php?id=<?= $postId ?>"><?= $post->title ?></a></h5>
-        <h6>Status: <?= $post->status ?></h6>
+        <h6>Status: <?= $post->post_status ?></h6>
         <table class="highlight centered">
             <thead>
                 <tr>
@@ -39,7 +40,7 @@
                         foreach($comments as $comment): ?>
                 <tr>
                     <td><?= $comment->comment_id ?></td>
-                    <td><?= $comment->username ?></td>
+                    <td><?= $comment->author()->username ?></td>
                     <td><?= $comment->description ?></td>
                     <td><?= $comment->date ?></td>
                     <td>
@@ -54,16 +55,16 @@
         </table>
 
         <ul class="pagination center-align">
-            <?php if($paginate->has_previous()):?>
-                <li class="waves-effect"><a href="comments.php?id=<?= $postId . '&page=' . $paginate->previous() ?>"><i class="material-icons">chevron_left</i></a></li>
+            <?php if($page > 1):?>
+                <li class="waves-effect"><a href="comments.php?id=<?= $postId . '&page=' . ($page - 1) ?>"><i class="material-icons">chevron_left</i></a></li>
             <?php endif ?>
 
-            <?php for($i = 1; $i <= $paginate->total_page(); $i++): ?>
-                <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="posts.php?page=<?= $i ?>"><?= $i ?></a></li>
+            <?php for($i = 1; $i <= $total_page; $i++): ?>
+                <li class="<?= $page == $i ? 'active light-blue darken-3' : 'waves-effect' ?>"><a href="comments.php?id=<?= $postId ?>&page=<?= $i ?>"><?= $i ?></a></li>
             <?php endfor ?>
 
-            <?php if($paginate->has_next()):?>
-                <li class="waves-effect"><a href="comments.php?id=<?= $postId . '&page=' . $paginate->next() ?>"><i class="material-icons">chevron_right</i></a></li>
+            <?php if($page < $total_page):?>
+                <li class="waves-effect"><a href="comments.php?id=<?= $postId . '&page=' . ($page + 1) ?>"><i class="material-icons">chevron_right</i></a></li>
             <?php endif ?>
         </ul>
     </div>

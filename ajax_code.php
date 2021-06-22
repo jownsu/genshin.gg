@@ -33,7 +33,7 @@ if(isset($_POST['comment'])){
 }
 
 if(isset($_POST['charId'])){
-    $character = Character::find_by_id($_POST['charId']);
+    $character = Character::find($_POST['charId']);
     exit("
     <div class='modal-content'>
     <div class='row'>
