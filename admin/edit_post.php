@@ -2,10 +2,7 @@
 <?php
     if(isset($_GET['id'])){
         $post = Post::find($_GET['id']);
-        if(!$post){
-            header('location: my_posts.php');
-        }
-        if($session->id != $post->author()->user_id){
+        if( (!$post) || ($session->id != $post->author()->user_id) ){
             header('location: my_posts.php');
         }
     }else{
@@ -13,13 +10,9 @@
     }
 
     if(isset($_POST['update'])){
-        $post->title       = trim($_POST['title']);
-        $post->description = trim($_POST['description']);
-        $post->tags        = implode(", ", $_POST['tags']);
-        $post->post_status      = $_POST['status'];
 
-        if($post->update()){
-            $session->set_message("<p class='green-text'>The Post ${$post->title} was Updated!</p>");
+        if($uPost = Post::edit($post, $_POST) ){
+            $session->set_message("<p class='green-text'>The Post $uPost->title was Updated!</p>");
             header('location: my_posts.php');
         }else{
             $session->set_message("<p class='red-text'>There was an error updating the post</p>");

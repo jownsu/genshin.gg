@@ -11,29 +11,19 @@
     }
 
     if(isset($_POST['update'])){
-        $character->name          = trim($_POST['name']);
-        $character->nickname      = trim($_POST['nickname']);
-        $character->rarity        = trim($_POST['rarity']);
-        $character->weapon        = trim($_POST['weapon']);
-        $character->vision        = trim($_POST['vision']);
-        $character->sex           = trim($_POST['sex']);
-        $character->set_birthday($_POST['birthday-month'], $_POST['birthday-day']);
-        $character->constellation = trim($_POST['constellation']);
-        $character->nation        = trim($_POST['nation']);
-        $character->affiliation   = trim($_POST['affiliation']);
-        $character->set_release_date($_POST['release-date-month'], $_POST['release-date-day'], $_POST['release-date-year']);
-        $character->tier          = trim($_POST['tier']);
 
-        if(!empty($_FILES['file-thumbnail']['name'])){
-            $character->set_thumbnail($_FILES['file-thumbnail']);
-        }
-        if(!empty($_FILES['file-portrait']['name'])){
-            $character->set_portrait($_FILES['file-portrait']);
-        }
+        // if(!empty($_FILES['file-thumbnail']['name'])){
+        //     $character->set_thumbnail($_FILES['file-thumbnail']);
+        // }
+        // if(!empty($_FILES['file-portrait']['name'])){
+        //     $character->set_portrait($_FILES['file-portrait']);
+        // }
 
-        if($character->update_character()){
+        if($uCharacter = Character::edit($character, $_POST)){
+
             header("location: characters.php");
-            $session->set_message("<p class='green-text'>Character updated!</p>");
+
+            $session->set_message("<p class='green-text'>Character $uCharacter->name updated!</p>");
         }else{
             $session->set_message("<p class='red-text'>There is an error updating the character</p>");
         }
@@ -111,7 +101,7 @@
                             </div>
 
                             <div class="input-field col l3 s6">
-                                <select name="birthday-month" id="birthday-month">
+                                <select name="birthday[month]" id="birthday-month">
                                     <?php foreach(MONTHS as $month): ?>
                                         <option value="<?= $month ?>" <?= $month == $character->get_birthday()[0] ? ' selected' : '' ?>><?=  $month ?></option>
                                     <?php endforeach ?>
@@ -120,7 +110,7 @@
                             </div>
 
                             <div class="input-field col l3 s6">
-                                <select name="birthday-day" id="birthday-day">
+                                <select name="birthday[day]" id="birthday-day">
                                     <?php foreach(DAYS as $day): ?>
                                         <option value="<?= $day ?>" <?= $day == $character->get_birthday()[1] ? ' selected' : '' ?>><?= $day ?></option>
                                     <?php endforeach ?>
@@ -143,7 +133,7 @@
                             </div>
 
                             <div class="input-field col l2 s4">
-                                <select name="release-date-month" id="release-date-month">
+                                <select name="release_date[month]" id="release-date-month">
                                     <?php foreach(MONTHS as $month): ?>
                                         <option value="<?= $month ?>" <?= $month == $character->get_release_date()[0] ? ' selected' : '' ?>><?=  $month ?></option>
                                     <?php endforeach ?>
@@ -152,7 +142,7 @@
                             </div>
 
                             <div class="input-field col l2 s4">
-                                <select name="release-date-day" id="release-date-day">
+                                <select name="release_date[day]" id="release-date-day">
                                     <?php foreach(DAYS as $day): ?>
                                         <option value="<?= $day ?>" <?= $day == $character->get_release_date()[1] ? ' selected' : '' ?>><?= $day ?></option>
                                     <?php endforeach ?>
@@ -160,7 +150,7 @@
                             </div>
 
                             <div class="input-field col l2 s4">
-                                <select name="release-date-year" id="release-date-year">
+                                <select name="release_date[year]" id="release-date-year">
                                     <?php foreach(YEARS as $year): ?>
                                         <option value="<?= $year ?>" <?= $year == $character->get_release_date()[2] ? ' selected' : '' ?>><?= $year ?></option>
                                     <?php endforeach ?>

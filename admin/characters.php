@@ -1,6 +1,7 @@
 <?php require_once("includes/header.php"); ?>
 
 <?php
+
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
     $item_per_page = 5;
 

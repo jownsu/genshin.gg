@@ -12,32 +12,13 @@
     }
 
         if(isset($_POST['update'])){
-        $username          = trim($_POST['username']);
-        $firstname         = trim($_POST['firstname']);
-        $lastname          = trim($_POST['lastname']);
-        $email             = trim($_POST['email']);
-        $birthday_month    = trim($_POST['birthday-month']);
-        $birthday_day      = trim($_POST['birthday-day']);
-        $birthday_year     = trim($_POST['birthday-year']);
-        $gender            = $_POST['gender'];
-        $role              = $_POST['role'];
-        $status            = $_POST['status'];
 
-        $user->username           = $username;
-        $user->firstname          = $firstname;
-        $user->lastname           = $lastname;
-        $user->email              = $email;
-        $user->gender             = $gender;
-        $user->set_birthday($birthday_month, $birthday_day, $birthday_year);
-        $user->status             = $status;
-        $user->role               = $role;
-
-        if($user->update()){
-            header("location: users.php");
-            $session->set_message("<p class='green-text'>User updated!</p>");
-        }else{
-            $session->set_message("<p class='red-text'>There is an error updating the user</p>");
-        }
+            if($uUser = User::edit($user, $_POST)){
+                header("location: users.php");
+                $session->set_message("<p class='green-text'>$uUser->username updated!</p>");
+            }else{
+                $session->set_message("<p class='red-text'>There is an error updating the user</p>");
+            }
     }
 
     if(isset($_POST['reset'])){
@@ -108,7 +89,7 @@
                         
                         <?php $birthday = $user->get_birthday(); ?>
                         <div class="input-field col l2 s4">
-                            <select name="birthday-month" id="birthday-month">
+                            <select name="birthday[month]" id="birthday-month">
                                 <?php foreach(MONTHS as $month): ?>
                                     <option value="<?= $month ?>" <?= $month == $birthday[0] ? 'Selected' : '' ?>><?=  $month ?></option>
                                 <?php endforeach ?>
@@ -117,7 +98,7 @@
                         </div>
 
                         <div class="input-field col l2 s4">
-                            <select name="birthday-day" id="birthday-day">
+                            <select name="birthday[day]" id="birthday-day">
                                 <?php foreach(DAYS as $day): ?>
                                     <option value="<?= $day ?>" <?= $day == $birthday[1] ? 'Selected' : '' ?>><?= $day ?></option>
                                 <?php endforeach ?>
@@ -125,7 +106,7 @@
                         </div>
 
                         <div class="input-field col l2 s4">
-                            <select name="birthday-year" id="birthday-year">
+                            <select name="birthday[year]" id="birthday-year">
                                 <?php foreach(B_YEARS as $year): ?>
                                     <option value="<?= $year ?>" <?= $year == $birthday[2] ? 'Selected' : '' ?>><?= $year ?></option>
                                 <?php endforeach ?>

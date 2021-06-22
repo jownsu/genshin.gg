@@ -28,6 +28,22 @@ class User extends Model{
         
     }
 
+    static function edit($user, $input){
+        $user->username          = trim($input['username']);
+        $user->firstname         = trim($input['firstname']);
+        $user->lastname          = trim($input['lastname']);
+        $user->email             = trim($input['email']);
+        $user->gender            = trim($input['gender']);
+        $user->birthday          = $input['birthday']['month'] . ' ' . $input['birthday']['day'] . ' ' . $input['birthday']['year'];
+        $user->status            = trim($input['status']);
+        $user->role              = trim($input['role']);
+        // $user->security_question = trim($input['security_question']);
+        // $user->set_password($password); 
+        // $user->set_security_answer($security_answer);
+
+        return $user->update() ? $user : false;
+    }
+
     static function verify_user($username, $password){
         $user = self::where(["username = " . $username])->get_single();
 

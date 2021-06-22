@@ -31,6 +31,18 @@ class Post extends Model{
         return $post->create() ? $post : false;
     }
 
+    static function edit($post, $input){
+
+        $post->title        = trim($input['title']) ?? "";
+        $post->description  = trim($input['description']) ?? "";
+        $post->tags         = isset($input['tags']) ? implode(", ", $input['tags']) : '';
+        $post->post_status  = trim($input['status']) ?? "";
+        $post->date         = date("F d, Y");
+
+        return $post->update() ? $post : false;
+
+    }
+
 
     function create_post(){
         if(!empty($this->errors)){

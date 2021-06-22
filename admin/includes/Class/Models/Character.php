@@ -26,18 +26,48 @@ class Character extends Model{
         $character->weapon         = trim($data['weapon']) ?? "";
         $character->rarity         = trim($data['rarity']) ?? "";
         $character->nation         = trim($data['nation']) ?? "";
-        $character->description    = trim($data['description']) ?? "";
+        // $character->description    = trim($data['description']) ?? "";
         $character->affiliation    = trim($data['affiliation']) ?? "";
         $character->constellation  = trim($data['constellation']) ?? "";
         $character->birthday       = $data['birthday']['month'] ?? "" . " " . $data['birthday']['day'] ?? "";
         $character->sex            = trim($data['sex']) ?? "";
-        $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
-        $character->skillTalents   = json_encode($data['skillTalents']) ?? "";
-        $character->passiveTalents = json_encode($data['passiveTalents']) ?? "";
-        $character->constellations = json_encode($data['constellations']) ?? "";
+        // $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
+        // $character->skillTalents   = json_encode($data['skillTalents']) ?? "";
+        // $character->passiveTalents = json_encode($data['passiveTalents']) ?? "";
+        // $character->constellations = json_encode($data['constellations']) ?? "";
         $character->tier           = trim($data['tier']) ?? "";
 
         return $character->create() ? $character : false;
+    }
+
+    static function edit($character, $input){
+        $oldName = $character->name;
+
+        $character->name           = trim($input['name']);
+        $character->nickname       = trim($input['nickname']);
+        $character->vision         = trim($input['vision']);
+        $character->weapon         = trim($input['weapon']);
+        $character->rarity         = trim($input['rarity']);
+        $character->nation         = trim($input['nation']);
+        // $character->description    = trim($input['description']);
+        $character->affiliation    = trim($input['affiliation']);
+        $character->constellation  = trim($input['constellation']);
+        $character->birthday       = $input['birthday']['month'] . " " . $input['birthday']['day'];
+        $character->sex            = trim($input['sex']) ?? "";
+        $character->release_date   = $input['release_date']['month'] . " " . $input['release_date']['day'] . " " . $input['release_date']['year'];
+        // $character->skillTalents   = json_encode($input['skillTalents']);
+        // $character->passiveTalents = json_encode($input['passiveTalents']);
+        // $character->constellations = json_encode($input['constellations']);
+        $character->tier           = trim($input['tier']);
+
+
+
+        if($character->update()){
+            rename("images/characters/" . $oldName, "images/characters/" . strtolower($input['name']) );
+           return $character;
+        }else{
+            return false;
+        }
     }
 
 
