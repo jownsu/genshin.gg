@@ -17,7 +17,7 @@ if(isset($_POST['comment'])){
         $comment->post_id = $_POST['postId'];
         if($comment->create()){
             exit("<div class='comment'>
-                    <img src='admin" . DS . $session->image_path . "' alt='" . $comment->username . "'>
+                    <img src='admin" . DS . $session->image_path . "' alt='" . $comment->author()->username . "'>
                     <div class='comment-details'>
                     <p class='c-name'>" . $session->username . "</p>
                     <p>" . $comment->date . "</p>

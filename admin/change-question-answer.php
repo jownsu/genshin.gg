@@ -3,7 +3,7 @@
 
 
     if(isset($session->id)){
-        $user = User::find_by_id($session->id);
+        $user = User::find($session->id);
         if(!$user){
             header("location: index.php");
         }

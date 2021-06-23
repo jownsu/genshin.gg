@@ -22,9 +22,10 @@
     }
 
     if(isset($_POST['reset'])){
-        $user->set_password($user->username);
+        $newPass = "pass_" . date("Y");
+        $user->set_password($newPass);
         if($user->update()){
-            $session->set_message("<p class='green-text'>Password Resetted to his/her username</p>");
+            $session->set_message("<p class='green-text'>Password Resetted to $newPass</p>");
         }else{
             $session->set_message("<p class='red-text'>There is an error resetting the password</p>");
         }

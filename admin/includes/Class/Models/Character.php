@@ -15,8 +15,17 @@ class Character extends Model{
     private $imagePath = "images" . DS . "characters" . DS;
 
 
+    static function is_character_exists($name){
+        $count = Character::count()->where(["name = $name"])->get();
+        return $count > 0 ? true : false;
+    }
 
     static function add($data){
+        global $session;
+        if(self::is_character_exists($data['name'])){
+            $session->set_message("<p class='red-text'>" .$data['name'] . " already exists</p>");
+            return false;
+        } 
         $character = new Character();
 
         $character->name           = trim($data['name']) ?? "";
@@ -36,10 +45,23 @@ class Character extends Model{
         // $character->constellations = json_encode($data['constellations']) ?? "";
         $character->tier           = trim($data['tier']) ?? "";
 
-        return $character->create() ? $character : false;
+        // return $character->create() ? $character : false;
+        if($character->create()){
+            return $character;
+        }else{
+            $session->set_message("<p class='red-text'>There is an error." .$data['name'] . " failed to add</p>");
+            return false;
+        }
     }
 
     static function edit($character, $input){
+        global $session;
+
+        if(self::is_character_exists($input['name']) && $character->name != $input['name']){
+            $session->set_message("<p class='red-text'>" .$input['name'] . " already exists</p>");
+            return false;
+        } 
+
         $oldName = $character->name;
 
         $character->name           = trim($input['name']);
@@ -60,9 +82,12 @@ class Character extends Model{
         $character->tier           = trim($input['tier']);
 
         if($character->update()){
-            rename($this->imagePath . $oldName, $this->imagePath . strtolower($input['name']) );
+            if(file_exists($character->imagePath . $oldName)){
+                rename($character->imagePath . $oldName, $character->imagePath . strtolower($input['name']) );
+            }
            return $character;
         }else{
+            $session->set_message("<p class='red-text'>There is an error" .$data['name'] . " failed to update</p>");
             return false;
         }
     }
@@ -128,6 +153,9 @@ class Character extends Model{
         if($this->delete()){
 
             $name = strtolower($this->name);
+            
+            if( empty($name) || $name == "" ) return false;
+            
             $path = IMAGES_ROOT . 'characters' . DS . $name;
             if(file_exists($path)){
                 self::deleteDir($path);

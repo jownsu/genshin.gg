@@ -59,7 +59,7 @@
                 <?php endif ?>
             </div>
             <div class="form-comment-container">
-                <?= $session->message ?>
+                <?= $session->message[0] ?? "" ?>
                 <p>Leave a Comment</p>
                 <form class="form-comment" method="POST">
                     <div class="input-field">

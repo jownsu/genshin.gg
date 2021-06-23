@@ -153,7 +153,7 @@ if(isset($_POST['submit-changepassword'])){
                         <input type="password" id="password" name="password">
                         <label for="password">Password</label>
                     </div>
-                    <p class="red-text"><?= $session->message ?></p>
+                    <p class="red-text"><?= $session->message[0] ?? ""?></p>
                     <input type="submit" value="login" class="btn blue darken-2 btnLogin" name="submit-login">
                 </form>
                 <a href="login.php?forgotpassword" class="forgotpass">Forgot Password</a>
@@ -250,7 +250,7 @@ if(isset($_POST['submit-changepassword'])){
                     </div>
 
 
-                    <?= $session->message ?>
+                    <?= $session->message[0] ?? ""?>
 
                     <input type="submit" value="Sign Up" name="submit-signup" class="btn-small blue darken-2">
                     <p>Already Have an Account? <a href="login.php">Log in</a></p>
@@ -285,7 +285,7 @@ if(isset($_POST['submit-changepassword'])){
                         <input type="password" name="confirm_password" id="confirm_password">
                         <label for="confirm_password">Confirm Password</label>
                     </div>
-                    <p class="red-text"><?= $session->message ?></p>
+                    <p class="red-text"><?= $session->message[0] ?? "" ?></p>
                     <input type="submit" value="Change Password" class="btn blue darken-2 btnLogin" name="submit-changepassword">
                     <a href="login.php">Login</a>
                 </form>

@@ -6,20 +6,22 @@
         if($character = Character::add($_POST)){
             if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
                if( !$character->upload($_FILES['icon'], 'icon') ){
-                    print_r($character->errors);
+                    // print_r($character->errors);
+                    $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
                } 
             }
     
             if( isset($_FILES['portrait']) && is_uploaded_file($_FILES['portrait']['tmp_name']) ){
                 if( !$character->upload($_FILES['portrait'], 'portrait') ){
-                    print_r($character->errors);
+                    // print_r($character->errors);
+                    $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
                 }
             }
             $session->set_message("<p class='green-text'> Character $character->name was Added </p>");
             header('location: add_character.php');
         }else{
             // print_r($character->get_errors());
-            $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
+            // $session->set_message("<p class='red-text'> There was an error adding the character </p>");
         }
     }
 ?>

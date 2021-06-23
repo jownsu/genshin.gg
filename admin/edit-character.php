@@ -12,25 +12,29 @@
 
     if(isset($_POST['update'])){
 
-        // if(!empty($_FILES['file-thumbnail']['name'])){
-        //     $character->set_thumbnail($_FILES['file-thumbnail']);
-        // }
-        // if(!empty($_FILES['file-portrait']['name'])){
-        //     $character->set_portrait($_FILES['file-portrait']);
-        // }
-
         if($uCharacter = Character::edit($character, $_POST)){
 
-            header("location: characters.php");
+            if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
+                if( !$character->upload($_FILES['icon'], 'icon') ){
+                    //  print_r($character->errors);
+                     $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
+                } 
+             }
+     
+             if( isset($_FILES['portrait']) && is_uploaded_file($_FILES['portrait']['tmp_name']) ){
+                 if( !$character->upload($_FILES['portrait'], 'portrait') ){
+                    //  print_r($character->errors);
+                     $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
+                 }
+             }
+            // header("location: characters.php");
 
             $session->set_message("<p class='green-text'>Character $uCharacter->name updated!</p>");
-        }else{
-            $session->set_message("<p class='red-text'>There is an error updating the character</p>");
         }
     }
 
     if(isset($_POST['delete'])){
-        if($character->delete()){
+        if($character->delete_character()){
             $session->set_message("<p class='green-text'> Character " . $character->name . " has been deleted </p>");
             header('Location: characters.php');
         }else{
@@ -166,7 +170,7 @@
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Upload Thumbnail</span>
-                                <input type="file" name="file-thumbnail">
+                                <input type="file" name="icon">
                             </div>
                             <div class="file-path-wrapper">
                                 <input type="text" class="file-path validate" accept="image/*">
@@ -176,7 +180,7 @@
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Upload Portrait</span>
-                                <input type="file" name="file-portrait">
+                                <input type="file" name="portrait">
                             </div>
                             <div class="file-path-wrapper">
                                 <input type="text" class="file-path validate" accept="image/*">
