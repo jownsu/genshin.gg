@@ -1,7 +1,7 @@
 <?php
 
 class User extends Model{
-
+    use File;
     protected static $primary_key = "user_id";
 
     private $image_placeholder = "userplaceholder.jpg";

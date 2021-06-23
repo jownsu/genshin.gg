@@ -14,10 +14,16 @@
 <script src="js/material-inits.js"></script>
 <script type="text/javascript" src="../js/materialize.min.js"></script>
 
-<?php if($session->message != ""): ?>
+<?php 
+    if(!empty($session->message) && count($session->message) > 0):
+        foreach($session->message as $msg):
+?>
     <script>
-        M.toast({html: "<?= $session->message ?>", classes: 'white rounded'})
+        M.toast({html: "<?= $msg ?>", classes: 'white rounded'})
     </script>
-<?php endif ?>
+<?php
+        endforeach;
+    endif;
+ ?>
 </body>
 </html>

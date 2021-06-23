@@ -1,11 +1,8 @@
 <?php
 
-define('DS', DIRECTORY_SEPARATOR);
-define('SITE_ROOT', dirname(__DIR__, 3));
-define('IMAGES_ROOT', dirname(__DIR__, 2) . DS . "images");
-
 require_once("Database.php");
 require_once("Model.php");
+require_once("File.php");
 require_once("Models/User.php");
 require_once("Models/Character.php");
 require_once("Models/Post.php");

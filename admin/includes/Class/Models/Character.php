@@ -2,7 +2,7 @@
 
 
 class Character extends Model{
-
+    use File;
     protected static $primary_key = "char_id";
 
     /***********Uploading Properties**************/
@@ -12,12 +12,11 @@ class Character extends Model{
 
     private $icon_placeholder = "icon_placeholder.png";
     private $portrait_placeholder = "portrait_placeholder.png";
-
+    private $imagePath = "images" . DS . "characters" . DS;
 
 
 
     static function add($data){
-
         $character = new Character();
 
         $character->name           = trim($data['name']) ?? "";
@@ -29,9 +28,9 @@ class Character extends Model{
         // $character->description    = trim($data['description']) ?? "";
         $character->affiliation    = trim($data['affiliation']) ?? "";
         $character->constellation  = trim($data['constellation']) ?? "";
-        $character->birthday       = $data['birthday']['month'] ?? "" . " " . $data['birthday']['day'] ?? "";
+        $character->birthday       = $data['birthday']['month'] . " " . $data['birthday']['day'];
         $character->sex            = trim($data['sex']) ?? "";
-        $character->release_date   = $data['release_date']['month'] ?? "" . " " . $data['release_date']['day'] ?? "" . " " . $data['release_date']['year'] ?? "";
+        $character->release_date   = $data['release_date']['month'] . " " . $data['release_date']['day'] . " " . $data['release_date']['year'];
         // $character->skillTalents   = json_encode($data['skillTalents']) ?? "";
         // $character->passiveTalents = json_encode($data['passiveTalents']) ?? "";
         // $character->constellations = json_encode($data['constellations']) ?? "";
@@ -61,12 +60,35 @@ class Character extends Model{
         $character->tier           = trim($input['tier']);
 
         if($character->update()){
-            rename("images/characters/" . $oldName, "images/characters/" . strtolower($input['name']) );
+            rename($this->imagePath . $oldName, $this->imagePath . strtolower($input['name']) );
            return $character;
         }else{
             return false;
         }
     }
+
+    public function upload($file, $filename = "image"){
+        //code here
+        $path = "../images/characters/";
+        $name = strtolower($this->name);
+
+         if(!file_exists($this->imagePath)){
+            mkdir($this->imagePath);
+         }
+
+         if(!file_exists($this->imagePath . $name)){
+            mkdir($this->imagePath . $name);
+         }
+
+         if($this->check_files($file)){
+           // $this->rename_if_exists();
+           move_uploaded_file($file['tmp_name'], $this->imagePath . $name . DS . $filename);
+           return true;
+
+         }else{
+            return false;
+         }
+     }
 
 
 
@@ -89,40 +111,6 @@ class Character extends Model{
         $this->portrait_tmpName = $file['tmp_name'];
     }
 
-    function create_characterrrr(){
-
-        if(!empty($this->errors)){
-            return false;
-        }
-
-
-        
-        // if(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)){
-        //     $thumbnailCount = 1;
-        //     list($name, $extension) = explode('.', $this->thumbnail);
-        //     while(file_exists(IMAGES_ROOT . DS . 'Characters' . DS . $this->thumbnail)) {
-        //         $this->thumbnail = $name . "(" . $thumbnailCount . ")" . '.' . $extension;    
-        //         $thumbnailCount++;
-        //     }
-        // }
-
-        // if(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)){
-        //     $portraitCount = 1;
-        //     list($name, $extension) = explode('.', $this->portrait);
-        //     while(file_exists(IMAGES_ROOT . DS . 'Portraits' . DS . $this->portrait)) {
-        //         $this->portrait = $name . "(" . $portraitCount . ")" . '.' . $extension;    
-        //         $portraitCount++;
-        //     }
-        // }
-
-        if($this->create()){
-            $this->move_files();
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     function update_character(){
         if(!empty($this->errors)){
             return false;
@@ -138,11 +126,28 @@ class Character extends Model{
     
     function delete_character(){
         if($this->delete()){
-            // unlink(IMAGES_ROOT . DS . "Characters" . DS . $this->thumbnail);
-            // unlink(IMAGES_ROOT . DS . "Portraits" . DS . $this->portrait);
+
+            $name = strtolower($this->name);
+            $path = IMAGES_ROOT . 'characters' . DS . $name;
+            if(file_exists($path)){
+                self::deleteDir($path);
+            }else{
+                return false;
+            }
+
             return true;
         }
         return false;
+    }
+    
+    function test(){
+        $name = strtolower($this->name);
+        $path = IMAGES_ROOT . 'characters' . DS . $name;
+        if(file_exists($path)){
+            self::deleteDir($path);
+        }else{
+            return false;
+        }
     }
 
     function Thumbnail(){

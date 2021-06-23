@@ -1,7 +1,8 @@
 <?php
 
 class Post extends Model{
-
+    use File;
+    
     protected static $primary_key = "post_id";
 
 

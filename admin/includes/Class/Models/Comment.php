@@ -1,6 +1,7 @@
 <?php
 
 class Comment extends Model{
+    use File;
 
     protected static $primary_key = "comment_id";
 

@@ -361,35 +361,4 @@ class Model{
 
     /*******End of Instantation of Properties**************/
 
-
-    /*******File Pathing Methods**********/
-
-
-    protected function get_access(){
-        $current_dir = explode(DS , getcwd());
-        $current_access = array_pop($current_dir);
-        return $current_access;
-    }
-
-    protected function image_path(){
-        $current_access = $this->get_access();
-        return $current_access == 'admin' ? 'images' . DS  : "admin" . DS . "images" . DS;
-    }
-    
-    protected function check_files($file){
-        if(empty($file) || !is_array($file)){
-            $this->errors[] = "There is no file uploaded";
-            return false;
-        }
-
-        if($file['error'] != 0){
-            $this->errors = $this->upload_errors_arr[$file['error']];
-            return false;
-        }
-
-        return true;
-    }
-
-
-
 }
