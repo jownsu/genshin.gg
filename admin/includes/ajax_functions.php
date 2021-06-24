@@ -8,38 +8,13 @@ if(isset($_POST['target_id'])){
     $category   = $_POST['image_category'];
     $image_name = $_POST['image_name'];
 
-    switch ($category) {
-        case 'Characters':
-        case 'Portraits':
-            $targetTable = Character::find_by_id($id);
-            break;
-        case 'Users':
-            $targetTable = User::find_by_id($id);
-            break;
-        default:
-            exit("Category not found");
-            break;
+    if($category == "Users"){
+        $targetTable = User::find($id);
     }
 
     if($targetTable){
 
-        switch ($category) {
-            case 'Characters':
-                $targetTable->thumbnail = $image_name;
-                break;
-
-            case 'Portraits':
-                $targetTable->portrait = $image_name;
-                break;
-
-            case 'Users':
-                $targetTable->user_image = $image_name;
-                break;
-            
-            default:
-                exit("Category not found");
-                break;
-        }
+        $targetTable->user_image = $image_name;
 
         if($targetTable->update()){
             exit(json_encode(['imgLocation' => 'images' . DS . $category . DS . $image_name]));
