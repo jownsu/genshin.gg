@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     });
 
-
-
     var tooltip = document.querySelectorAll('.tooltipped');
     M.Tooltip.init(tooltip);
     
+    var tabs = document.querySelectorAll('.tabs');
+    M.Tabs.init(tabs);
 });
 
