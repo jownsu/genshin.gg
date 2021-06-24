@@ -197,49 +197,27 @@
                             <div class="skill-talents">
                                 <h5 class="col s12 m12 l12">Skill Talents</h5>
 
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[normal_attack][name]" id="name">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[normal_attack][unlock]" id="unlock" value="Normal Attack">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="skill_talents[normal_attack][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
+                                <?php 
+                                    $skillTalents = json_decode($character->skillTalents);
                                 
+                                    foreach($skillTalents as $skillTalent):
+                                ?>
+                                <div class="extraskill col l12">
+                                    <div class="input-field col l3">
+                                        <input type="text" name="skill_talents[normal_attack][name]" id="name" value="<?= $skillTalent->name ?>">
+                                        <label for="name">Name</label>
+                                    </div>
+                                    <div class="input-field col l3">
+                                        <input type="text" name="skill_talents[normal_attack][unlock]" id="unlock" value="<?=$skillTalent->unlock?>">
+                                        <label for="unlock">Unlock</label>
+                                    </div>
+                                    <div class="input-field col l12">
+                                        <textarea class="materialize-textarea" name="skill_talents[normal_attack][description]" id="description" cols="30" rows="10"><?= $skillTalent->description ?></textarea>
+                                        <label for="description">Description</label>
+                                    </div>
+                                </div>
+                                <?php endforeach ?>
 
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[elemental_skill][name]" id="name">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[elemental_skill][unlock]" id="unlock" value="Elemental Skill">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="skill_talents[elemental_skill][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
-
-
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[elemental_burst][name]" id="name">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="skill_talents[elemental_burst][unlock]" id="unlock" value="Elemental Burst">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="skill_talents[elemental_burst][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
-
-
-                                
                             </div>
 
 
@@ -249,47 +227,31 @@
 
 
                             <h5 class="col s12 m12 l12">Passive Talents</h5>
-                            <div class="passive-talents">        
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_one][name]" id="name">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_one][unlock]" id="unlock" value="Unlocked at Ascension 1">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="passive_talents[asc_one][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
 
 
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_four][name]" id="name">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_four][unlock]" id="unlock" value="Unlocked at Ascension 4">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="passive_talents[asc_four][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
 
 
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_auto][name]" id="name">
-                                    <label for="name">Name</label>
+                            <div class="passive-talents">     
+                                <?php 
+                                        $passiveTalents = json_decode($character->passiveTalents);
+                                    
+                                        foreach($passiveTalents as $passiveTalent):
+                                ?>   
+                                <div class="extraPassive col l12">
+                                    <div class="input-field col l3">
+                                        <input type="text" name="passive_talents[asc_one][name]" id="name" value="<?= $passiveTalent->name ?>">
+                                        <label for="name">Name</label>
+                                    </div>
+                                    <div class="input-field col l3">
+                                        <input type="text" name="passive_talents[asc_one][unlock]" id="unlock" value="<?= $passiveTalent->unlock ?>">
+                                        <label for="unlock">Unlock</label>
+                                    </div>
+                                    <div class="input-field col l12">
+                                        <textarea class="materialize-textarea" name="passive_talents[asc_one][description]" id="description" cols="30" rows="10"><?= $passiveTalent->description ?></textarea>
+                                        <label for="description">Description</label>
+                                    </div>
                                 </div>
-                                <div class="input-field col l3">
-                                    <input type="text" name="passive_talents[asc_auto][unlock]" id="unlock" value="Unlocked Automatically">
-                                    <label for="unlock">Unlock</label>
-                                </div>
-                                <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="passive_talents[asc_auto][description]" id="description" cols="30" rows="10"></textarea>
-                                    <label for="description">Description</label>
-                                </div>
+                                <?php endforeach ?>
                             </div>
 
                             <div class="col l12">
@@ -304,91 +266,28 @@
                     <div id="swipe-3" class="col s12">
 
                         <div class="row">
-                            <h5 class="col l12">Constellations</h5>
+                        <h5 class="col l12">Constellations</h5>
 
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[1][name]" id="name">
-                                <label for="name">Name</label>
+                            <?php 
+                                $constellations = json_decode($character->constellations);
+                            
+                                foreach($constellations as $constellation):
+                            ?>
+                            <div class="constellation col l12">
+                                <div class="input-field col l3">
+                                    <input type="text" name="constellations[1][name]" id="name" value="<?= $constellation->name ?>">
+                                    <label for="name">Name</label>
+                                </div>
+                                <div class="input-field col l3">
+                                    <input type="text" name="constellations[1][unlock]" id="unlock" value="<?= $constellation->unlock ?>">
+                                    <label for="unlock">Unlock</label>
+                                </div>
+                                <div class="input-field col l12">
+                                    <textarea class="materialize-textarea" name="constellations[1][description]" id="description" cols="30" rows="10"> <?= $constellation->description ?></textarea>
+                                    <label for="description">Description</label>
+                                </div>
                             </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[1][unlock]" id="unlock" value="Constellation lvl. 1">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[1][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
-
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[2][name]" id="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[2][unlock]" id="unlock" value="Constellation lvl. 2">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[2][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
-
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[3][name]" id="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[3][unlock]" id="unlock" value="Constellation lvl. 3">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[3][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
-
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[4][name]" id="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[4][unlock]" id="unlock" value="Constellation lvl. 4">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[4][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
-
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[5][name]" id="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[5][unlock]" id="unlock" value="Constellation lvl. 5">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[5][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
-
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[6][name]" id="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="input-field col l3">
-                                <input type="text" name="constellations[6][unlock]" id="unlock" value="Constellation lvl. 6">
-                                <label for="unlock">Unlock</label>
-                            </div>
-                            <div class="input-field col l12">
-                                <textarea class="materialize-textarea" name="constellations[6][description]" id="description" cols="30" rows="10"></textarea>
-                                <label for="description">Description</label>
-                            </div>
-
+                            <?php endforeach ?>
                         </div>
 
 
@@ -397,6 +296,7 @@
 
 
                     <div id="swipe-4" class="col s12">
+                        
                         <div class="row">
                             <div class="col l6 s12 editCharacterPhotosContainer">
                                 <img class="edit-thumbnail" src="<?= $character->Thumbnail() ?>" alt="<?= $character->name ?>">

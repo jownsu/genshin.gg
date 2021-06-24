@@ -51,6 +51,13 @@ main {
   padding: .5em;
 }
 
+.constellation{
+  border: 1px solid rgb(158, 158, 158);
+  border-radius: 20px;
+  margin: 1em;
+  padding: 1em;
+}
+
 .notif::after{
   content: '';
   height: 10px;
