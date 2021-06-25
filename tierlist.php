@@ -57,10 +57,10 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($S_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
-                            <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
+                            <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                         </a>
                     <?php endforeach ?>
                 </div>
@@ -72,10 +72,10 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($A_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
-                            <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
+                            <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                         </a>
                     <?php endforeach ?>
                 </div>
@@ -87,10 +87,10 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($B_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
-                            <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
+                            <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                         </a>
                     <?php endforeach ?>
                 </div>
@@ -102,10 +102,10 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($C_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
-                            <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
+                            <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                         </a>
                     <?php endforeach ?>
                 </div>
@@ -117,10 +117,10 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($D_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->element?>" data-weapon="<?=$character->weapon?>">
+                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
-                            <img src="<?= $character->Vision() ?>" alt="<?= $character->element ?>" class="character-element">
+                            <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                         </a>
                     <?php endforeach ?>
                 </div>
