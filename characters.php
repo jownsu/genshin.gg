@@ -38,7 +38,7 @@
                         $characters = Character::orderBy('name')->get();
                         foreach($characters as $character):;
                     ?>
-                    <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                    <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                         <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                         <span class="character-name"><?= $character->name ?></span>
                         <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
