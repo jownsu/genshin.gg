@@ -56,7 +56,7 @@
                     <li class="tab col s3"><a href="#swipe-1">Informations</a></li>
                     <li class="tab col s3"><a href="#swipe-2">Skills</a></li>
                     <li class="tab col s3"><a href="#swipe-3">Constellations</a></li>
-                    <li class="tab col s3"><a href="#swipe-4">Upload</a></li>
+                    <li class="tab col s3"><a href="#swipe-4">Upload/Save</a></li>
                 </ul>
         
                 <form method="POST" enctype="multipart/form-data">
@@ -199,20 +199,25 @@
 
                                 <?php 
                                     $skillTalents = json_decode($character->skillTalents);
-                                
                                     foreach($skillTalents as $skillTalent):
                                 ?>
                                 <div class="extraskill col l12">
+                                    <?php if(!preg_match('(normal attack|elemental skill|elemental burst)i', $skillTalent->unlock)): ?>
+                                        <div class="col s12 m12 l12 right-align">
+                                        <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraSkill">close</i></a>
+                                        </div>
+                                    <?php endif ?>
+
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[normal_attack][name]" id="name" value="<?= $skillTalent->name ?>">
+                                        <input type="text" name="skill_talents[<?= $skillTalent->unlock ?>][name]" id="name" value="<?= $skillTalent->name ?>">
                                         <label for="name">Name</label>
                                     </div>
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[normal_attack][unlock]" id="unlock" value="<?=$skillTalent->unlock?>">
+                                        <input type="text" name="skill_talents[<?= $skillTalent->unlock ?>][unlock]" id="unlock" value="<?=$skillTalent->unlock?>">
                                         <label for="unlock">Unlock</label>
                                     </div>
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea" name="skill_talents[normal_attack][description]" id="description" cols="30" rows="10"><?= $skillTalent->description ?></textarea>
+                                        <textarea class="materialize-textarea" name="skill_talents[<?= $skillTalent->unlock ?>][description]" id="description" cols="30" rows="10"><?= $skillTalent->description ?></textarea>
                                         <label for="description">Description</label>
                                     </div>
                                 </div>
@@ -238,16 +243,19 @@
                                         foreach($passiveTalents as $passiveTalent):
                                 ?>   
                                 <div class="extraPassive col l12">
+                                    <!-- <div class="col s12 m12 l12 right-align">
+                                        <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraPassive">close</i></a>
+                                    </div> -->
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[asc_one][name]" id="name" value="<?= $passiveTalent->name ?>">
+                                        <input type="text" name="passive_talents[<?= $passiveTalent->unlock ?>][name]" id="name" value="<?= $passiveTalent->name ?>">
                                         <label for="name">Name</label>
                                     </div>
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[asc_one][unlock]" id="unlock" value="<?= $passiveTalent->unlock ?>">
+                                        <input type="text" name="passive_talents[<?= $passiveTalent->unlock ?>][unlock]" id="unlock" value="<?= $passiveTalent->unlock ?>">
                                         <label for="unlock">Unlock</label>
                                     </div>
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea" name="passive_talents[asc_one][description]" id="description" cols="30" rows="10"><?= $passiveTalent->description ?></textarea>
+                                        <textarea class="materialize-textarea" name="passive_talents[<?= $passiveTalent->unlock ?>][description]" id="description" cols="30" rows="10"><?= $passiveTalent->description ?></textarea>
                                         <label for="description">Description</label>
                                     </div>
                                 </div>
@@ -275,15 +283,15 @@
                             ?>
                             <div class="constellation col l12">
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[1][name]" id="name" value="<?= $constellation->name ?>">
+                                    <input type="text" name="constellations[<?= $constellation->unlock ?>][name]" id="name" value="<?= $constellation->name ?>">
                                     <label for="name">Name</label>
                                 </div>
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[1][unlock]" id="unlock" value="<?= $constellation->unlock ?>">
+                                    <input type="text" name="constellations[<?= $constellation->unlock ?>][unlock]" id="unlock" value="<?= $constellation->unlock ?>">
                                     <label for="unlock">Unlock</label>
                                 </div>
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="constellations[1][description]" id="description" cols="30" rows="10"> <?= $constellation->description ?></textarea>
+                                    <textarea class="materialize-textarea" name="constellations[<?= $constellation->unlock ?>][description]" id="description" cols="30" rows="10"> <?= $constellation->description ?></textarea>
                                     <label for="description">Description</label>
                                 </div>
                             </div>

@@ -9,8 +9,12 @@ let skillCount = 0;
 btnAddSkill.addEventListener('click', e =>{
     e.preventDefault();
 
-    skillContainer.innerHTML += `
-    <div class="extraskill col l12">
+    let newSkill = document.createElement('div');
+    newSkill.classList.add("extraskill"); 
+    newSkill.classList.add("col"); 
+    newSkill.classList.add("l12");
+    
+    newSkill.innerHTML = `
         <div class="col s12 m12 l12 right-align">
             <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraSkill">close</i></a>
         </div>
@@ -25,12 +29,10 @@ btnAddSkill.addEventListener('click', e =>{
         <div class="input-field col l12">
             <textarea class="materialize-textarea" name="skill_talents[${skillCount}][description]" id="description" cols="30" rows="10"></textarea>
             <label for="description">Description</label>
-        </div>
-    </div>
-    
-    `;
+        </div>`;
 
-    skillCount++;
+        skillContainer.appendChild(newSkill);
+        skillCount++;
 });
 
 skillContainer.addEventListener('click', e =>{
@@ -50,10 +52,14 @@ let passiveCount = 0;
 btnAddPassive.addEventListener('click', e =>{
     e.preventDefault();
 
-    passiveContainer.innerHTML += `
-    <div class="extraPassive col l12">
+    let newPassive = document.createElement('div');
+    newPassive.classList.add("extraPassive"); 
+    newPassive.classList.add("col"); 
+    newPassive.classList.add("l12");
+
+    newPassive.innerHTML = `
         <div class="col s12 m12 l12 right-align">
-            <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraPassive">close</i></a>
+        <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraPassive">close</i></a>
         </div>
         <div class="input-field col l3">
             <input type="text" name="passive_talents[${passiveCount}][name]" id="name">
@@ -67,11 +73,10 @@ btnAddPassive.addEventListener('click', e =>{
             <textarea class="materialize-textarea" name="passive_talents[${passiveCount}][description]" id="description" cols="30" rows="10"></textarea>
             <label for="description">Description</label>
         </div>
-    </div>
-    
     `;
 
-    skillCount++;
+    passiveContainer.appendChild(newPassive);
+    passiveCount++;
 });
 
 passiveContainer.addEventListener('click', e =>{
@@ -81,7 +86,7 @@ passiveContainer.addEventListener('click', e =>{
 
     if(e.target.id == "removeExtraPassive"){
         target.remove();
-        skillCount--;
+        passiveCount--;
     }
     
 });
