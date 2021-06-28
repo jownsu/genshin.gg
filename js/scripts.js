@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /*****Nav Char filter***********/
 
     var charNav = document.querySelector('.charNav');
-    var charPortrait = document.querySelectorAll('.filter');
+    var charPortrait = document.querySelectorAll('.character-portrait');
 
     var allElems = document.querySelectorAll('.elemList img');
     var allWeaps = document.querySelectorAll('.weapList img');

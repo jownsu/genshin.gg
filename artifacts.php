@@ -7,7 +7,7 @@
     $item_per_page = 10;
 
     $artifacts = Artifact::orderBy('name')->paginate($item_per_page)->get();
-    $total_page = Artifact::count()->orderBy('name')->total_page($item_per_page);
+    $total_page = Artifact::count()->total_page($item_per_page);
 ?>
 
     <main>

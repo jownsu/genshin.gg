@@ -6,8 +6,17 @@
     $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
     $item_per_page = 10;
 
-    $weapons = Weapon::orderBy('name')->paginate($item_per_page)->get();
-    $total_page = Weapon::count()->orderBy('name')->total_page($item_per_page);
+    if(isset($_GET['search']) && $_GET['search'] != ""){
+        $search = trim($_GET['search']);
+        $weapons = Weapon::where(["type = $search"])->orderBy('name')->paginate($item_per_page)->get();
+        $total_page = Weapon::count()->where(["type = $search"])->total_page($item_per_page);
+    }else{
+        $weapons = Weapon::orderBy('name')->paginate($item_per_page)->get();
+        $total_page = Weapon::count()->total_page($item_per_page);
+    }
+
+
+
 ?>
 
     <main>
@@ -20,13 +29,13 @@
 
                 </div>
 
-                <div class="charNav row blue-grey darken-4 z-depth-2">
+                <div class="weaponNav row blue-grey darken-4 z-depth-2">
                     <div class="weapList">
-                        <img class="tooltipped" src="admin/images/Weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'>
-                        <img class="tooltipped" src="admin/images/Weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'>
-                        <img class="tooltipped" src="admin/images/Weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'>
-                        <img class="tooltipped" src="admin/images/Weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'>
-                        <img class="tooltipped" src="admin/images/Weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'>
+                        <a href="weapons.php?search=bow"> <img class="tooltipped <?= $search == 'bow' ? 'active' : '' ?>" src="admin/images/Weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'> </a>
+                        <a href="weapons.php?search=catalyst"> <img class="tooltipped <?= $search == 'catalyst' ? 'active' : '' ?>" src="admin/images/Weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'> </a>
+                        <a href="weapons.php?search=claymore"> <img class="tooltipped <?= $search == 'claymore' ? 'active' : '' ?>" src="admin/images/Weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'> </a>
+                        <a href="weapons.php?search=polearm"> <img class="tooltipped <?= $search == 'polearm' ? 'active' : '' ?>" src="admin/images/Weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'> </a>
+                        <a href="weapons.php?search=sword"> <img class="tooltipped <?= $search == 'sword' ? 'active' : '' ?>" src="admin/images/Weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'> </a>
                     </div>
                 </div>
 

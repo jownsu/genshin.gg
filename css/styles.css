@@ -382,7 +382,22 @@ textarea.materialize-textarea{
     gap: .5em;
 }
 
-
+.weaponNav{
+    padding: 1em;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.weaponNav img{
+    box-sizing: content-box;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: .3em;
+    border-radius: 40%;
+}
 /**************End of weapons***********************/
 /******artifacts********/
 

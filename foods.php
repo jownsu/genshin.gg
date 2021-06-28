@@ -7,7 +7,7 @@
     $item_per_page = 10;
     
     $foods = Consumable::where(['category = Food'])->orderBy('name')->paginate($item_per_page)->get();
-    $total_page = Consumable::count()->where(['category = Food'])->orderBy('name')->total_page($item_per_page);
+    $total_page = Consumable::count()->where(['category = Food'])->total_page($item_per_page);
 ?>
 
     <main>

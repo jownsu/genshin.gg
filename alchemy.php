@@ -7,7 +7,7 @@
     $item_per_page = 10;
     
     $alchemies = Consumable::where(['category = Alchemy'])->orderBy('name')->paginate($item_per_page)->get();
-    $total_page = Consumable::count()->where(['category = Alchemy'])->orderBy('name')->total_page($item_per_page);
+    $total_page = Consumable::count()->where(['category = Alchemy'])->total_page($item_per_page);
 ?>
 
     <main>
