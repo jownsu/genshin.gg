@@ -31,11 +31,6 @@ if(!$session->is_signed_in()){
                     </a>   
                 </div>
             </nav>
-
-            <ul id="dropdown1" class="dropdown-content">
-                <li><a href="logout.php">Logout</a></li>
-                <li><a href=>Account Settings</a></li>
-            </ul>
     </header>
     <ul id="mobile-links" class="sidenav sidenav-fixed blue-grey darken-3 z-depth-0">
         <li class="sidenav-brand"><a href="../index.php"><img class="genshin-logo" src="images/genshin-logo.svg" alt="logo"><span class="brand-name">GENSHIN.GG</span></a></li>

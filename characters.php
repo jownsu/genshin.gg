@@ -5,7 +5,7 @@
 
     <main>
 
-        <div class="character-container blue-grey darken-3">
+        <div class="character-container blue-grey darken-3 z-depth-4">
                 <div class="row">
                     <div class="col s12 l6">
                         <h5 class="white-text">Character List</h5>
@@ -13,7 +13,7 @@
 
                 </div>
 
-                <div class="charNav row blue-grey darken-4">
+                <div class="charNav row blue-grey darken-4 z-depth-2">
                     <div class="elemList">
                         <img class="tooltipped" src="admin/images/Elements/Anemo.png" alt="anemo" data-position='top' data-tooltip='Anemo'>                            
                         <img class="tooltipped" src="admin/images/Elements/Cryo.png" alt="cryo" data-position='top' data-tooltip='Cryo'>                             
@@ -38,7 +38,7 @@
                         $characters = Character::orderBy('name')->get();
                         foreach($characters as $character):;
                     ?>
-                    <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                    <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait filter' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                         <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                         <span class="character-name"><?= $character->name ?></span>
                         <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">

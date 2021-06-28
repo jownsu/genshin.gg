@@ -14,10 +14,12 @@ body{
     color: white;
 }
 
-.genshinMap{
-    margin: 1.5em auto;
-    height: 60vh;
+.sidenav li>a{
+    color: white;
 }
+
+
+
 
 .pagination li a{
     color: rgb(196, 196, 196);
@@ -193,7 +195,7 @@ ul li a.active::after{
     padding: 5px;
 }
 
-.character-rarity{
+.rarity{
     height: 20px;
 }
 
@@ -370,6 +372,33 @@ textarea.materialize-textarea{
   }
 
 /********End of Post***************/
+
+/*************Weapons************************/
+
+
+
+.weapon-container{
+    display: flex;
+    gap: .5em;
+}
+
+
+/**************End of weapons***********************/
+/******artifacts********/
+
+.artifacts-overview{
+    padding: 1.5em 1em;
+    list-style-type: circle !important;
+    border-radius: 15px;
+
+}
+
+.artifacts-overview > ul > li{
+    list-style-type: disc !important;
+    list-style-position: inside;
+    
+}
+/*****end of artifacts*********/
 /*****Login Modal********/
 #login_modal{
     width: 500px;

@@ -5,7 +5,7 @@ $navActive = "tierlist";
 require_once("includes/navigation.php"); ?>
     <main>
 
-        <div class="character-container blue-grey darken-3">
+        <div class="character-container blue-grey darken-3 z-depth-4">
             <div class="row">
                 <div class="col s12 l6">
                     <h5 class="white-text">Character Tier List</h5>
@@ -30,7 +30,7 @@ require_once("includes/navigation.php"); ?>
                 });
             ?>
 
-            <div class="charNav row blue-grey darken-4">
+            <div class="charNav row blue-grey darken-4 z-depth-2">
                     <div class="elemList">
                         <img class="tooltipped" src="admin/images/Elements/Anemo.png" alt="anemo" data-position='top' data-tooltip='Anemo'>                            
                         <img class="tooltipped" src="admin/images/Elements/Cryo.png" alt="cryo" data-position='top' data-tooltip='Cryo'>                             
@@ -57,7 +57,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($S_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                        <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
@@ -72,7 +72,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($A_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                        <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
@@ -87,7 +87,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($B_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                        <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
@@ -102,7 +102,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($C_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                        <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
@@ -117,7 +117,7 @@ require_once("includes/navigation.php"); ?>
                 </div>
                 <div class="tier-characters">
                     <?php foreach($D_tier as $character): ?>
-                        <a href="#" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
+                        <a href="single_character.php?id=<?= $character->char_id ?>" class='character-portrait' data-id="<?= $character->char_id ?>" data-element="<?=$character->vision?>" data-weapon="<?=$character->weapon?>">
                             <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
                             <span class="character-name"><?= $character->name ?></span>
                             <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">

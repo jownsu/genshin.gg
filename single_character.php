@@ -20,7 +20,7 @@
 
                 <a href="#" class='character-portrait'>
                     <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
-                    <img src="<?= $character->Rarity() ?>" alt="<?= $character->rarity ?>" class="character-rarity">
+                    <img src="<?= $character->Rarity() ?>" alt="<?= $character->rarity ?>" class="rarity">
                     <img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="character-element">
                 </a>
 
