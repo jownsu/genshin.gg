@@ -22,6 +22,12 @@ class Character extends Model{
 
     static function add($data){
         global $session;
+        
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
+            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
+            return false;
+        }
+
         if(self::is_character_exists($data['name'])){
             $session->set_message("<p class='red-text'>" .$data['name'] . " already exists</p>");
             return false;
@@ -56,6 +62,11 @@ class Character extends Model{
 
     static function edit($character, $input){
         global $session;
+        
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $input['name'])){
+            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
+            return false;
+        }
 
         if(self::is_character_exists($input['name']) && $character->name != $input['name']){
             $session->set_message("<p class='red-text'>" .$input['name'] . " already exists</p>");

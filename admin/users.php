@@ -38,7 +38,7 @@
             <div class="input-field col l4 m8 s12">
                 <i class="material-icons prefix">search</i>
                 <input type="text" name="search" id="search" value="<?= isset($search) ? $search : '' ?>">
-                <label for="search">Search...</label>
+                <label class="active" for="search">Search...</label>
             </div>
         </form>
         <table class="highlight centered responsive-table user-table">

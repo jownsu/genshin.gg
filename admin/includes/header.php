@@ -36,6 +36,9 @@ if(!$session->is_signed_in()){
         <li class="sidenav-brand"><a href="../index.php"><img class="genshin-logo" src="images/genshin-logo.svg" alt="logo"><span class="brand-name">GENSHIN.GG</span></a></li>
         <li><a href="index.php"><i class="material-icons white-text">assessment</i>Dashboard</a></li>
         <li><a href="characters.php"><i class="material-icons white-text">portrait</i>Character</a></li>
+        <li><a href="weapons.php"><i class="material-icons white-text">portrait</i>Weapon</a></li>
+        <li><a href="artifacts.php"><i class="material-icons white-text">portrait</i>Artifact</a></li>
+        <li><a href="consumables.php"><i class="material-icons white-text">portrait</i>Consumables</a></li>
         <li><a href="my_posts.php"><i class="material-icons white-text">add_to_photos</i>My Posts</a></li>
 
         <?php if($session->role == 'Admin'): ?>

@@ -15,6 +15,9 @@ main {
 }
 
 /*********tab*************/
+.tabs{
+  background: rgb(55, 71, 79);
+}
 
 .tabs .tab{
   background: rgb(55, 71, 79);
@@ -138,7 +141,6 @@ header, main, footer {
 }
 
 .table-star{
-  width: 75px;
   height: 20px;
 }
 .table-img-thumbnail{

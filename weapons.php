@@ -61,12 +61,12 @@
                             <tr>
                                 <td>
                                     <div class="weapon-container">
-                                        <img src="admin/images/weapons/<?= $weapon->name ?>/icon" class="character-icon" alt="">
+                                        <img src="<?= $weapon->weapon_img() ?>" class="character-icon" alt="">
                                         <p><?= $weapon->name ?></p> 
                                     </div>    
                                 </td>
                                 <td><?= $weapon->type ?></td>
-                                <td><img class="rarity" src="admin/images/<?= $weapon->rarity ?>.png" alt=""></td>
+                                <td><img class="rarity" src="<?= $weapon->rarity() ?>" alt=""></td>
                                 <td><?= $weapon->baseAttack ?></td>
                                 <td><?= $weapon->subStat ?></td>
                                 <td><?= $weapon->passiveName ?></td>
