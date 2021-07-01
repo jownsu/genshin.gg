@@ -6,7 +6,7 @@ class Session{
     public $username;
     public $role;
     public $image_path;
-    public $message = [];
+    public $message;
     private $signed_in = false;
 
     function __construct(){
@@ -60,7 +60,7 @@ class Session{
 
     function check_message(){
         if(isset($_SESSION['message'])){
-            $this->message[] = $_SESSION['message'];
+            $this->message = $_SESSION['message'];
             unset($_SESSION['message']);
         }else{
             unset($this->message);
@@ -68,7 +68,7 @@ class Session{
     }
 
     function set_message($msg){
-        $this->message[] = $_SESSION['message'] = $msg;
+        $this->message = $_SESSION['message'] = $msg;
     }
 
     function get_username(){

@@ -3,17 +3,23 @@
 <?php
     if(isset($_POST['submit'])){
 
-
         if($artifact = Artifact::add($_POST)){
-            if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
-               if( !$artifact->upload($_FILES['icon'], 'icon') ){
-                    // print_r($artifact->errors);
-                    $session->set_message("<p class='red-text'>" . implode("<br>", $artifact->errors) . "</p>");
-               } 
+            if(is_object($artifact)){
+                if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
+                    if( !$artifact->upload($_FILES['icon'], 'icon') ){
+                         // print_r($artifact->errors);
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $artifact->errors) . "</p>");
+                    } 
+                 }
+                 $session->set_message("<p class='green-text'> Artifact $artifact->name was Added </p>");
+                 header('location: add_artifact.php');
+            }else{
+                $empty_err   = isset($artifact['error']['empty']) ? $artifact['error']['empty'] : "";
+                $name_err    = isset($artifact['error']['name']) ? $artifact['error']['name'] : $empty_err;
             }
-    
-            $session->set_message("<p class='green-text'> Artifact $artifact->name was Added </p>");
-            header('location: add_artifact.php');
+
+
+
         }else{
             // print_r($artifact->get_errors());
             $session->set_message("<p class='red-text'> There was an error adding the artifact </p>");
@@ -34,29 +40,32 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name">
+                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($artifact['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
+                                <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
                                 <select id="max_rarity" name="max_rarity">
-                                    <option value="1">1 Star</option>
-                                    <option value="2">2 Star</option>
-                                    <option value="3">3 Star</option>
-                                    <option value="4">4 Star</option>
-                                    <option value="5">5 Star</option>
+                                    <option value="1" <?= ( isset($_POST['max_rarity']) && $_POST['max_rarity'] == '1' ) ? 'selected' : '' ?>>1 Star</option>
+                                    <option value="2" <?= ( isset($_POST['max_rarity']) && $_POST['max_rarity'] == '2' ) ? 'selected' : '' ?>>2 Star</option>
+                                    <option value="3" <?= ( isset($_POST['max_rarity']) && $_POST['max_rarity'] == '3' ) ? 'selected' : '' ?>>3 Star</option>
+                                    <option value="4" <?= ( isset($_POST['max_rarity']) && $_POST['max_rarity'] == '4' ) ? 'selected' : '' ?>>4 Star</option>
+                                    <option value="5" <?= ( isset($_POST['max_rarity']) && $_POST['max_rarity'] == '5' ) ? 'selected' : '' ?>>5 Star</option>
                                 </select>
                                 <label>Max Rarity</label>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="two_piece_bonus" name="two_piece_bonus">
+                                <input type="text" id="two_piece_bonus" name="two_piece_bonus" value="<?= isset($_POST['two_piece_bonus']) ? $_POST['two_piece_bonus'] : '' ?>" class="<?= ( empty($_POST['two_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="two_piece_bonus">Two Piece Bonus</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="four_piece_bonus" name="four_piece_bonus">
+                                <input type="text" id="four_piece_bonus" name="four_piece_bonus" value="<?= isset($_POST['four_piece_bonus']) ? $_POST['four_piece_bonus'] : '' ?>" class="<?= ( empty($_POST['four_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="four_piece_bonus">Four Piece Bonus</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
  
                             <div class="file-field input-field col l6">

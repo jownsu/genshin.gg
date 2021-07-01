@@ -13,16 +13,19 @@
     if(isset($_POST['update'])){
 
         if($uArtifact = Artifact::edit($artifact, $_POST)){
+            if(is_object($uArtifact)){
+                if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
+                    if( !$uArtifact->upload($_FILES['icon'], 'icon') ){
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $uArtifact->errors) . "</p>");
+                    } 
+                 }
 
-            if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
-                if( !$artifact->upload($_FILES['icon'], 'icon') ){
-                    //  print_r($artifact->errors);
-                     $session->set_message("<p class='red-text'>" . implode("<br>", $artifact->errors) . "</p>");
-                } 
-             }
-            // header("location: characters.php");
-
-            $session->set_message("<p class='green-text'>Artifact $uArtifact->name updated!</p>");
+                $session->set_message("<p class='green-text'>Artifact $uArtifact->name updated!</p>");
+                header("Refresh:0");
+            }else{
+                $empty_err   = isset($uArtifact['error']['empty']) ? $uArtifact['error']['empty'] : "";
+                $name_err    = isset($uArtifact['error']['name']) ? $uArtifact['error']['name'] : $empty_err;
+            }
         }
     }
 
@@ -48,29 +51,32 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= $artifact->name ?>">
+                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : $artifact->name ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($uArtifact['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
+                                <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
                                 <select id="max_rarity" name="max_rarity">
-                                    <option value="1" <?= $artifact->max_rarity == '1' ? 'selected' : '' ?>>1 Star</option>
-                                    <option value="2" <?= $artifact->max_rarity == '2' ? 'selected' : '' ?>>2 Star</option>
-                                    <option value="3" <?= $artifact->max_rarity == '3' ? 'selected' : '' ?>>3 Star</option>
-                                    <option value="4" <?= $artifact->max_rarity == '4' ? 'selected' : '' ?>>4 Star</option>
-                                    <option value="5" <?= $artifact->max_rarity == '5' ? 'selected' : '' ?>>5 Star</option>
+                                    <option value="1" <?= ( (isset($_POST['max_rarity']) ? $_POST['max_rarity'] : $artifact->max_rarity) == '1' ) ? 'selected' : '' ?>>1 Star</option>
+                                    <option value="2" <?= ( (isset($_POST['max_rarity']) ? $_POST['max_rarity'] : $artifact->max_rarity) == '2' ) ? 'selected' : '' ?>>2 Star</option>
+                                    <option value="3" <?= ( (isset($_POST['max_rarity']) ? $_POST['max_rarity'] : $artifact->max_rarity) == '3' ) ? 'selected' : '' ?>>3 Star</option>
+                                    <option value="4" <?= ( (isset($_POST['max_rarity']) ? $_POST['max_rarity'] : $artifact->max_rarity) == '4' ) ? 'selected' : '' ?>>4 Star</option>
+                                    <option value="5" <?= ( (isset($_POST['max_rarity']) ? $_POST['max_rarity'] : $artifact->max_rarity) == '5' ) ? 'selected' : '' ?>>5 Star</option>
                                 </select>
                                 <label>Max Rarity</label>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="two_piece_bonus" name="two_piece_bonus" value="<?= $artifact->two_piece_bonus ?>">
+                                <input type="text" id="two_piece_bonus" name="two_piece_bonus" value="<?= isset($_POST['two_piece_bonus']) ? $_POST['two_piece_bonus'] : $artifact->two_piece_bonus ?>" class="<?= ( empty($_POST['two_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="two_piece_bonus">Two Piece Bonus</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="four_piece_bonus" name="four_piece_bonus" value="<?= $artifact->four_piece_bonus ?>">
+                                <input type="text" id="four_piece_bonus" name="four_piece_bonus" value="<?= isset($_POST['four_piece_bonus']) ? $_POST['four_piece_bonus'] : $artifact->four_piece_bonus ?>" class="<?= ( empty($_POST['four_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="four_piece_bonus">Four Piece Bonus</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
  
                             <div class="col l6 s12">

@@ -314,7 +314,9 @@ input[type=text]:not(.browser-default):disabled+label{
 }
  
       
-
+.input-field .helper-text{
+  min-height: 0px;
+}
 
 /*******End of input fields**************/
 

@@ -26,6 +26,10 @@ define("B_YEARS", $b_years);
 define("SECURTY_QUESTIONS", ["What's your favorite color?", "Who's your first love?",
                              "What's the title of your favorite song?", "Your Secret word"]);
 
+define("WEAPON_LOCATIONS", ['Chest', 'Crafting', 'BP Bounty', 'Gacha', 'Starglitter Exchange', 'Event']);
+
+define("CONSUMABLE_TYPES" , ['Potion', 'Oil', 'Stats Boost', 'Heal Food', 'Revive Food', 'Stamina Food']);
+
 function get_all_thumbnails(){
     return glob("images" . DS . "Characters" . DS . "*.{png,jpg}", GLOB_BRACE);
 }

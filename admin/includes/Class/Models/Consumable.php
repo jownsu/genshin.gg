@@ -12,18 +12,36 @@ class Consumable extends Model{
         return $count > 0 ? true : false;
     }
 
+    private static function validate($data){
+        $err = array();
+
+        foreach(array_keys($data) as $key){
+            $data[$key] = trim($data[$key]);
+        }
+
+        if(in_array(null, $data)){
+            $err['error']['empty'] = 'Field cannot be empty';
+        }
+
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
+            $err['error']['name'] = "!$%^&*()_+|~=`{}[]:;<>?,./\” characters not allowed";
+        }
+
+        return $err;
+    }
+
     static function add($data){
         global $session;
 
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($data);
 
         if(self::is_consumable_exists($data['name'])){
-            $session->set_message("<p class='red-text'>" .$data['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $data['name'] . " already exists";
+        }
+        
+        if(!empty($err)){
+            return $err;
+        }
         
         $consumable = new Consumable();
 
@@ -46,15 +64,15 @@ class Consumable extends Model{
     static function edit($consumable, $input){
         global $session;
 
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $input['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($input);
 
         if(self::is_consumable_exists($input['name']) && $consumable->name != $input['name']){
-            $session->set_message("<p class='red-text'>" .$input['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $input['name'] . " already exists";
+        }
+
+        if(!empty($err)){
+            return $err;
+        }
 
         $oldName = $consumable->name;
 

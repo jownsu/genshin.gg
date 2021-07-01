@@ -12,18 +12,40 @@ class Weapon extends Model{
         return $count > 0 ? true : false;
     }
 
+    private static function validate($data){
+        $err = array();
+
+        foreach(array_keys($data) as $key){
+            $data[$key] = trim($data[$key]);
+        }
+
+        if(in_array(null, $data)){
+            $err['error']['empty'] = 'Field cannot be empty';
+        }
+
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
+            $err['error']['name'] = "!$%^&*()_+|~=`{}[]:;<>?,./\” characters not allowed";
+        }
+
+        if( !is_numeric($data['baseAttack']) && !empty($data['baseAttack'])){
+            $err['error']['baseATK'] = "Base Attack must be a number";
+        }
+
+        return $err;
+    }
+
     static function add($data){
         global $session;
 
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($data);
 
         if(self::is_weapon_exists($data['name'])){
-            $session->set_message("<p class='red-text'>" .$data['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $data['name'] . " already exists";
+        }
+        
+        if(!empty($err)){
+            return $err;
+        }
         
         $weapon = new Weapon();
 
@@ -36,27 +58,22 @@ class Weapon extends Model{
         $weapon->passiveDesc = trim($data['passiveDesc']) ?? "";
         $weapon->location    = trim($data['location']) ?? "";
 
-        // return $weapon->create() ? $weapon : false;
-        if($weapon->create()){
-            return $weapon;
-        }else{
-            $session->set_message("<p class='red-text'>There is an error." .$data['name'] . " failed to add</p>");
-            return false;
-        }
+        return $weapon->create() ? $weapon : false;
+
     }
 
     static function edit($weapon, $input){
         global $session;
 
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $input['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($input);
 
         if(self::is_weapon_exists($input['name']) && $weapon->name != $input['name']){
-            $session->set_message("<p class='red-text'>" .$input['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $input['name'] . " already exists";
+        }
+
+        if(!empty($err)){
+            return $err;
+        }
 
         $oldName = $weapon->name;
 
@@ -75,7 +92,7 @@ class Weapon extends Model{
             }
            return $weapon;
         }else{
-            $session->set_message("<p class='red-text'>There is an error" .$input['name'] . " failed to update</p>");
+            // $session->set_message("<p class='red-text'>There is an error" .$input['name'] . " failed to update</p>");
             return false;
         }
     }
