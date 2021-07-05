@@ -7,7 +7,6 @@
             if(is_object($artifact)){
                 if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
                     if( !$artifact->upload($_FILES['icon'], 'icon') ){
-                         // print_r($artifact->errors);
                          $session->set_message("<p class='red-text'>" . implode("<br>", $artifact->errors) . "</p>");
                     } 
                  }

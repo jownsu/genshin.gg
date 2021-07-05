@@ -14,22 +14,27 @@
 
         if($uCharacter = Character::edit($character, $_POST)){
 
-            if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
-                if( !$character->upload($_FILES['icon'], 'icon') ){
-                    //  print_r($character->errors);
-                     $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
-                } 
-             }
-     
-             if( isset($_FILES['portrait']) && is_uploaded_file($_FILES['portrait']['tmp_name']) ){
-                 if( !$character->upload($_FILES['portrait'], 'portrait') ){
-                    //  print_r($character->errors);
-                     $session->set_message("<p class='red-text'>" . implode("<br>", $character->errors) . "</p>");
+            if(is_object($uCharacter)){
+                if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
+                    if( !$uCharacter->upload($_FILES['icon'], 'icon') ){
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $uCharacter->errors) . "</p>");
+                    } 
                  }
-             }
-            // header("location: characters.php");
+         
+                 if( isset($_FILES['portrait']) && is_uploaded_file($_FILES['portrait']['tmp_name']) ){
+                     if( !$uCharacter->upload($_FILES['portrait'], 'portrait') ){
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $uCharacter->errors) . "</p>");
+                     }
+                 }
+                $session->set_message("<p class='green-text'>Character $uCharacter->name updated!</p>");
+                header("Refresh:0");
+            }else{
+                $empty_err   = isset($uCharacter['error']['empty']) ? $uCharacter['error']['empty'] : "";
+                $name_err    = isset($uCharacter['error']['name']) ? $uCharacter['error']['name'] : $empty_err;
+                $extraSkill_err   = $uCharacter['error']['extraSkill'] ?? null;
+                $extraPassive_err   = $uCharacter['error']['extraPassive'] ?? null;
+            }
 
-            $session->set_message("<p class='green-text'>Character $uCharacter->name updated!</p>");
         }
     }
 
@@ -68,25 +73,27 @@
                             <h5 class="col l12">Basic Information</h5>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= $character->name ?>">
+                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : $character->name ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($uCharacter['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
+                                <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="nickname" name="nickname" value="<?= $character->nickname ?>">
+                                <input type="text" id="nickname" name="nickname" value="<?= isset($_POST['nickname']) ? $_POST['nickname'] : $character->nickname ?>" class="<?= ( empty($_POST['nickname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="nickname">Nickname</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l12 s12">
-                                <input type="text" id="description" name="description" value="<?= $character->description ?>">
+                                <input type="text" id="description" name="description" value="<?= isset($_POST['description']) ? $_POST['description'] : $character->description ?>" class="<?= ( empty($_POST['description']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="description">Description</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
                                 <select id="rarity" name="rarity">
-                                <?php foreach(RARITY as $rarity): ?>
-                                    <option value="<?= $rarity ?>" <?= $rarity == $character->rarity ? 'selected' : '' ?> ><?= $rarity ?></option>
-                                <?php endforeach ?> 
+                                    <option value="4" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $character->rarity) == '4' ) ? 'selected' : '' ?>>4 Star</option>
+                                    <option value="5" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $character->rarity) == '5' ) ? 'selected' : '' ?>>5 Star</option>
                                 </select>
                                 <label>Rarity</label>
                             </div>
@@ -94,7 +101,7 @@
                             <div class="input-field col l6 s12">
                                 <select id="weapon" name="weapon">
                                 <?php foreach(WEAPONS as $weapon): ?>
-                                    <option value="<?= $weapon ?> " <?= $weapon == $character->weapon ? 'selected' : '' ?>><?= $weapon ?></option>
+                                    <option value="<?= $weapon ?>" <?= ( $weapon == (isset($_POST['weapon']) ? $_POST['weapon'] : $character->weapon) ) ? 'selected' : '' ?> ><?= $weapon ?></option>
                                 <?php endforeach ?> 
                                 </select>
                                 <label>Weapon</label>
@@ -103,7 +110,7 @@
                             <div class="input-field col l6 s12">
                                 <select id="element" name="vision">
                                 <?php foreach(ELEMENTS as $element): ?>
-                                    <option value="<?= $element ?>" <?= $element == $character->vision ? 'selected' : '' ?>><?= $element ?></option>
+                                    <option value="<?= $element ?>" <?= ( $element == (isset($_POST['vision']) ? $_POST['vision'] : $character->vision ) ) ? 'selected' : '' ?> ><?= $element ?></option>
                                 <?php endforeach ?> 
                                 </select>
                                 <label>Vision</label>
@@ -114,31 +121,34 @@
                             <div class="input-field col l6 s12">
                                 <select id="sex" name="sex">
                                 <?php foreach(SEX as $sex): ?>
-                                    <option value="<?= $sex ?>" <?= $sex == $character->sex ? 'selected' : '' ?>><?= $sex ?></option>
+                                    <option value="<?= $sex ?>" <?= ( $sex == (isset($_POST['sex']) ? $_POST['sex'] : $character->sex) ) ? 'selected' : '' ?>><?= $sex ?></option>
                                 <?php endforeach ?> 
                                 </select>
                                 <label>Sex</label>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="constellation" name="constellation" value="<?= $character->constellation ?>">
+                                <input type="text" id="constellation" name="constellation" value="<?= isset($_POST['constellation']) ? $_POST['constellation'] : $character->constellation ?>" class="<?= ( empty($_POST['constellation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="constellation">Constellation</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="nation" name="nation" value="<?= $character->nation ?>">
+                                <input type="text" id="nation" name="nation" value="<?= isset($_POST['nation']) ? $_POST['nation'] : $character->nation ?>" class="<?= ( empty($_POST['nation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="nation">Nation</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="affilation" name="affiliation" value="<?= $character->affiliation ?>">
+                                <input type="text" id="affilation" name="affiliation" value="<?= isset($_POST['affiliation']) ? $_POST['affiliation'] : $character->affiliation ?>" class="<?= ( empty($_POST['affiliation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="affilation">Affilation</label>
+                                <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
  
                             <div class="input-field col l3 s6">
                                 <select name="birthday[month]" id="birthday-month">
                                     <?php foreach(MONTHS as $month): ?>
-                                        <option value="<?= $month ?>" <?= $month == $character->get_birthday()[0] ? ' selected' : '' ?>><?=  $month ?></option>
+                                        <option value="<?= $month ?>" <?= ( $month == (isset($_POST['birthday']['month']) ? $_POST['birthday']['month'] : $character->get_birthday()[0]) ) ? 'selected' : '' ?>><?=  $month ?></option>
                                     <?php endforeach ?>
                                 </select>
                                 <label for="birthday-month">Birthday</label>
@@ -147,7 +157,7 @@
                             <div class="input-field col l3 s6">
                                 <select name="birthday[day]" id="birthday-day">
                                     <?php foreach(DAYS as $day): ?>
-                                        <option value="<?= $day ?>" <?= $day == $character->get_birthday()[1] ? ' selected' : '' ?>><?= $day ?></option>
+                                        <option value="<?= $day ?>" <?= ( $day == (isset($_POST['birthday']['day']) ? $_POST['birthday']['day'] : $character->get_birthday()[1]) ) ? 'selected' : '' ?>><?=  $day ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -155,7 +165,7 @@
                             <div class="input-field col l2 s4">
                                 <select name="release_date[month]" id="release-date-month">
                                     <?php foreach(MONTHS as $month): ?>
-                                        <option value="<?= $month ?>" <?= $month == $character->get_release_date()[0] ? ' selected' : '' ?>><?=  $month ?></option>
+                                        <option value="<?= $month ?>" <?= ( $month == (isset($_POST['release_date']['month']) ? $_POST['release_date']['month'] : $character->get_release_date()[0]) ) ? 'selected' : '' ?>><?=  $month ?></option>
                                     <?php endforeach ?>
                                 </select>
                                 <label for="release-date-month">Release Date</label>
@@ -164,7 +174,7 @@
                             <div class="input-field col l2 s4">
                                 <select name="release_date[day]" id="release-date-day">
                                     <?php foreach(DAYS as $day): ?>
-                                        <option value="<?= $day ?>" <?= $day == $character->get_release_date()[1] ? ' selected' : '' ?>><?= $day ?></option>
+                                        <option value="<?= $day ?>" <?= ( $day == (isset($_POST['release_date']['day']) ? $_POST['release_date']['day'] : $character->get_release_date()[1]) ) ? 'selected' : '' ?>><?=  $day ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -172,7 +182,7 @@
                             <div class="input-field col l2 s4">
                                 <select name="release_date[year]" id="release-date-year">
                                     <?php foreach(YEARS as $year): ?>
-                                        <option value="<?= $year ?>" <?= $year == $character->get_release_date()[2] ? ' selected' : '' ?>><?= $year ?></option>
+                                        <option value="<?= $year ?>" <?= ( $year == (isset($_POST['release_date']['year']) ? $_POST['release_date']['year'] : $character->get_release_date()[2]) ) ? 'selected' : '' ?>><?=  $year ?></option>
                                     <?php endforeach ?>
                                 </select>
                             </div>
@@ -180,7 +190,7 @@
                             <div class="input-field col l6 s12">
                                 <select id="tier" name="tier">
                                 <?php foreach(TIERS as $tier): ?>
-                                    <option value="<?= $tier ?>" <?= $tier == $character->tier ? 'selected' : '' ?> ><?= $tier ?></option>
+                                    <option value="<?= $tier ?>" <?= ( $tier == (isset($_POST['tier']) ? $_POST['tier'] : $character->tier) ) ? 'selected' : '' ?> ><?= $tier ?></option>
                                 <?php endforeach ?> 
                                 </select>
                                 <label>Tier</label>
@@ -199,71 +209,58 @@
 
                                 <?php 
                                     $skillTalents = json_decode($character->skillTalents);
-                                    foreach($skillTalents as $skillTalent):
+                                    foreach($skillTalents as $key => $skillTalent):
                                 ?>
                                 <div class="extraskill col l12">
-                                    <?php if(!preg_match('(normal attack|elemental skill|elemental burst)i', $skillTalent->unlock)): ?>
-                                        <div class="col s12 m12 l12 right-align">
-                                        <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraSkill">close</i></a>
-                                        </div>
-                                    <?php endif ?>
-
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[<?= $skillTalent->unlock ?>][name]" id="name" value="<?= $skillTalent->name ?>">
+                                        <input type="text" name="skill_talents[<?= $key ?>][name]" id="name" value="<?= isset($_POST['skill_talents'][$key]['name']) ? $_POST['skill_talents'][$key]['name'] : $skillTalent->name ?>" class="<?= ( empty($_POST['skill_talents'][$key]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraSkill_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[<?= $skillTalent->unlock ?>][unlock]" id="unlock" value="<?=$skillTalent->unlock?>">
+                                        <input type="text" name="skill_talents[<?= $key ?>][unlock]" id="unlock" value="<?= isset($_POST['skill_talents'][$key]['unlock']) ? $_POST['skill_talents'][$key]['unlock'] : $skillTalent->unlock ?>" class="<?= ( empty($_POST['skill_talents'][$key]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraSkill_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea" name="skill_talents[<?= $skillTalent->unlock ?>][description]" id="description" cols="30" rows="10"><?= $skillTalent->description ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][$key]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[<?= $key ?>][description]" id="description" cols="30" rows="10"><?= isset($_POST['skill_talents'][$key]['description']) ? $_POST['skill_talents'][$key]['description'] : $skillTalent->description ?></textarea>
                                         <label for="description">Description</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraSkill_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                 </div>
                                 <?php endforeach ?>
 
-                            </div>
-
-
-                            <div class="col l12">
-                                <a href="#" class="btn-small green" id="addSkill">Add more skill</a>
                             </div>
 
 
                             <h5 class="col s12 m12 l12">Passive Talents</h5>
 
 
-
-
                             <div class="passive-talents">     
                                 <?php 
                                         $passiveTalents = json_decode($character->passiveTalents);
                                     
-                                        foreach($passiveTalents as $passiveTalent):
+                                        foreach($passiveTalents as $key => $passiveTalent):
                                 ?>   
                                 <div class="extraPassive col l12">
-                                    <!-- <div class="col s12 m12 l12 right-align">
-                                        <a href="#"><i class="material-icons red-text text-lighten-1" id="removeExtraPassive">close</i></a>
-                                    </div> -->
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[<?= $passiveTalent->unlock ?>][name]" id="name" value="<?= $passiveTalent->name ?>">
+                                        <input type="text" name="passive_talents[<?= $key ?>][name]" id="name" value="<?= isset($_POST['passive_talents'][$key]['name']) ? $_POST['passive_talents'][$key]['name'] : $passiveTalent->name ?>" class="<?= ( empty($_POST['passive_talents'][$key]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraPassive_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[<?= $passiveTalent->unlock ?>][unlock]" id="unlock" value="<?= $passiveTalent->unlock ?>">
+                                        <input type="text" name="passive_talents[<?= $key ?>][unlock]" id="unlock" value="<?= isset($_POST['passive_talents'][$key]['unlock']) ? $_POST['passive_talents'][$key]['unlock'] : $passiveTalent->unlock ?>" class="<?= ( empty($_POST['passive_talents'][$key]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraPassive_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea" name="passive_talents[<?= $passiveTalent->unlock ?>][description]" id="description" cols="30" rows="10"><?= $passiveTalent->description ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][$key]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[<?= $key ?>][description]" id="description" cols="30" rows="10"><?= isset($_POST['passive_talents'][$key]['description']) ? $_POST['passive_talents'][$key]['description'] : $passiveTalent->description ?></textarea>
                                         <label for="description">Description</label>
+                                        <span class="helper-text" data-error="<?= $key > 2 ? $extraPassive_err : $empty_err ?? '' ?>"></span>
                                     </div>
                                 </div>
-                                <?php endforeach ?>
-                            </div>
 
-                            <div class="col l12">
-                                <a href="#" class="btn-small green" id="addPassive">Add more passive</a>
+                                <?php endforeach ?>
                             </div>
 
                         </div>    
@@ -279,20 +276,23 @@
                             <?php 
                                 $constellations = json_decode($character->constellations);
                             
-                                foreach($constellations as $constellation):
+                                foreach($constellations as $key => $constellation):
                             ?>
                             <div class="constellation col l12">
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[<?= $constellation->unlock ?>][name]" id="name" value="<?= $constellation->name ?>">
+                                    <input type="text" name="constellations[<?= $key ?>][name]" id="name" value="<?= isset($_POST['constellations'][$key]['name']) ? $_POST['constellations'][$key]['name'] : $constellation->name ?>" class="<?= ( empty($_POST['constellations'][$key]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[<?= $constellation->unlock ?>][unlock]" id="unlock" value="<?= $constellation->unlock ?>">
+                                    <input type="text" name="constellations[<?= $key ?>][unlock]" id="unlock" value="<?= isset($_POST['constellations'][$key]['unlock']) ? $_POST['constellations'][$key]['unlock'] : $constellation->unlock ?>" class="<?= ( empty($_POST['constellations'][$key]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea" name="constellations[<?= $constellation->unlock ?>][description]" id="description" cols="30" rows="10"> <?= $constellation->description ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][$key]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[<?= $key ?>][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations'][$key]['description']) ? $_POST['constellations'][$key]['description'] : $constellation->description ?></textarea>
                                     <label for="description">Description</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
                             </div>
                             <?php endforeach ?>

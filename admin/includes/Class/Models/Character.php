@@ -20,18 +20,73 @@ class Character extends Model{
         return $count > 0 ? true : false;
     }
 
+    private static function validate($data){
+        $err = array();
+
+        foreach(array_keys($data) as $key){
+            if(is_string($data[$key])){
+                $data[$key] = trim($data[$key]);
+            }
+        }
+
+        if(in_array(null, $data)){
+            $err['error']['empty'] = 'Field cannot be empty';
+        }
+
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
+            $err['error']['name'] = "!$%^&*()_+|~=`{}[]:;<>?,./\” characters not allowed";
+        }
+
+        foreach($data['skill_talents'] as $key => $arrSkill){
+            if($key == 3) break;
+            if(in_array('',$arrSkill)){
+                $err['error']['empty'] = "Field cannot be empty";
+            }
+        }
+
+        foreach($data['passive_talents'] as $key => $arrPassive){
+            if($key == 3) break;
+            if(in_array('',$arrPassive)){
+                $err['error']['empty'] = "Field cannot be empty";
+            }
+        }
+
+        if(isset($data['skill_talents'][3])){
+            if(  in_array('', $data['skill_talents'][3]) && in_array(!null, $data['skill_talents'][3]) ){
+                $err['error']['extraSkill'] = 'Fieldset should be complete';
+            }
+        }
+
+        if(isset($data['passive_talents'][3])){
+            if(  in_array('', $data['passive_talents'][3]) && in_array(!null, $data['passive_talents'][3]) ){
+                $err['error']['extraPassive'] = 'Fieldset should be complete';
+            }
+        }
+
+        return $err;
+    }
+
     static function add($data){
         global $session;
         
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($data);
 
         if(self::is_character_exists($data['name'])){
-            $session->set_message("<p class='red-text'>" .$data['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $data['name'] . " already exists";
+        }
+        
+        if(!empty($err)){
+            return $err;
+        }
+
+        if(in_array('', $data['skill_talents'][3])){
+            unset($data['skill_talents'][3]);
+        }
+
+        if(in_array('', $data['passive_talents'][3])){
+            unset($data['passive_talents'][3]);
+        }
+
         $character = new Character();
 
         $character->name           = trim($data['name']) ?? "";
@@ -51,27 +106,22 @@ class Character extends Model{
         $character->constellations = json_encode(array_values($data['constellations'])) ?? "";
         $character->tier           = trim($data['tier']) ?? "";
 
-        // return $character->create() ? $character : false;
-        if($character->create()){
-            return $character;
-        }else{
-            $session->set_message("<p class='red-text'>There is an error." .$data['name'] . " failed to add</p>");
-            return false;
-        }
+        return $character->create() ? $character : false;
+
     }
 
     static function edit($character, $input){
         global $session;
         
-        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $input['name'])){
-            $session->set_message("<p class='red-text'>Some special characters not allowed</p>");
-            return false;
-        }
+        $err = self::validate($input);
 
         if(self::is_character_exists($input['name']) && $character->name != $input['name']){
-            $session->set_message("<p class='red-text'>" .$input['name'] . " already exists</p>");
-            return false;
-        } 
+            $err['error']['name'] = $input['name'] . " already exists";
+        }
+
+        if(!empty($err)){
+            return $err;
+        }
 
         $oldName = $character->name;
 
