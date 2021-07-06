@@ -118,8 +118,6 @@ class Artifact extends Model{
             $path = IMAGES_ROOT . 'artifacts' . DS . $name;
             if(file_exists($path)){
                 self::deleteDir($path);
-            }else{
-                return false;
             }
 
             return true;

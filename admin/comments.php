@@ -4,7 +4,7 @@
         $postId = $_GET['id'];
 
         $page = isset($_GET['page']) && $_GET['page'] >= 1 ? (int)$_GET['page'] : 1;
-        $items_per_page = 2;
+        $items_per_page = 5;
         $whereSQL = ["post_id = {$postId}"];
 
         $comments = Comment::where($whereSQL)->paginate($items_per_page)->get();
@@ -44,7 +44,7 @@
                     <td><?= $comment->description ?></td>
                     <td><?= $comment->date ?></td>
                     <td>
-                        <input type="hidden" name="commentId" value="<?= $comment->comment_id ?>">
+                        <input type="hidden" name="comments" value="<?= $comment->comment_id ?>">
                         <button data-target="delete-modal" data-id="<?= $comment->comment_id ?>" data-name="<?= $comment->description ?>" class="btn-small red modal-trigger"><i class="material-icons">delete</i></button>
                     </td>
                 </tr>

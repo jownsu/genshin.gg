@@ -64,7 +64,7 @@
                     <td><a href="comments.php?id=<?= $post->post_id ?> "><?= Comment::count()->where(["post_id = $post->post_id"])->get() ?></a></td>
                     <td>
                         <a href="edit_post.php?id=<?= $post->post_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
-                        <input type="hidden" name="postId" value="<?= $post->post_id ?>">
+                        <input type="hidden" name="posts" value="<?= $post->post_id ?>">
                         <button data-target="delete-modal" data-id="<?= $post->post_id ?>" data-name="<?= $post->title ?>" class="btn-small red modal-trigger"><i class="material-icons">delete</i></button>
                     </td>
                 </tr>

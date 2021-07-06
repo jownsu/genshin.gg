@@ -28,13 +28,9 @@ btnModalDelete.addEventListener('click', e =>{
     ajaxDelete('includes/ajax_functions.php', deleteIdType, deleteId)
         .then(response =>{
             if(response.location){
-                if(window.location.pathname.includes('edit')){
-                    window.location.href = response.location;
-                }else{
                     M.toast({html: response.message, classes: 'green rounded'});
                     targetTR.remove();
                     //window.location.reload();
-                }
             }else{
                 console.log('ID Type not valid');
             }

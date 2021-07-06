@@ -30,68 +30,47 @@ if(isset($_POST['target_id'])){
 
 
 if(isset($_POST['idType'])){
-    $type = $_POST['idType'];
-    $id   = $_POST['id'];
+    $id = $_POST['id'];
+    $type = ucfirst(substr($_POST['idType'], 0, -1)) ?? "";
 
-    switch ($type) {
-        case 'userId':
-            deleteUser($id);
-            exit(json_encode(['location' => 'users.php', 'message' => 'User has been deleted']));
-            break;
+    $data = $type::find($id);
 
-        case 'charId':
-            deleteChar($id);
-            exit(json_encode(['location' => 'characters.php', 'message' => 'Character has been deleted']));
-            break;
+    if(!empty($data)){
 
-        case 'postId':
-            deletePost($id);
-            exit(json_encode(['location' => 'posts.php', 'message' => 'Post has been deleted']));
-            break;
+        switch ($type) {
+            case 'Character':
+                if($data->delete_character()){
+                    exit(json_encode(['location' => 'characters.php', 'message' => 'Character has been deleted']));
+                }
+                break;
 
-        case 'commentId':
-            deleteComment($id);
-            exit(json_encode(['location' => 'comments.php', 'message' => 'Comment has been deleted']));
-            break;
+            case 'Weapon':
+                if($data->delete_weapon()){
+                    exit(json_encode(['location' => 'weapons.php', 'message' => 'Weapon has been deleted']));
+                }
+                break;
+
+            case 'Artifact':
+                if($data->delete_artifact()){
+                    exit(json_encode(['location' => 'artifacts.php', 'message' => 'Artifact has been deleted']));
+                }
+                break;
+            case 'Consumable':
+                if($data->delete_consumable()){
+                    exit(json_encode(['location' => 'consumables.php', 'message' => 'Consumable has been deleted']));
+                }
+                break;
             
-        default:
-            exit(json_encode(['message' => 'There was an error on deleting']));
+            default:
+                if($data->delete()){
+                    exit(json_encode(['location' => $_POST['idType'] . ".php", 'message' => "$type has been deleted"]));
+                }
+                break;
+        }
+
+
+    }else{
+        exit(json_encode(['message' => 'There was an error on deleting']));
     }
-}
 
-function deleteUser($id){
-    global $session;
-
-    $user = User::find($id);
-    if($user){
-        $user->delete();
-    }
-}
-
-function deleteChar($id){
-    global $session;
-
-    $character = Character::find($id);
-
-    if($character){
-        $character->delete_character();
-    }
-}
-
-function deletePost($id){
-    global $session;
-
-    $post = Post::find($id);
-    if($post){
-        $post->delete();
-    }
-}
-
-function deleteComment($id){
-    global $session;
-
-    $comment = Comment::find($id);
-    if($comment){
-        $comment->delete();
-    }
 }

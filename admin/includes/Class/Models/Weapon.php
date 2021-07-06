@@ -130,8 +130,6 @@ class Weapon extends Model{
             $path = IMAGES_ROOT . 'weapons' . DS . $name;
             if(file_exists($path)){
                 self::deleteDir($path);
-            }else{
-                return false;
             }
 
             return true;

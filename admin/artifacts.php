@@ -62,7 +62,7 @@
                     <td><?= $artifact->four_piece_bonus ?></td>
                     <td>
                         <a href="edit_artifact.php?id=<?= $artifact->artif_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
-                        <input type="hidden" name="artifId" value="<?= $artifact->artif_id ?>">
+                        <input type="hidden" name="artifacts" value="<?= $artifact->artif_id ?>">
                         <button data-target="delete-modal" data-name="<?= $artifact->name ?>" class="btn-small red modal-trigger btn-delete"><i class="material-icons">delete</i></button>
                     </td>
                 </tr>

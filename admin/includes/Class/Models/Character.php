@@ -175,40 +175,6 @@ class Character extends Model{
             return false;
          }
      }
-
-
-
-
-    function set_thumbnail($file){
-
-        if(!$this->check_files($file)){
-            return false;
-        }
-
-        $this->thumbnail = basename($file['name']);
-        $this->thumbnail_tmpName = ($file['tmp_name']);
-    }
-
-    function set_portrait($file){
-
-        $this->check_files($file);
-
-        $this->portrait = basename($file['name']);
-        $this->portrait_tmpName = $file['tmp_name'];
-    }
-
-    function update_character(){
-        if(!empty($this->errors)){
-            return false;
-        }
-
-        if($this->update()){
-            $this->move_files();
-            return true;
-        }else{
-            return false;
-        }
-    }
     
     function delete_character(){
         if($this->delete()){
@@ -220,23 +186,11 @@ class Character extends Model{
             $path = IMAGES_ROOT . 'characters' . DS . $name;
             if(file_exists($path)){
                 self::deleteDir($path);
-            }else{
-                return false;
             }
 
             return true;
         }
         return false;
-    }
-    
-    function test(){
-        $name = strtolower($this->name);
-        $path = IMAGES_ROOT . 'characters' . DS . $name;
-        if(file_exists($path)){
-            self::deleteDir($path);
-        }else{
-            return false;
-        }
     }
 
     function Thumbnail(){

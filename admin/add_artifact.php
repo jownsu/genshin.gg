@@ -20,7 +20,6 @@
 
 
         }else{
-            // print_r($artifact->get_errors());
             $session->set_message("<p class='red-text'> There was an error adding the artifact </p>");
         }
     }

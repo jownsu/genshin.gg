@@ -126,9 +126,7 @@ class Consumable extends Model{
             
             $path = IMAGES_ROOT . 'consumable' . DS . $name;
             if(file_exists($path)){
-                unlink($path);
-            }else{
-                return false;
+                self::deleteDir($path);
             }
 
             return true;

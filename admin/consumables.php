@@ -65,7 +65,7 @@
                     <td><?= $consumable->ingredients ?></td>
                     <td>
                         <a href="edit_consumable.php?id=<?= $consumable->con_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
-                        <input type="hidden" name="conId" value="<?= $consumable->con_id ?>">
+                        <input type="hidden" name="consumables" value="<?= $consumable->con_id ?>">
                         <button data-target="delete-modal" data-name="<?= $consumable->name ?>" class="btn-small red modal-trigger btn-delete"><i class="material-icons">delete</i></button>
                     </td>
                 </tr>

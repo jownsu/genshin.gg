@@ -65,7 +65,7 @@
                 </ul>
         
                 <form method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="targetId" value="<?= $character->char_id ?>">
+                    <input type="hidden" id="targetId" value="<?= $character->char_id ?>">
         
                     <div id="swipe-1" class="col s12">
 

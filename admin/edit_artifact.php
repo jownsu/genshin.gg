@@ -94,7 +94,7 @@
 
                             <div class="input-field col l12">
                                 <input type="submit" value="Update" name="update" class="btn-small green">
-                                <button data-target="delete-char-modal" class="btn-small red modal-trigger btn-delete">Delete</button>
+                                <button data-target="delete-modal" class="btn-small red modal-trigger btn-delete">Delete</button>
                             </div>
 
 
@@ -106,6 +106,18 @@
         </div>
     </div>
 
+    <div id="delete-modal" class="modal black-text">
+        <div class="modal-content">
+            <h5>Are you sure to delete <?= $artifact->name ?>?</h5>
+        </div>
+        <div class="modal-footer">
+            <form method="POST">
+                <input type="submit" value="Delete" name="delete" class="modal-close btn-small red">
+                <a href="#!" class="modal-close btn-small blue">No</a>
+            </form>
+        </div>
+    </div>
+    
 <script src="js/addMoreSkill.js"> </script>
 <?php 
 

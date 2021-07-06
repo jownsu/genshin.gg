@@ -63,7 +63,7 @@
                     <td><?= $weapon->location ?></td>
                     <td>
                         <a href="edit_weapon.php?id=<?= $weapon->weap_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
-                        <input type="hidden" name="weapId" value="<?= $weapon->weap_id ?>">
+                        <input type="hidden" name="weapons" value="<?= $weapon->weap_id ?>">
                         <button data-target="delete-modal" data-name="<?= $weapon->name ?>" class="btn-small red modal-trigger btn-delete"><i class="material-icons">delete</i></button>
                     </td>
                 </tr>

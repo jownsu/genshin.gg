@@ -14,10 +14,10 @@ class Comment extends Model{
         return empty($this->user_image) ? $this->image_path() . $this->user_image : $this->image_path() . "Users" . DS . $this->user_image;
     }
     
-    function delete(){
-        global $db;
-        $sql = "DELETE FROM " . static::$db_table . " WHERE comment_id = " . $this->comment_id;
-        return $db->query($sql) ? true : false;
-    }
+    // function delete(){
+    //     global $db;
+    //     $sql = "DELETE FROM " . static::$db_table . " WHERE comment_id = " . $this->comment_id;
+    //     return $db->query($sql) ? true : false;
+    // }
 
 }
