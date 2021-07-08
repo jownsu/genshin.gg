@@ -94,7 +94,9 @@ ul li a.active::after{
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: 20px;
+    color: black;
+    font-weight: bolder;
 }
 
 .talent-info{
@@ -116,6 +118,11 @@ ul li a.active::after{
 
 .talent-container > .col{
     margin: 10px 0;
+}
+
+.char_name{
+    font-size: 1.8em;
+    line-height: 0;
 }
 
 

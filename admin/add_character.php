@@ -16,10 +16,9 @@
                         }
                     }
                     $session->set_message("<p class='green-text'> Character $character->name was Added </p>");
-                    header('location: add_character.php');
             }else{
-                $empty_err   = isset($character['error']['empty']) ? $character['error']['empty'] : "";
-                $name_err    = isset($character['error']['name']) ? $character['error']['name'] : $empty_err;
+                $empty_err   = $character['error']['empty'] ?? "";
+                $name_err    = $character['error']['name'] ?? $empty_err;
                 $extraSkill_err   = $character['error']['extraSkill'] ?? null;
                 $extraPassive_err   = $character['error']['extraPassive'] ?? null;
             }
@@ -54,19 +53,19 @@
                         <div class="row">
                             <h5 class="col l12">Basic Information</h5>
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($character['error']['name']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="name" name="name" value="<?= $_POST['name'] ?? '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($character['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
                                 <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="nickname" name="nickname" value="<?= isset($_POST['nickname']) ? $_POST['nickname'] : '' ?>" class="<?= ( empty($_POST['nickname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="nickname" name="nickname" value="<?= $_POST['nickname'] ?? '' ?>" class="<?= ( empty($_POST['nickname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="nickname">Nickname</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l12 s12">
-                                <input type="text" id="description" name="description" value="<?= isset($_POST['description']) ? $_POST['description'] : '' ?>" class="<?= ( empty($_POST['description']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="description" name="description" value="<?= $_POST['description'] ?? '' ?>" class="<?= ( empty($_POST['description']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="description">Description</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
@@ -110,19 +109,19 @@
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="constellation" name="constellation" value="<?= isset($_POST['constellation']) ? $_POST['constellation'] : '' ?>" class="<?= ( empty($_POST['constellation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="constellation" name="constellation" value="<?= $_POST['constellation'] ?? '' ?>" class="<?= ( empty($_POST['constellation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="constellation">Constellation</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="nation" name="nation" value="<?= isset($_POST['nation']) ? $_POST['nation'] : '' ?>" class="<?= ( empty($_POST['nation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="nation" name="nation" value="<?= $_POST['nation'] ?? '' ?>" class="<?= ( empty($_POST['nation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="nation">Nation</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="affiliation" name="affiliation" value="<?= isset($_POST['affiliation']) ? $_POST['affiliation'] : '' ?>" class="<?= ( empty($_POST['affiliation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="affiliation" name="affiliation" value="<?= $_POST['affiliation'] ?? '' ?>" class="<?= ( empty($_POST['affiliation']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="affiliation">Affiliation</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
@@ -194,19 +193,19 @@
                                 <div class="extraskill col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[0][name]" id="name" value="<?= isset($_POST['skill_talents'][0]['name']) ? $_POST['skill_talents'][0]['name'] : '' ?>" class="<?= ( empty($_POST['skill_talents'][0]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="skill_talents[0][name]" id="name" value="<?= $_POST['skill_talents'][0]['name'] ?? '' ?>" class="<?= ( empty($_POST['skill_talents'][0]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="skill_talents[0][unlock]" id="unlock" value="<?= isset($_POST['skill_talents'][0]['unlock']) ? $_POST['skill_talents'][0]['unlock'] : 'Normal Attack' ?>" class="<?= ( empty($_POST['skill_talents'][0]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="skill_talents[0][unlock]" id="unlock" value="<?= $_POST['skill_talents'][0]['unlock'] ?? 'Normal Attack' ?>" class="<?= ( empty($_POST['skill_talents'][0]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][0]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[0][description]" id="description" cols="30" rows="10"><?= isset($_POST['skill_talents'][0]['description']) ? $_POST['skill_talents'][0]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][0]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[0][description]" id="description" cols="30" rows="10"><?= $_POST['skill_talents'][0]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -216,19 +215,19 @@
                                 <div class="extraskill col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[1][name]" id="name" value="<?= isset($_POST['skill_talents'][1]['name']) ? $_POST['skill_talents'][1]['name'] : '' ?>" class="<?= ( empty($_POST['skill_talents'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="skill_talents[1][name]" id="name" value="<?= $_POST['skill_talents'][1]['name'] ?? '' ?>" class="<?= ( empty($_POST['skill_talents'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="skill_talents[1][unlock]" id="unlock" value="<?= isset($_POST['skill_talents'][1]['unlock']) ? $_POST['skill_talents'][1]['unlock'] : 'Elemental Skill' ?>" class="<?= ( empty($_POST['skill_talents'][1]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="skill_talents[1][unlock]" id="unlock" value="<?= $_POST['skill_talents'][1]['unlock'] ?? 'Elemental Skill' ?>" class="<?= ( empty($_POST['skill_talents'][1]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[1][description]" id="description" cols="30" rows="10"><?= isset($_POST['skill_talents'][1]['description']) ? $_POST['skill_talents'][1]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[1][description]" id="description" cols="30" rows="10"><?= $_POST['skill_talents'][1]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -238,19 +237,19 @@
                                 <div class="extraskill col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[2][name]" id="name" value="<?= isset($_POST['skill_talents'][2]['name']) ? $_POST['skill_talents'][2]['name'] : '' ?>" class="<?= ( empty($_POST['skill_talents'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="skill_talents[2][name]" id="name" value="<?= $_POST['skill_talents'][2]['name'] ?? '' ?>" class="<?= ( empty($_POST['skill_talents'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="skill_talents[2][unlock]" id="unlock" value="<?= isset($_POST['skill_talents'][2]['unlock']) ? $_POST['skill_talents'][2]['unlock'] : 'Elemental Burst' ?>" class="<?= ( empty($_POST['skill_talents'][2]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="skill_talents[2][unlock]" id="unlock" value="<?= $_POST['skill_talents'][2]['unlock'] ?? 'Elemental Burst' ?>" class="<?= ( empty($_POST['skill_talents'][2]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[2][description]" id="description" cols="30" rows="10"><?= isset($_POST['skill_talents'][2]['description']) ? $_POST['skill_talents'][2]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="skill_talents[2][description]" id="description" cols="30" rows="10"><?= $_POST['skill_talents'][2]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -261,19 +260,19 @@
 
                                     <p class="grey-text">* Optional</p>
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[3][name]" id="name" value="<?= isset($_POST['skill_talents'][3]['name']) ? $_POST['skill_talents'][3]['name'] : '' ?>" class="<?= ( empty($_POST['skill_talents'][3]['name']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="skill_talents[3][name]" id="name" value="<?= $_POST['skill_talents'][3]['name'] ?? '' ?>" class="<?= ( empty($_POST['skill_talents'][3]['name']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $extraSkill_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="skill_talents[3][unlock]" id="unlock"  value="<?= isset($_POST['skill_talents'][3]['unlock']) ? $_POST['skill_talents'][3]['unlock'] : '' ?>" class="<?= ( empty($_POST['skill_talents'][3]['unlock']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="skill_talents[3][unlock]" id="unlock"  value="<?= $_POST['skill_talents'][3]['unlock'] ?? '' ?>" class="<?= ( empty($_POST['skill_talents'][3]['unlock']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $extraSkill_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][3]['description']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>" name="skill_talents[3][description]" id="description" cols="30" rows="10"><?= isset($_POST['skill_talents'][3]['description']) ? $_POST['skill_talents'][3]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['skill_talents'][3]['description']) && isset($extraSkill_err) ) ? 'invalid' : '' ?>" name="skill_talents[3][description]" id="description" cols="30" rows="10"><?= $_POST['skill_talents'][3]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $extraSkill_err ?? '' ?>"></span>
                                     </div>
@@ -290,19 +289,19 @@
                                 <div class="extraPassive col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[0][name]" id="name" value="<?= isset($_POST['passive_talents'][0]['name']) ? $_POST['passive_talents'][0]['name'] : '' ?>" class="<?= ( empty($_POST['passive_talents'][0]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="passive_talents[0][name]" id="name" value="<?= $_POST['passive_talents'][0]['name'] ?? '' ?>" class="<?= ( empty($_POST['passive_talents'][0]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="passive_talents[0][unlock]" id="unlock" value="<?= isset($_POST['passive_talents'][0]['unlock']) ? $_POST['passive_talents'][0]['unlock'] : 'Unlocked at Ascension 1' ?>" class="<?= ( empty($_POST['passive_talents'][0]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="passive_talents[0][unlock]" id="unlock" value="<?= $_POST['passive_talents'][0]['unlock'] ?? 'Unlocked at Ascension 1' ?>" class="<?= ( empty($_POST['passive_talents'][0]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][0]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[0][description]" id="description" cols="30" rows="10"><?= isset($_POST['passive_talents'][0]['description']) ? $_POST['passive_talents'][0]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][0]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[0][description]" id="description" cols="30" rows="10"><?= $_POST['passive_talents'][0]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -312,19 +311,19 @@
                                 <div class="extraPassive col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[1][name]" id="name" value="<?= isset($_POST['passive_talents'][1]['name']) ? $_POST['passive_talents'][1]['name'] : '' ?>" class="<?= ( empty($_POST['passive_talents'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="passive_talents[1][name]" id="name" value="<?= $_POST['passive_talents'][1]['name'] ?? '' ?>" class="<?= ( empty($_POST['passive_talents'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="passive_talents[1][unlock]" id="unlock" value="<?= isset($_POST['passive_talents'][1]['unlock']) ? $_POST['passive_talents'][1]['unlock'] : 'Unlocked at Ascension 4' ?>" class="<?= ( empty($_POST['passive_talents'][1]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="passive_talents[1][unlock]" id="unlock" value="<?= $_POST['passive_talents'][1]['unlock'] ?? 'Unlocked at Ascension 4' ?>" class="<?= ( empty($_POST['passive_talents'][1]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[1][description]" id="description" cols="30" rows="10"><?= isset($_POST['passive_talents'][1]['description']) ? $_POST['passive_talents'][1]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[1][description]" id="description" cols="30" rows="10"><?= $_POST['passive_talents'][1]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -334,19 +333,19 @@
                                 <div class="extraPassive col l12">
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[2][name]" id="name" value="<?= isset($_POST['passive_talents'][2]['name']) ? $_POST['passive_talents'][2]['name'] : '' ?>" class="<?= ( empty($_POST['passive_talents'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="passive_talents[2][name]" id="name" value="<?= $_POST['passive_talents'][2]['name'] ?? '' ?>" class="<?= ( empty($_POST['passive_talents'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input readonly type="text" name="passive_talents[2][unlock]" id="unlock" value="<?= isset($_POST['passive_talents'][2]['unlock']) ? $_POST['passive_talents'][2]['unlock'] : 'Unlocked Automatically' ?>" class="<?= ( empty($_POST['passive_talents'][2]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                        <input readonly type="text" name="passive_talents[2][unlock]" id="unlock" value="<?= $_POST['passive_talents'][2]['unlock'] ?? 'Unlocked Automatically' ?>" class="<?= ( empty($_POST['passive_talents'][2]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[2][description]" id="description" cols="30" rows="10"><?= isset($_POST['passive_talents'][2]['description']) ? $_POST['passive_talents'][2]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="passive_talents[2][description]" id="description" cols="30" rows="10"><?= $_POST['passive_talents'][2]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
@@ -357,19 +356,19 @@
                                 
                                     <p class="grey-text">* Optional</p>
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[3][name]" id="name" value="<?= isset($_POST['passive_talents'][3]['name']) ? $_POST['passive_talents'][3]['name'] : '' ?>" class="<?= ( empty($_POST['passive_talents'][3]['name']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="passive_talents[3][name]" id="name" value="<?= $_POST['passive_talents'][3]['name'] ?? '' ?>" class="<?= ( empty($_POST['passive_talents'][3]['name']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>">
                                         <label for="name">Name</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l3">
-                                        <input type="text" name="passive_talents[3][unlock]" id="unlock"  value="<?= isset($_POST['passive_talents'][3]['unlock']) ? $_POST['passive_talents'][3]['unlock'] : '' ?>" class="<?= ( empty($_POST['passive_talents'][3]['unlock']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>">
+                                        <input type="text" name="passive_talents[3][unlock]" id="unlock"  value="<?= $_POST['passive_talents'][3]['unlock'] ?? '' ?>" class="<?= ( empty($_POST['passive_talents'][3]['unlock']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>">
                                         <label for="unlock">Unlock</label>
                                         <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                     </div>
 
                                     <div class="input-field col l12">
-                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][3]['description']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>" name="passive_talents[3][description]" id="description" cols="30" rows="10"><?= isset($_POST['passive_talents'][3]['description']) ? $_POST['passive_talents'][3]['description'] : '' ?></textarea>
+                                        <textarea class="materialize-textarea <?= ( empty($_POST['passive_talents'][3]['description']) && isset($extraPassive_err) ) ? 'invalid' : '' ?>" name="passive_talents[3][description]" id="description" cols="30" rows="10"><?= $_POST['passive_talents'][3]['description'] ?? '' ?></textarea>
                                         <label for="description">Description</label>
                                         <span class="helper-text" data-error="<?= $extraPassive_err ?? '' ?>"></span>
                                     </div>
@@ -390,18 +389,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[1][name]" id="name" value="<?= isset($_POST['constellations'][1]['name']) ? $_POST['constellations'][1]['name'] : '' ?>" class="<?= ( empty($_POST['constellations'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[1][name]" id="name" value="<?= $_POST['constellations'][1]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][1]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[1][unlock]" id="unlock" value="Constellation lvl. 1">
+                                    <input readonly type="text" name="constellations[1][unlock]" id="unlock" value="<?= $_POST['constellations'][1]['unlock'] ?? 'Constellation lvl. 1' ?> " class="<?= ( empty($_POST['constellations'][1]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[1][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations'][1]['description']) ? $_POST['constellations'][1]['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][1]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[1][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][1]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
@@ -411,18 +411,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[2][name]" id="name" value="<?= isset($_POST['constellations'][2]['name']) ? $_POST['constellations'][2]['name'] : '' ?>" class="<?= ( empty($_POST['constellations'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[2][name]" id="name" value="<?= $_POST['constellations'][2]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][2]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[2][unlock]" id="unlock" value="Constellation lvl. 2">
+                                    <input readonly type="text" name="constellations[2][unlock]" id="unlock" value="<?= $_POST['constellations'][2]['unlock'] ?? 'Constellation lvl. 2' ?>" class="<?= ( empty($_POST['constellations'][2]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[2][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations'][2]['description']) ? $_POST['constellations'][2]['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][2]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[2][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][2]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
@@ -432,18 +433,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[3][name]" id="name" value="<?= isset($_POST['constellations']['3']['name']) ? $_POST['constellations']['3']['name'] : '' ?>" class="<?= ( empty($_POST['constellations']['3']['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[3][name]" id="name" value="<?= $_POST['constellations'][3]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][3]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[3][unlock]" id="unlock" value="Constellation lvl. 3">
+                                    <input readonly type="text" name="constellations[3][unlock]" id="unlock" value=" <?= $_POST['constellations'][3]['unlock'] ?? 'Constellation lvl. 3' ?>" class="<?= ( empty($_POST['constellations'][3]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations']['3']['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[3][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations']['3']['description']) ? $_POST['constellations']['3']['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][3]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[3][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][3]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
@@ -453,18 +455,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[4][name]" id="name" value="<?= isset($_POST['constellations']['4']['name']) ? $_POST['constellations']['4']['name'] : '' ?>" class="<?= ( empty($_POST['constellations']['4']['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[4][name]" id="name" value="<?= $_POST['constellations'][4]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][4]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[4][unlock]" id="unlock" value="Constellation lvl. 4">
+                                    <input readonly type="text" name="constellations[4][unlock]" id="unlock" value="<?= $_POST['constellations'][4]['unlock'] ?? 'Constellation lvl. 4' ?>" class="<?= ( empty($_POST['constellations'][4]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations']['4']['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[4][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations']['4']['description']) ? $_POST['constellations']['4']['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][4]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[4][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][4]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
@@ -474,18 +477,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[5][name]" id="name" value="<?= isset($_POST['constellations']['5']['name']) ? $_POST['constellations']['5']['name'] : '' ?>" class="<?= ( empty($_POST['constellations']['5']['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[5][name]" id="name" value="<?= $_POST['constellations'][5]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][5]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[5][unlock]" id="unlock" value="Constellation lvl. 5">
+                                    <input readonly type="text" name="constellations[5][unlock]" id="unlock" value="<?= $_POST['constellations'][5]['unlock'] ?? 'Constellation lvl. 5' ?>" class="<?= ( empty($_POST['constellations'][5]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations']['5']['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[5][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations']['5']['description']) ? $_POST['constellations']['5']['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][5]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[5][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][5]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
@@ -495,18 +499,19 @@
                             <div class="constellation col l12">
 
                                 <div class="input-field col l3">
-                                    <input type="text" name="constellations[6][name]" id="name" value="<?= isset($_POST['constellations']['6']['name']) ? $_POST['constellations']['6']['name'] : '' ?>" class="<?= ( empty($_POST['constellations']['6']['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                    <input type="text" name="constellations[6][name]" id="name" value="<?= $_POST['constellations'][6]['name'] ?? '' ?>" class="<?= ( empty($_POST['constellations'][6]['name']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="name">Name</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l3">
-                                    <input readonly type="text" name="constellations[6][unlock]" id="unlock" value="Constellation lvl. 6">
+                                    <input readonly type="text" name="constellations[6][unlock]" id="unlock" value=" <?= $_POST['constellations'][6]['unlock'] ?? 'Constellation lvl. 6' ?>" class="<?= ( empty($_POST['constellations'][6]['unlock']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                     <label for="unlock">Unlock</label>
+                                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>
 
                                 <div class="input-field col l12">
-                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations']['6']['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[6][description]" id="description" cols="30" rows="10"><?= isset($_POST['constellations']['6']['description']) ? $_POST['constellations']['6']['description'] : '' ?></textarea>
+                                    <textarea class="materialize-textarea <?= ( empty($_POST['constellations'][6]['description']) && isset($empty_err) ) ? 'invalid' : '' ?>" name="constellations[6][description]" id="description" cols="30" rows="10"><?= $_POST['constellations'][6]['description'] ?? '' ?></textarea>
                                     <label for="description">Description</label>
                                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                                 </div>

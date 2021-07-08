@@ -8,6 +8,18 @@
         if(empty($character)){
             header("Location: index.php");
         }
+
+        $color = [  'Anemo' => '#76FFD7',
+                    'Cryo' => '#99FFF9',
+                    'Electro' => '#FFACE6',
+                    'Geo' => '#FFE699',
+                    'Hydro' => '#80C0FF',
+                    'Pyro' => '#FF9991' ];
+        $tierBG = [ 'S' => '#FF7F7F',
+                    'A' => '#FFBF7F',
+                    'B' => '#FFFF7F',
+                    'C' => '#BFFF7F',
+                    'D' => '#7FFF7F'    ];
     }    
 ?>
 
@@ -15,8 +27,8 @@
 
 
 
-    <div class="character-container blue-grey darken-3">
-        <div class="single-char-header blue-grey darken-4">
+    <div class="character-container blue-grey darken-3 z-depth-4">
+        <div class="single-char-header blue-grey darken-4 z-depth-2">
 
                 <a href="#" class='character-portrait'>
                     <img src="<?= $character->Thumbnail() ?>" class='character-icon responsive-img' alt="<?= $character->name ?>">
@@ -25,12 +37,12 @@
                 </a>
 
                 <div class="single-char-info">
-                    <p><?= $character->name ?></p>
+                    <p class="char_name" style="color: <?= $color[$character->vision] ?>"><?= $character->name ?></p>
                     <p><?= $character->nickname ?></p>
-                    <p><?= $character->vision ?> * <?= $character->weapon ?></p>
+                    <p><span style="color: <?= $color[$character->vision] ?>"><?= $character->vision ?></span> * <?= $character->weapon ?></p>
                 </div>
 
-                <div class="single-char-tier red"><?= $character->tier ?></div>
+                <div class="single-char-tier" style="background: <?= $tierBG[$character->tier] ?>"><?= $character->tier ?></div>
 
         </div>
 
@@ -44,7 +56,7 @@
                 foreach($skills as $skill): 
             ?>
             <div class="col s12 m12 l4">
-                <div class="talent-info blue-grey darken-4 center-align">
+                <div class="talent-info blue-grey darken-4 center-align z-depth-2">
                     <h6 class="yellow-text"><?= $skill->name ?></h6>
                     <p class="grey-text">Unlock: <?= $skill->unlock ?></h6>
                     <p class="left-align"><?= nl2br($skill->description) ?></p>
@@ -64,7 +76,7 @@
             
             ?>
             <div class="col s12 m12 l4">
-                <div class="talent-info blue-grey darken-4 center-align">
+                <div class="talent-info blue-grey darken-4 center-align z-depth-2">
                     <h6 class="yellow-text"><?= $passive->name ?></h6>
                     <p class="grey-text">Unlock: <? $passive->unlock ?></h6>
                     <p class="left-align"><?= nl2br($passive->description) ?></p>
@@ -85,7 +97,7 @@
             foreach($constellations as $constellation): 
             ?>
             <div class="col s12 m12 l4 s">
-                <div class="constellation-info blue-grey darken-4 center-align">
+                <div class="constellation-info blue-grey darken-4 center-align z-depth-2">
                     <h6 class="yellow-text"><?= $constellation->name ?></h6>
                     <p class="grey-text">Unlock: <?= $constellation->unlock ?></h6>
                     <p class="left-align"><?= nl2br($constellation->description) ?></p>

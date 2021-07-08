@@ -21,11 +21,12 @@
                  }
     
                 $session->set_message("<p class='green-text'>Consumable $uConsumable->name updated!</p>");
-                header("Refresh:0");
             }else{
-                $empty_err   = isset($uConsumable['error']['empty']) ? $uConsumable['error']['empty'] : "";
-                $name_err    = isset($uConsumable['error']['name']) ? $uConsumable['error']['name'] : $empty_err;
+                $empty_err   = $uConsumable['error']['empty'] ?? "";
+                $name_err    = $uConsumable['error']['name'] ?? $empty_err;
             }
+        }else{
+            $session->set_message("<p class='green-text'>There was an error updating the consumable</p>");
         }
     }
 
@@ -51,26 +52,26 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : $consumable->name ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($uConsumable['error']['name']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="name" name="name" value="<?= $_POST['name'] ?? $consumable->name ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($uConsumable['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
                                 <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
                                 <select id="rarity" name="rarity">
-                                    <option value="1" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $consumable->rarity) == '1' ) ? 'selected' : '' ?>>1 Star</option>
-                                    <option value="2" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $consumable->rarity) == '2' ) ? 'selected' : '' ?>>2 Star</option>
-                                    <option value="3" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $consumable->rarity) == '3' ) ? 'selected' : '' ?>>3 Star</option>
-                                    <option value="4" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $consumable->rarity) == '4' ) ? 'selected' : '' ?>>4 Star</option>
-                                    <option value="5" <?= ( (isset($_POST['rarity']) ? $_POST['rarity'] : $consumable->rarity) == '5' ) ? 'selected' : '' ?>>5 Star</option>
+                                    <option value="1" <?= ( ($_POST['rarity'] ?? $consumable->rarity) == '1' ) ? 'selected' : '' ?>>1 Star</option>
+                                    <option value="2" <?= ( ($_POST['rarity'] ?? $consumable->rarity) == '2' ) ? 'selected' : '' ?>>2 Star</option>
+                                    <option value="3" <?= ( ($_POST['rarity'] ?? $consumable->rarity) == '3' ) ? 'selected' : '' ?>>3 Star</option>
+                                    <option value="4" <?= ( ($_POST['rarity'] ?? $consumable->rarity) == '4' ) ? 'selected' : '' ?>>4 Star</option>
+                                    <option value="5" <?= ( ($_POST['rarity'] ?? $consumable->rarity) == '5' ) ? 'selected' : '' ?>>5 Star</option>
                                 </select>
                                 <label>Rarity</label>
                             </div>
 
                             <div class="input-field col l6 s12">
                                 <select id="category" name="category">
-                                    <option value="Alchemy" <?= ( (isset($_POST['category']) ? $_POST['category'] : $consumable->category) == 'Alchemy' ) ? 'selected' : '' ?>>Alchemy</option>
-                                    <option value="Food" <?= ( (isset($_POST['category']) ? $_POST['category'] : $consumable->category) == 'Food' ) ? 'selected' : '' ?>>Food</option>
+                                    <option value="Alchemy" <?= ( ($_POST['category'] ?? $consumable->category) == 'Alchemy' ) ? 'selected' : '' ?>>Alchemy</option>
+                                    <option value="Food" <?= ( ($_POST['category'] ?? $consumable->category) == 'Food' ) ? 'selected' : '' ?>>Food</option>
                                 </select>
                                 <label>Category</label>
 
@@ -78,20 +79,20 @@
                             <div class="input-field col l6 s12">
                                 <select id="type" name="type">
                                     <?php foreach(CONSUMABLE_TYPES as $type): ?>
-                                        <option value="<?= $type ?>" <?= ( (isset($_POST['type']) ? $_POST['type'] : $consumable->type) == $type) ? 'selected' : '' ?> ><?= $type ?></option>
+                                        <option value="<?= $type ?>" <?= ( ($_POST['type'] ?? $consumable->type) == $type) ? 'selected' : '' ?> ><?= $type ?></option>
                                     <?php endforeach ?>
                                 </select>
                                 <label>Type</label>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="bonus" name="bonus" value="<?=  isset($_POST['bonus']) ? $_POST['bonus'] : $consumable->bonus ?>" class="<?= ( empty($_POST['bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="bonus" name="bonus" value="<?= $_POST['bonus'] ?? $consumable->bonus ?>" class="<?= ( empty($_POST['bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="bonus">Bonus</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="ingredients" name="ingredients" value="<?= isset($_POST['ingredients']) ? $_POST['ingredients'] :  $consumable->ingredients ?>" class="<?= ( empty($_POST['ingredients']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="ingredients" name="ingredients" value="<?= $_POST['ingredients'] ?? $consumable->ingredients ?>" class="<?= ( empty($_POST['ingredients']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="ingredients">Ingredients</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>

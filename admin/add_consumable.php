@@ -14,14 +14,12 @@
                  }
          
                  $session->set_message("<p class='green-text'> Consumable $consumable->name was Added </p>");
-                 header('location: add_consumable.php');
             }else{
-                $empty_err   = isset($consumable['error']['empty']) ? $consumable['error']['empty'] : "";
-                $name_err    = isset($consumable['error']['name']) ? $consumable['error']['name'] : $empty_err;
+                $empty_err   = $consumable['error']['empty'] ?? "";
+                $name_err    = $consumable['error']['name'] ?? $empty_err;
             }
 
         }else{
-            // print_r($consumable->get_errors());
             $session->set_message("<p class='red-text'> There was an error adding the consumable </p>");
         }
     }
@@ -40,7 +38,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($consumable['error']['name']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="name" name="name" value="<?= $_POST['name'] ?? '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($consumable['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
                                 <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
@@ -74,13 +72,13 @@
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="bonus" name="bonus" value="<?= isset($_POST['bonus']) ? $_POST['bonus'] : '' ?>" class="<?= ( empty($_POST['bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="bonus" name="bonus" value="<?= $_POST['bonus'] ?? '' ?>" class="<?= ( empty($_POST['bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="bonus">Bonus</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="ingredients" name="ingredients" value="<?= isset($_POST['ingredients']) ? $_POST['ingredients'] : '' ?>" class="<?= ( empty($_POST['ingredients']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="ingredients" name="ingredients" value="<?= $_POST['ingredients'] ?? '' ?>" class="<?= ( empty($_POST['ingredients']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="ingredients">Ingredients</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>

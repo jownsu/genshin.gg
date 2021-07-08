@@ -44,7 +44,7 @@
                             <tr>
                                 <td>
                                     <div class="weapon-container">
-                                        <img src="admin/images/artifacts/<?= $alchemy->name ?>/icon" class="character-icon" alt="">
+                                        <img src="<?= $alchemy->consumables_img() ?>" class="character-icon" alt="">
                                         <p><?= $alchemy->name ?></p> 
                                     </div>    
                                 </td>

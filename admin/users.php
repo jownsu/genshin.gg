@@ -70,7 +70,7 @@
                     <td><?= $user->lastname ?></td>
                     <td><?= $user->status ?></td>
                     <td>
-                        <a href="edit-user.php?id=<?= $user->user_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
+                        <a href="edit_user.php?id=<?= $user->user_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
                         <input type="hidden" name="users" value="<?= $user->user_id ?>">
                         <button data-target="delete-modal" data-name="<?= $user->username ?>" class="btn-small red modal-trigger btn-delete"><i class="material-icons">delete</i></button>
                     </td>

@@ -7,20 +7,17 @@
                 if(is_object($weapon)){
                     if( isset($_FILES['icon']) && is_uploaded_file($_FILES['icon']['tmp_name']) ){
                         if( !$weapon->upload($_FILES['icon'], 'icon') ){
-                            // print_r($weapon->errors);
                             $session->set_message("<p class='red-text'>" . implode("<br>", $weapon->errors) . "</p>");
                         } 
                     }
                     $session->set_message("<p class='green-text'> Weapon $weapon->name  was added </p>");
-                    header('location: add_weapon.php');
                 }else{
-                    $empty_err   = isset($weapon['error']['empty']) ? $weapon['error']['empty'] : "";
-                    $name_err    = isset($weapon['error']['name']) ? $weapon['error']['name'] : $empty_err;
-                    $baseATK_err = isset($weapon['error']['baseATK']) ? $weapon['error']['baseATK'] : $empty_err;
+                    $empty_err   = $weapon['error']['empty'] ?? "";
+                    $name_err    = $weapon['error']['name'] ?? $empty_err;
+                    $baseATK_err = $weapon['error']['baseATK'] ?? $empty_err;
                 }
 
             }else{
-                // print_r($weapon->get_errors());
                 $session->set_message("<p class='red-text'> There was an error adding the weapon </p>");
             }
 
@@ -39,7 +36,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($weapon['error']['name']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="name" name="name" value="<?= $_POST['name'] ?? '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($weapon['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
                                 <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
@@ -55,13 +52,13 @@
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="baseAttack" name="baseAttack" value="<?= isset($_POST['baseAttack']) ? $_POST['baseAttack'] : '' ?>" class="<?= ( (empty($_POST['baseAttack']) && isset($empty_err)) || isset($weapon['error']['baseATK']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="baseAttack" name="baseAttack" value="<?= $_POST['baseAttack'] ?? '' ?>" class="<?= ( (empty($_POST['baseAttack']) && isset($empty_err)) || isset($weapon['error']['baseATK']) ) ? 'invalid' : '' ?>">
                                 <label for="baseAttack">Base Attack</label>
                                 <span class="helper-text" data-error="<?= $baseATK_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="subStat" name="subStat" value="<?= isset($_POST['subStat']) ? $_POST['subStat'] : '' ?>" class="<?= ( empty($_POST['subStat']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="subStat" name="subStat" value="<?= $_POST['subStat'] ?? '' ?>" class="<?= ( empty($_POST['subStat']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="subStat">Sub Stat</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
@@ -87,13 +84,13 @@
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="passiveName" name="passiveName" value="<?= isset($_POST['passiveName']) ? $_POST['passiveName'] : '' ?>" class="<?= ( empty($_POST['passiveName']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="passiveName" name="passiveName" value="<?= $_POST['passiveName'] ?? '' ?>" class="<?= ( empty($_POST['passiveName']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="passiveName">Passive Name</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l12 s12">
-                                <input type="text" id="passiveDesc" name="passiveDesc" value="<?= isset($_POST['passiveDesc']) ? $_POST['passiveDesc'] : '' ?>" class="<?= ( empty($_POST['passiveDesc']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="passiveDesc" name="passiveDesc" value="<?= $_POST['passiveDesc'] ?? '' ?>" class="<?= ( empty($_POST['passiveDesc']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="passiveDesc">Passive Description</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>

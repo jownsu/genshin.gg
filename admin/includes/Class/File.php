@@ -41,7 +41,7 @@ trait File{
         return true;
     }
 
-    protected function rename_if_exists($path, $filename){
+    static protected function rename_if_exists($path, $filename){
         if(file_exists($path . DS . $filename)){
             $count = 1;
             list($name, $extension) = explode('.', $filename);
@@ -58,7 +58,7 @@ trait File{
         return $this->errors;
     }
 
-    static function deleteDir($dirPath) {
+    static protected function deleteDir($dirPath) {
         if (! is_dir($dirPath)) {
             throw new InvalidArgumentException("$dirPath must be a directory");
         }

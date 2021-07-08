@@ -5,6 +5,7 @@ class Post extends Model{
     
     protected static $primary_key = "post_id";
 
+    private $imagePath = "images" . DS . "Posts" . DS;
 
 
     /*******Uploading Properties******/
@@ -17,59 +18,111 @@ class Post extends Model{
         return $author;
     }
 
-    static function add($data){
+    private static function validate($data){
+        $err = array();
+
+        foreach(array_keys($data) as $key){
+            if(is_string($data[$key])){
+                $data[$key] = trim($data[$key]);
+            }
+        }
+
+        if(in_array(null, $data)){
+            $err['error']['empty'] = 'Field cannot be empty';
+        }
+
+        return $err;
+    }
+
+    static function add($data, $image = ""){
         global $session;
-        
+
+        $err = self::validate($data);
+
+        if(!empty($err)){
+            return $err;
+        }
+
         $post = new Post();
 
-        $post->title        = trim($data['title']) ?? "";
-        $post->description  = trim($data['description']) ?? "";
+        $post->title        = $data['title'] ?? "";
+        $post->description  = $data['description'] ?? "";
+        $post->image        = $image ?? "";
         $post->tags         = isset($data['tags']) ? implode(", ", $data['tags']) : '';
-        $post->post_status  = trim($data['status']) ?? "";
+        $post->post_status  = $data['status'] ?? "";
         $post->date         = date("F d, Y");
         $post->user_id      = $session->id;
 
         return $post->create() ? $post : false;
     }
 
-    static function edit($post, $input){
+    static function edit($post, $input, $image){
 
-        $post->title        = trim($input['title']) ?? "";
-        $post->description  = trim($input['description']) ?? "";
+        $err = self::validate($input);
+
+        if(!empty($err)){
+            return $err;
+        }
+
+        $post->title        = trim($input['title']);
+        $post->description  = trim($input['description']);
+        $post->image        = $image ?? $post->image;
         $post->tags         = isset($input['tags']) ? implode(", ", $input['tags']) : '';
-        $post->post_status  = trim($input['status']) ?? "";
+        $post->post_status  = trim($input['status']);
         $post->date         = date("F d, Y");
 
         return $post->update() ? $post : false;
 
     }
 
+    static function rename_img($file){
+        $imagePath = "images" . DS . "Posts" . DS;
 
-    function create_post(){
-        if(!empty($this->errors)){
-            return false;
-        }
+        $filename = self::rename_if_exists($imagePath ,$file);
         
-        if($this->create()){
-            $this->move_files();
-            return true;
-        }else{
+        return $filename;
+    }
+
+    public function upload($file, $filename){
+        //code here
+        $path = "../images/Posts/";
+        // $name = strtolower($this->name);
+
+         if(!file_exists($this->imagePath)){
+            mkdir($this->imagePath);
+         }
+
+        //  if(!file_exists($this->imagePath . $name)){
+        //     mkdir($this->imagePath . $name);
+        //  }
+
+         if($this->check_files($file)){
+           $filename = $this->rename_if_exists($this->imagePath ,$file['name']);
+
+           move_uploaded_file($file['tmp_name'], $this->imagePath . $filename);
+           return true;
+
+         }else{
             return false;
+         }
+     }
+
+
+     function delete_post(){
+        if($this->delete()){
+
+            $image = strtolower($this->image);
+            
+            // if( empty($image) || $image == "" ) return false;
+            
+            $path = IMAGES_ROOT . 'Posts' . DS . $image;
+            if(file_exists($path)){
+                unlink($path);
+            }
+
+            return true;
         }
-    }
-
-    private function move_files(){
-        if(isset($this->image_tmpname)){
-            move_uploaded_file($this->image_tmpname, IMAGES_ROOT . DS . $this->image_dir . DS . $this->image);
-        }
-    }
-
-    function set_image($file){
-
-        $this->check_files($file);
-
-        $this->image = basename($file['name']);
-        $this->image_tmpname = $file['tmp_name'];
+        return false;
     }
 
     function post_image_path(){

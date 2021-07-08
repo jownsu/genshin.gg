@@ -7,8 +7,61 @@ class User extends Model{
     private $image_placeholder = "userplaceholder.jpg";
     private $image_directory = "Users";
 
+    static function is_username_exists($username){
+        $count = User::count()->where(["username = $username"])->get();
+        return $count > 0 ? true : false;
+    }
+
+    private static function validate($data){
+        $err = array();
+
+        foreach(array_keys($data) as $key){
+            if(is_string($data[$key])){
+                $data[$key] = trim($data[$key]);
+            }
+        }
+
+        if(in_array(null, $data)){
+            $err['error']['empty'] = 'Field cannot be empty';
+        }
+
+        if(preg_match("/[!$%^&*()_+|~=`{}\[\]:\";<>?,.\/]/", $data['username'])){
+            $err['error']['username'] = "!$%^&*()_+|~=`{}[]:;<>?,./\” characters not allowed";
+        }
+
+        if(!empty($data['password']) && !empty($data['confirm_password'])){
+            if($data['password'] != $data['confirm_password']){
+                $err['error']['password'] = "Password not match";
+            }
+        }
+
+        if(!empty($data['security_answer']) && !empty($data['confirm_security_answer'])){
+            if($data['security_answer'] != $data['confirm_security_answer']){
+                $err['error']['sec_answer'] = "Security answer not match";
+            }
+        }
+
+        if(!empty($data['email'])){
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $err['error']['email'] = 'Invalid email format';
+            }
+        }
+
+
+        return $err;
+    }
 
     static function add($data){
+
+        $err = self::validate($data);
+
+        if(self::is_username_exists($data['username'])){
+            $err['error']['username'] = $data['username'] . " already exists";
+        }
+        
+        if(!empty($err)){
+            return $err;
+        }
 
         $user = new User();
 
@@ -29,6 +82,18 @@ class User extends Model{
     }
 
     static function edit($user, $input){
+
+        $err = self::validate($input);
+
+        if(self::is_username_exists($input['username']) && $user->username != $input['username'] ){
+            $err['error']['username'] = $input['username'] . " already exists";
+        }
+        
+        if(!empty($err)){
+            return $err;
+        }
+
+
         $user->username          = trim($input['username']);
         $user->firstname         = trim($input['firstname']);
         $user->lastname          = trim($input['lastname']);

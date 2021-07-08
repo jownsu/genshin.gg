@@ -35,7 +35,6 @@ class Weapon extends Model{
     }
 
     static function add($data){
-        global $session;
 
         $err = self::validate($data);
 
@@ -63,7 +62,6 @@ class Weapon extends Model{
     }
 
     static function edit($weapon, $input){
-        global $session;
 
         $err = self::validate($input);
 
@@ -92,7 +90,6 @@ class Weapon extends Model{
             }
            return $weapon;
         }else{
-            // $session->set_message("<p class='red-text'>There is an error" .$input['name'] . " failed to update</p>");
             return false;
         }
     }

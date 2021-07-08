@@ -67,7 +67,6 @@ class Character extends Model{
     }
 
     static function add($data){
-        global $session;
         
         $err = self::validate($data);
 
@@ -111,7 +110,6 @@ class Character extends Model{
     }
 
     static function edit($character, $input){
-        global $session;
         
         $err = self::validate($input);
 
@@ -148,7 +146,6 @@ class Character extends Model{
             }
            return $character;
         }else{
-            $session->set_message("<p class='red-text'>There is an error" .$data['name'] . " failed to update</p>");
             return false;
         }
     }

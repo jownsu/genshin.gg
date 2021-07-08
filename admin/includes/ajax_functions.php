@@ -55,8 +55,15 @@ if(isset($_POST['idType'])){
                     exit(json_encode(['location' => 'artifacts.php', 'message' => 'Artifact has been deleted']));
                 }
                 break;
+
             case 'Consumable':
                 if($data->delete_consumable()){
+                    exit(json_encode(['location' => 'consumables.php', 'message' => 'Consumable has been deleted']));
+                }
+                break;
+
+            case 'Post':
+                if($data->delete_post()){
                     exit(json_encode(['location' => 'consumables.php', 'message' => 'Consumable has been deleted']));
                 }
                 break;

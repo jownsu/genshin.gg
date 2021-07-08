@@ -2,46 +2,24 @@
 <?php
     if(isset($_POST['submit'])){
 
-        $firstname                = trim($_POST['firstname']);
-        $lastname                 = trim($_POST['lastname']);
-        $username                 = trim($_POST['username']);
-        $password                 = trim($_POST['password']);
-        $email                    = trim($_POST['email']);
-        $birthday_month           = trim($_POST['birthday-month']);
-        $birthday_day             = trim($_POST['birthday-day']);
-        $birthday_year            = trim($_POST['birthday-year']);
-        $gender                   = $_POST['gender'];
-        $confirm_password         = trim($_POST['confirm-password']);
-        $security_question        = trim($_POST['security-question']);
-        $security_answer          = trim($_POST['security-answer']);
-        $confirm_security_answer  = trim($_POST['confirm-security-answer']);
-        $status                   = $_POST['status'];
-        $role                     = $_POST['role'];
 
-        if(empty($username) || empty($password) || empty($firstname) || empty($lastname) || empty($security_answer) || empty($email)){
-            $session->set_message("<p class='red-text'>Fields cannot be empty</p>");
-        }else{
-            if($password != $confirm_password){
-                $session->set_message("<p class='red-text'>Password not match</p>");
-            }elseif($security_answer != $confirm_security_answer){
-                $session->set_message("<p class='red-text'>Security answer not match</p>");
-            }else{
+
                 
                 if($user = User::add($_POST)){
-                    $session->set_message("<p class='green-text'> User $user->username Added </p>");
-                    header('location: users.php');
+                    if(is_object($user)){
+                        $session->set_message("<p class='green-text'> $user->role $user->username  was added </p>");
+                    }else{
+                        $empty_err    = $user['error']['empty'] ?? "";
+                        $email_err    = $user['error']['email'] ?? $empty_err;
+                        $username_err = $user['error']['username'] ?? $empty_err;
+                        $password_err = $user['error']['password'] ?? $empty_err;
+                        $answer_err   = $user['error']['sec_answer'] ?? $empty_err;
+                    }
                 }else{
                     $session->set_message("<p class='red-text'>There is an error adding the user</p>");
                 }
 
-            }
-
-        }
-    }else{
-        $firstname = "";
-        $lastname = "";
-        $username = "";
-        $email = "";
+            
     }
 ?>
 
@@ -50,19 +28,21 @@
         <form method="POST">
             <div class="row">
                 <div class="input-field col l6 s12">
-                    <input type="text" id="firstname" name="firstname" value="<?= $firstname ?>">
+                    <input type="text" id="firstname" name="firstname" value="<?= $_POST['firstname'] ?? '' ?>" class="<?= ( empty($_POST['firstname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                     <label for="firstname">First Name</label>
+                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="text" id="lastname" name="lastname" value="<?= $lastname ?>">
+                    <input type="text" id="lastname" name="lastname" value="<?= $_POST['lastname'] ?? '' ?>" class="<?= ( empty($_POST['lastname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                     <label for="lastname">Last Name</label>
+                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                 </div>
                 
                 <div class="input-field col l2 s4">
                     <select name="birthday[month]" id="birthday-month">
                         <?php foreach(MONTHS as $month): ?>
-                            <option value="<?= $month ?>"><?=  $month ?></option>
+                            <option value="<?= $month ?>" <?= ( isset($_POST['birthday']['month']) && $_POST['birthday']['month'] == $month ) ? 'selected' : '' ?> ><?= $month ?></option>
                         <?php endforeach ?>
                     </select>
                     <label for="birthday-month">Birthday</label>
@@ -71,7 +51,7 @@
                 <div class="input-field col l2 s4">
                     <select name="birthday[day]" id="birthday-day">
                         <?php foreach(DAYS as $day): ?>
-                            <option value="<?= $day ?>"><?= $day ?></option>
+                            <option value="<?= $day ?>" <?= ( isset($_POST['birthday']['day']) && $_POST['birthday']['day'] == $day ) ? 'selected' : '' ?> ><?= $day ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -79,73 +59,79 @@
                 <div class="input-field col l2 s4">
                     <select name="birthday[year]" id="birthday-year">
                         <?php foreach(B_YEARS as $year): ?>
-                            <option value="<?= $year ?>"><?= $year ?></option>
+                            <option value="<?= $year ?>" <?= ( isset($_POST['birthday']['year']) && $_POST['birthday']['year'] == $year ) ? 'selected' : '' ?> ><?= $year ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
 
                 <div class="input-field col l6 s12">
                     <select name="gender" id="gender">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Secret">Secret</option>
+                        <option value="Male"   <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Male' ) ? 'selected' : '' ?>>Male</option>
+                        <option value="Female" <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Female' ) ? 'selected' : '' ?>>Female</option>
+                        <option value="Secret" <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Secret' ) ? 'selected' : '' ?>>Secret</option>
                     </select>
                     <label for="gender">Gender</label>
                 </div>
 
                 <div class="input-field col l6 s12">
                     <select name="role" id="role">
-                        <option value="User">User</option>
-                        <option value="Admin">Admin</option>
+                        <option value="User"  <?= ( isset($_POST['role']) && $_POST['role'] == 'User' ) ? 'selected' : '' ?>>User</option>
+                        <option value="Admin" <?= ( isset($_POST['role']) && $_POST['role'] == 'Admin' ) ? 'selected' : '' ?>>Admin</option>
                     </select>
                     <label for="role">Role</label>
                 </div>
 
                 <div class="input-field col l6 s12">
                     <select name="status" id="status">
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                        <option value="Active"   <?= ( isset($_POST['status']) && $_POST['status'] == 'Active' ) ? 'selected' : '' ?>>Active</option>
+                        <option value="Inactive" <?= ( isset($_POST['status']) && $_POST['status'] == 'Inactive' ) ? 'selected' : '' ?>>Inactive</option>
                     </select>
                     <label for="status">Status</label>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="text" id="username" name="username" value="<?= $username ?>">
+                    <input type="text" id="username" name="username" value="<?= $_POST['username'] ?? '' ?>" class="<?= ( (empty($_POST['username']) && isset($empty_err)) || isset($user['error']['username']) ) ? 'invalid' : '' ?>">
                     <label for="username">Username</label>
+                    <span class="helper-text" data-error="<?= $username_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="text" id="email" name="email" value="<?= $email ?>">
+                    <input type="text" id="email" name="email" value="<?= $_POST['email'] ?? '' ?>" class="<?= ( (empty($_POST['email']) && isset($empty_err)) || isset($user['error']['email']) ) ? 'invalid' : '' ?>">
                     <label for="email">Email</label>
+                    <span class="helper-text" data-error="<?= $email_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" value="<?= $_POST['password'] ?? '' ?>" class="<?= ( (empty($_POST['password']) && isset($empty_err)) || isset($user['error']['password']) ) ? 'invalid' : '' ?>">
                     <label for="password">Password</label>
+                    <span class="helper-text" data-error="<?= $password_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="password" id="confirm-password" name="confirm-password">
+                    <input type="password" id="confirm-password" name="confirm_password" value="<?= $_POST['confirm_password'] ?? '' ?>" class="<?= ( (empty($_POST['confirm_password']) && isset($empty_err)) || isset($user['error']['password']) ) ? 'invalid' : '' ?>">
                     <label for="confirm-password">Confirm Password</label>
+                    <span class="helper-text" data-error="<?= $password_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l12 s12">
-                    <select name="security-question" id="security-question">
+                    <select name="security_question" id="security-question">
                         <?php foreach(SECURTY_QUESTIONS as $question): ?>
-                            <option value="<?= $question ?>"><?= $question ?></option>
+                            <option value="<?= $question ?>" <?= ( isset($_POST['security_question']) && $_POST['security_question'] == $question ) ? 'selected' : '' ?> ><?= $question ?></option>
                         <?php endforeach ?>
                     </select>
                     <label for="security-question">Security Question</label>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="password" id="security-answer" name="security-answer">
+                    <input type="password" id="security-answer" name="security_answer" value="<?= $_POST['security_answer'] ?? '' ?>" class="<?= ( (empty($_POST['security_answer']) && isset($empty_err)) || isset($user['error']['sec_answer']) ) ? 'invalid' : '' ?>">
                     <label for="security-answer">Security Answer</label>
+                    <span class="helper-text" data-error="<?= $answer_err ?? '' ?>"></span>
                 </div>
 
                 <div class="input-field col l6 s12">
-                    <input type="password" id="confirm-security-answer" name="confirm-security-answer">
+                    <input type="password" id="confirm-security-answer" name="confirm_security_answer" value="<?= $_POST['confirm_security_answer'] ?? '' ?>" class="<?= ( (empty($_POST['confirm_security_answer']) && isset($empty_err)) || isset($user['error']['sec_answer']) ) ? 'invalid' : '' ?>">
                     <label for="confirm-security-answer">Confirm Security Answer</label>
+                    <span class="helper-text" data-error="<?= $answer_err ?? '' ?>"></span>
                 </div>
     
                 <input type="submit" value="Submit" name="submit" class="btn-small green">

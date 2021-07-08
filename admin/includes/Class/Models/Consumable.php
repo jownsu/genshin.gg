@@ -31,7 +31,6 @@ class Consumable extends Model{
     }
 
     static function add($data){
-        global $session;
 
         $err = self::validate($data);
 
@@ -56,13 +55,11 @@ class Consumable extends Model{
         if($consumable->create()){
             return $consumable;
         }else{
-            $session->set_message("<p class='red-text'>There is an error." .$data['name'] . " failed to add</p>");
             return false;
         }
     }
 
     static function edit($consumable, $input){
-        global $session;
 
         $err = self::validate($input);
 
@@ -89,7 +86,6 @@ class Consumable extends Model{
             }
            return $consumable;
         }else{
-            $session->set_message("<p class='red-text'>There is an error" .$input['name'] . " failed to update</p>");
             return false;
         }
     }

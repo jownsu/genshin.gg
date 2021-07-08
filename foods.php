@@ -45,7 +45,7 @@
                             <tr>
                                 <td>
                                     <div class="weapon-container">
-                                        <img src="admin/images/artifacts/<?= $food->name ?>/icon" class="character-icon" alt="">
+                                        <img src="<?= $food->consumables_img() ?>" class="character-icon" alt="">
                                         <p><?= $food->name ?></p> 
                                     </div>    
                                 </td>

@@ -11,12 +11,27 @@
 
     if(isset($_POST['update'])){
 
-        if($uPost = Post::edit($post, $_POST) ){
-            $session->set_message("<p class='green-text'>The Post $uPost->title was Updated!</p>");
-            header('location: my_posts.php');
+        $image = !empty($_FILES['post_image']['name']) ? $_FILES['post_image']['name'] : $post->image;
+
+        $image_name = Post::rename_img($image);
+
+        if($uPost = Post::edit($post, $_POST, $image_name) ){
+            if(is_object($uPost)){
+
+                if( isset($_FILES['post_image']) && is_uploaded_file($_FILES['post_image']['tmp_name']) ){
+                    if( !$uPost->upload($_FILES['post_image'], $image_name) ){
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $uPost->errors) . "</p>");
+                    } 
+                 }
+
+                $session->set_message("<p class='green-text'>Artifact $uPost->title updated!</p>");
+            }else{
+                $empty_err   = $uPost['error']['empty'] ?? "";
+            }
         }else{
             $session->set_message("<p class='red-text'>There was an error updating the post</p>");
         }
+
     }
     
     if(isset($_POST['delete'])){
@@ -39,34 +54,51 @@
                 <img src="<?= $post->post_image_path() ?>" alt="img" class="responsive-img post-image">
             </div>
             <div class="col s12">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
+
                     <input type="hidden" name="id" value="<?= $post->post_id ?>">
+
+                    <div class="file-field input-field">
+                        <div class="btn-small green">
+                            <span>Change Image</span>
+                            <input type="file" name="post_image">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input type="text" class="file-path validate"  accept="image/*">
+                        </div>
+                    </div>
+
                     <div class="input-field">
-                        <input type="text" id="title" name="title" value="<?= $post->title ?>">
+                        <input type="text" id="title" name="title" value="<?= $_POST['title'] ?? $post->title ?>" class="<?= ( empty($_POST['title']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                         <label for="title">Post Title</label>
+                        <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                     </div>
+
                     <div class="input-field">
-                        <textarea id="description" name="description" class="materialize-textarea"><?= $post->description ?></textarea>
+                        <textarea id="description" name="description" class="materialize-textarea <?= ( empty($_POST['description']) && isset($empty_err) ) ? 'invalid' : '' ?>"><?= $_POST['description'] ?? $post->description ?></textarea>
                         <label for="description">Post Description</label>
+                        <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                     </div>
+                    
                     <div class="input-field">
                         <select name="tags[]" multiple>
                             <?php 
                             $tags = $post->post_tags();
                             foreach(TAGS as $tag): ?>
-                                <option value="<?= $tag ?>" <?= in_array($tag, $tags) ? 'selected' : '' ?>><?= $tag ?></option>
+                                <option value="<?= $tag ?>" <?= in_array($tag, $_POST['tags'] ?? $tags) ? 'selected' : '' ?>><?= $tag ?></option>
                             <?php endforeach ?>
                         </select>
                         <label>Select Tag</label>
                     </div>
+
                     <div class="input-field col s12">
                         <select name="status">
-                            <?php foreach(POST_STATUS as $status): ?>
-                                <option value="<?= $status ?>" <?= $post->post_status == $status ? 'selected' : '' ?>><?= $status ?></option>
-                            <?php endforeach ?>
+                            <option value="Published" <?= ( ($_POST['status'] ?? $post->post_status) == 'Published' ) ? 'selected' : '' ?>>Published</option>
+                            <option value="Draft" <?= ( ($_POST['status'] ?? $post->post_status) == 'Draft' ) ? 'selected' : '' ?>>Draft</option>
                         </select>
                         <label>Status</label>
                     </div>
+
                     <input type="submit" value="Update" name="update" class="btn-small green">
                     <button data-target="delete-post-modal" class="btn-small red modal-trigger btn-delete">Delete</button>
                 </form>

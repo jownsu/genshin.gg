@@ -31,7 +31,6 @@ class Artifact extends Model{
     }
 
     static function add($data){
-        global $session;
 
         $err = self::validate($data);
 
@@ -55,7 +54,6 @@ class Artifact extends Model{
     }
 
     static function edit($artifact, $input){
-        global $session;
         
         $err = self::validate($input);
 
@@ -80,7 +78,6 @@ class Artifact extends Model{
             }
            return $artifact;
         }else{
-            $session->set_message("<p class='red-text'>There is an error" .$input['name'] . " failed to update</p>");
             return false;
         }
     }

@@ -11,10 +11,9 @@
                     } 
                  }
                  $session->set_message("<p class='green-text'> Artifact $artifact->name was Added </p>");
-                 header('location: add_artifact.php');
             }else{
-                $empty_err   = isset($artifact['error']['empty']) ? $artifact['error']['empty'] : "";
-                $name_err    = isset($artifact['error']['name']) ? $artifact['error']['name'] : $empty_err;
+                $empty_err   = $artifact['error']['empty'] ?? "";
+                $name_err    = $artifact['error']['name'] ?? $empty_err;
             }
 
 
@@ -38,7 +37,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="input-field col l6 s12">
-                                <input type="text" id="name" name="name" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($artifact['error']['name']) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="name" name="name" value="<?= $_POST['name'] ?? '' ?>" class="<?= ( (empty($_POST['name']) && isset($empty_err)) || isset($artifact['error']['name']) ) ? 'invalid' : '' ?>">
                                 <label for="name">Name</label>
                                 <span class="helper-text" data-error="<?= $name_err ?? '' ?>"></span>
                             </div>
@@ -55,13 +54,13 @@
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="two_piece_bonus" name="two_piece_bonus" value="<?= isset($_POST['two_piece_bonus']) ? $_POST['two_piece_bonus'] : '' ?>" class="<?= ( empty($_POST['two_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="two_piece_bonus" name="two_piece_bonus" value="<?= $_POST['two_piece_bonus'] ?? '' ?>" class="<?= ( empty($_POST['two_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="two_piece_bonus">Two Piece Bonus</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>
 
                             <div class="input-field col l6 s12">
-                                <input type="text" id="four_piece_bonus" name="four_piece_bonus" value="<?= isset($_POST['four_piece_bonus']) ? $_POST['four_piece_bonus'] : '' ?>" class="<?= ( empty($_POST['four_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
+                                <input type="text" id="four_piece_bonus" name="four_piece_bonus" value="<?= $_POST['four_piece_bonus'] ?? '' ?>" class="<?= ( empty($_POST['four_piece_bonus']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                                 <label for="four_piece_bonus">Four Piece Bonus</label>
                                 <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                             </div>

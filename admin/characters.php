@@ -57,7 +57,7 @@
                     <td><img src="<?= $character->Weapon() ?>" alt="<?= $character->weapon ?>" class="table-thumbnails tooltipped" data-position="top" data-tooltip="<?= $character->weapon ?>"></td>
                     <td><img src="<?= $character->Vision() ?>" alt="<?= $character->vision ?>" class="table-thumbnails tooltipped" data-position="top" data-tooltip="<?= $character->vision ?>""></td>
                     <td>
-                            <a href="edit-character.php?id=<?= $character->char_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
+                            <a href="edit_character.php?id=<?= $character->char_id ?>" class="btn-small blue"><i class="material-icons">update</i></a>
                             <input type="hidden" name="characters" value="<?= $character->char_id ?>">
                             <button data-target="delete-modal" data-id="<?= $character->char_id ?>" data-name="<?= $character->name ?>" class="btn-small red modal-trigger btn-delete"><i class="material-icons">delete</i></button>
                     </td>
