@@ -133,4 +133,15 @@ class Artifact extends Model{
         return $this->image_path() . $this->max_rarity ." Star.png";
     }
 
+    /**********API*********/
+    static function fetch($name){
+        // $name = str_replace('-', ' ', $name);
+        $artifact = self::where(["name = {$name}"])->get_single();
+
+        if(empty($artifact)) return false;
+
+        unset($artifact->id);
+        return json_encode($artifact);
+     }
+
 }

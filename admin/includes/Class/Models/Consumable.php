@@ -143,4 +143,14 @@ class Consumable extends Model{
         return $this->image_path() . $this->rarity ." Star.png";
     }
 
+    /*********API**************/
+    static function fetch($name){
+        // $name = str_replace('-', ' ', $name);
+        $consumable = self::where(["name = {$name}"])->get_single();
+
+        if(empty($consumable)) return false;
+
+        unset($consumable->id);
+        return json_encode($consumable);
+     }
 }

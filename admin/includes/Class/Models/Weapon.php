@@ -145,6 +145,18 @@ class Weapon extends Model{
         return $this->image_path() . $this->rarity ." Star.png";
     }
 
+    /***********API**********/
+
+    static function fetch($name){
+        // $name = str_replace('-', ' ', $name);
+        $weapon = self::where(["name = {$name}"])->get_single();
+
+        if(empty($weapon)) return false;
+
+        unset($weapon->id);
+        return json_encode($weapon);
+     }
+
 
 
 

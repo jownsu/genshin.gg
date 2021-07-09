@@ -251,4 +251,18 @@ class Character extends Model{
 
         return $count ? $count : 0;
     }
+
+    /****API**********/
+    public static function fetch($name){
+        //   $name = str_replace('-', ' ', $name);
+          $character = self::where(["name = {$name}"])->get_single();
+
+          if(empty($character)) return false;
+
+          $character->skillTalents   = json_decode($character->skillTalents);
+          $character->passiveTalents = json_decode($character->passiveTalents);
+          $character->constellations = json_decode($character->constellations);
+          unset($character->char_id);
+          return json_encode($character);
+       } 
 }

@@ -1,0 +1,13 @@
+RewriteEngine on
+
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule .* - [L]
+
+RewriteRule ^api/(characters|weapons|artifacts|consumables)/*$ api/index.php?type=$1 [NC,L]
+
+RewriteRule ^api/(characters|weapons|artifacts|consumables)/([a-zA-Z-'\s]+)/(icon|portrait)$ api/image.php?type=$1&name=$2&img=$3 [NC,L]
+
+RewriteRule ^api/(characters|weapons|artifacts|consumables)/([a-zA-Z-'\s]+)/*$ api/read.php?type=$1&name=$2 [NC,L]
+
+#redirect the link with .php extension
+#RewriteRule ^api/([^\.]+)$ $1.php [NC,L]
