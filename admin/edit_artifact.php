@@ -21,6 +21,7 @@
                  }
 
                 $session->set_message("<p class='green-text'>Artifact $uArtifact->name updated!</p>");
+                header("Refresh: 0");
             }else{
                 $empty_err   = $uArtifact['error']['empty'] ?? "";
                 $name_err    = $uArtifact['error']['name'] ?? $empty_err;

@@ -2,16 +2,19 @@
 <?php
     if(isset($_POST['submit'])){
 
-            $image_name = $_FILES['post_image']['name'] ?? "";
+            $image = !empty($_FILES['post_image']['name']) ? $_FILES['post_image']['name'] : "";
+
+            $image_name = Post::rename_img($image);
 
             if($post = Post::add($_POST, $image_name)){
                 if(is_object($post)){
                     if( isset($_FILES['post_image']) && is_uploaded_file($_FILES['post_image']['tmp_name']) ){
-                        if( !$post->upload($_FILES['post_image']) ){
+                        if( !$post->upload($_FILES['post_image'], $image_name) ){
                              $session->set_message("<p class='red-text'>" . implode("<br>", $post->errors) . "</p>");
                         } 
                      }
                     $session->set_message("<p class='green-text'> Post $post->title was Added </p>");
+                    header("Refresh: 0");
                 }else{
                     $empty_err = $post['error']['empty'] ?? "";
                 }
@@ -40,6 +43,7 @@
                     <?php foreach(TAGS as $tag): ?>
                         <option value="<?= $tag ?>" <?= ( isset($_POST['tags']) && in_array($tag, $_POST['tags']) ) ? 'selected' : '' ?>><?= $tag ?></option>
                     <?php endforeach ?>
+                    <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
                 </select>
                 <label>Select Tag</label>
             </div>

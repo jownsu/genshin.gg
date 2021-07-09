@@ -21,6 +21,7 @@
                  }
     
                 $session->set_message("<p class='green-text'>Consumable $uConsumable->name updated!</p>");
+                header("Refresh: 0");
             }else{
                 $empty_err   = $uConsumable['error']['empty'] ?? "";
                 $name_err    = $uConsumable['error']['name'] ?? $empty_err;

@@ -64,7 +64,7 @@ if(isset($_POST['idType'])){
 
             case 'Post':
                 if($data->delete_post()){
-                    exit(json_encode(['location' => 'consumables.php', 'message' => 'Consumable has been deleted']));
+                    exit(json_encode(['location' => 'my_posts.php', 'message' => 'Post has been deleted']));
                 }
                 break;
             

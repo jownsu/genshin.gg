@@ -21,6 +21,7 @@
                  }
     
                 $session->set_message("<p class='green-text'>Weapon $uWeapon->name updated!</p>");
+                header("Refresh: 0");
             }else{
                 $empty_err   = $uWeapon['error']['empty'] ?? "";
                 $name_err    = $uWeapon['error']['name'] ?? $empty_err;

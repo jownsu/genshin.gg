@@ -25,8 +25,8 @@
                         weapon enhancement materials into higher rarity ones. Alchemists are usually located in the major cities.</p>
 
                 </div>
-                <div class="weapon-table">
-                    <table class="highlight centered">
+                <div class="info-table">
+                    <table class="highlight responsive-table">
                         <thead>
                             <tr>
                                 <th>Consumable</th>

@@ -39,8 +39,8 @@
                     </div>
                 </div>
 
-                <div class="weapon-table">
-                    <table class="highlight centered">
+                <div class="info-table">
+                    <table class="highlight responsive-table">
                         <thead>
                             <tr>
                                 <th>Weapon</th>

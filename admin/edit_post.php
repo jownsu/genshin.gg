@@ -11,6 +11,8 @@
 
     if(isset($_POST['update'])){
 
+        $current_image = $post->image ?? "";
+
         $image = !empty($_FILES['post_image']['name']) ? $_FILES['post_image']['name'] : $post->image;
 
         $image_name = Post::rename_img($image);
@@ -19,12 +21,13 @@
             if(is_object($uPost)){
 
                 if( isset($_FILES['post_image']) && is_uploaded_file($_FILES['post_image']['tmp_name']) ){
-                    if( !$uPost->upload($_FILES['post_image'], $image_name) ){
-                         $session->set_message("<p class='red-text'>" . implode("<br>", $uPost->errors) . "</p>");
+                    if( !$uPost->upload($_FILES['post_image'], $image_name, $current_image) ){
+                         $session->set_message("<p class='red-text'>" . implode("<br>", $post->errors) . "</p>");
                     } 
                  }
 
-                $session->set_message("<p class='green-text'>Artifact $uPost->title updated!</p>");
+                $session->set_message("<p class='green-text'>Post $uPost->title updated!</p>");
+                header("Refresh: 0");
             }else{
                 $empty_err   = $uPost['error']['empty'] ?? "";
             }
@@ -35,7 +38,7 @@
     }
     
     if(isset($_POST['delete'])){
-        if($post->delete()){
+        if($post->delete_post()){
             $session->set_message("<p class='green-text'> Post " . $post->title . " has been deleted </p>");
             header('Location: my_posts.php');
         }else{

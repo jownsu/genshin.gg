@@ -51,6 +51,7 @@ require_once("includes/navigation.php"); ?>
             
             <h6>Quick View</h6>
             <div class="char-modal">
+
             <div class="tier-container row z-depth-2">
                 <div class="tier valign-wrapper" style="background: #FF7F7F">
                     <span>S</span>

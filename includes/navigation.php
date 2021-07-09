@@ -25,8 +25,13 @@
             <li><a href="characters.php">Character</a></li>
             <li><a href="tierlist.php">Tier List</a></li>
             <li><a href="weapons.php">Weapon</a></li>
-            <li><a href="artifact.php">Artifact</a></li>
+            <li><a href="artifacts.php">Artifact</a></li>
             <li><a href="alchemy.php">Alchemy</a></li>
             <li><a href="foods.php">Food</a></li>
+            <?php if(!$session->is_signed_in()): ?>
+                <li><a href="#login_modal" class="modal-trigger">Login</a></li>
+            <?php else: ?>
+                <li><a href="admin/index.php" class="modal-trigger"><?= $session->username ?></a></li>
+            <?php endif ?>
         </ul>
     </header>

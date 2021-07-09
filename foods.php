@@ -26,8 +26,8 @@
                         some characters create enhanced versions of certain dishes.</p>
 
                 </div>
-                <div class="weapon-table">
-                    <table class="highlight centered">
+                <div class="info-table">
+                    <table class="highlight responsive-table">
                         <thead>
                             <tr>
                                 <th>Consumable</th>

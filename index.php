@@ -37,19 +37,24 @@
 
 
                 foreach($posts as $post): ?>
-                    <div class="post-container">
-                        <img src="<?= $post->post_image_path() ?>" alt="" class="post-img">
-                        <div class="post-content">
+                    <div class="post-container row">
+                        <div class="post-img-container col l4 m12 s12">
+                            <img src="<?= $post->post_image_path() ?>" alt="" class="post-img">
+                        </div>
+                        <div class="post-content col l8 m12 s12">
                             <a href="single-post.php?id=<?= $post->post_id ?>" class="post-title"><?= $post->title ?></a>
                             <p>
                             <?php
                                 $tags = $post->post_tags();
-                                foreach($tags as $tag): ?>
-                                    <div class="chip"><?= $tag ?></div>
-                                <?php endforeach ?>
+                                if($tags[0] != ""):
+                                    foreach($tags as $tag): ?>
+                                        <div class="chip"><?= $tag ?></div>
+                                <?php 
+                                        endforeach;
+                                    endif;
+                                ?>
                             Posted by <?= $post->author()->username ?> at <?= $post->date ?></p>
                             <p class="post-body"><?= $post->post_description() ?></p>
-                            <a href="single-post.php">See more</a>
                         </div>            
                     </div>
                 <?php endforeach ?>

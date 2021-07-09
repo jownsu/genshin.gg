@@ -27,6 +27,7 @@
                      }
                  }
                 $session->set_message("<p class='green-text'>Character $uCharacter->name updated!</p>");
+                header("Refresh: 0");
             }else{
                 $empty_err   = $uCharacter['error']['empty'] ?? "";
                 $name_err    = $uCharacter['error']['name'] ?? $empty_err;

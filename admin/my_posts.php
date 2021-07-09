@@ -55,9 +55,11 @@
                     <td>
                         <?php
                         $tags = $post->post_tags();
+                        if($tags[0] != ""):
                         foreach($tags as $tag): ?>
                         <div class="chip"><?= $tag ?></div>
-                        <?php endforeach ?>
+                        <?php endforeach;
+                        endif; ?>
                     </td>
                     <td><?= $post->author()->username ?></td>
                     <td><?= $post->post_status ?></td>

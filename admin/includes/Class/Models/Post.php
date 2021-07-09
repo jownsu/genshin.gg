@@ -6,6 +6,7 @@ class Post extends Model{
     protected static $primary_key = "post_id";
 
     private $imagePath = "images" . DS . "Posts" . DS;
+    private $post_placeholder = "post_placeholder.jpg";
 
 
     /*******Uploading Properties******/
@@ -76,6 +77,7 @@ class Post extends Model{
     }
 
     static function rename_img($file){
+        if(empty($file)) return $file;
         $imagePath = "images" . DS . "Posts" . DS;
 
         $filename = self::rename_if_exists($imagePath ,$file);
@@ -83,9 +85,9 @@ class Post extends Model{
         return $filename;
     }
 
-    public function upload($file, $filename){
+    public function upload($file, $filename, $oldimage = null){
         //code here
-        $path = "../images/Posts/";
+        $path = IMAGES_ROOT . 'Posts' . DS;
         // $name = strtolower($this->name);
 
          if(!file_exists($this->imagePath)){
@@ -97,9 +99,12 @@ class Post extends Model{
         //  }
 
          if($this->check_files($file)){
-           $filename = $this->rename_if_exists($this->imagePath ,$file['name']);
+        //    $filename = $this->rename_if_exists($this->imagePath ,$file['name']);
 
            move_uploaded_file($file['tmp_name'], $this->imagePath . $filename);
+           if(!empty($oldimage)){
+                unlink($path . $oldimage);   
+           }
            return true;
 
          }else{
@@ -111,22 +116,27 @@ class Post extends Model{
      function delete_post(){
         if($this->delete()){
 
-            $image = strtolower($this->image);
+            if(!empty($this->image)){
+                $image = strtolower($this->image);
             
-            // if( empty($image) || $image == "" ) return false;
-            
-            $path = IMAGES_ROOT . 'Posts' . DS . $image;
-            if(file_exists($path)){
-                unlink($path);
+                // if( empty($image) || $image == "" ) return false;
+                
+                $path = IMAGES_ROOT . 'Posts' . DS . $image;
+    
+                if(file_exists($path)){
+                    unlink($path);
+                }
             }
-
             return true;
         }
         return false;
     }
 
     function post_image_path(){
-        return $this->image_path() . $this->image_dir . DS . $this->image;
+        return (file_exists(IMAGES_ROOT . DS . 'Posts' . DS . $this->image) && !empty($this->image) )
+        ? $this->image_path() . "Posts" . DS . $this->image 
+        : $this->image_path() . "Posts" . DS . $this->post_placeholder;
+
     }
 
     function post_description(){

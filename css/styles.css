@@ -260,19 +260,22 @@ ul li a.active::after{
     color: rgb(188, 187, 214);
     border-radius: 1em;
     padding: 1em;
-    display: flex;
-    gap: 2em;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+
     flex-wrap: wrap;
     margin: 1em 0;
     background: #37474F;
     box-shadow: 2px 2px 10px 3px #181F22;
 }
+
+.post-img-container{
+    height: 200px;
+}
     
 .post-img{
-    width: 300px;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .post-content{
@@ -489,7 +492,8 @@ textarea.materialize-textarea{
 @media (max-width: 992px){
     .character-portrait{
 
-        width: 16.62%;
+        width: 80px;
+        height: 125px;
     }
 
     .character-container{
@@ -499,12 +503,16 @@ textarea.materialize-textarea{
     .modal{
         width: 675px;
     }
+
+    .user-table thead tr th:nth-child(2){
+        padding: 50px 0px;
+      }
 }
 
 @media (max-width: 750px){
     .character-portrait{
-        padding: 1em;
-        width: 25%;
+        width: 90px;
+        height: 125px;
     }
     .character-container{
         width: 450px;
@@ -517,8 +525,8 @@ textarea.materialize-textarea{
 
 @media (max-width: 600px){
     .character-portrait{
-        padding: .1em;
-        width: 33.3%;
+        width: 80px;
+        height: 125px;
     }
     .character-container{
         width: 350px;
@@ -532,5 +540,8 @@ textarea.materialize-textarea{
         flex-direction: column;
         gap: 1em;
         margin-top: 1.5em;
+    }
+    .elemList{
+        gap: .5em;
     }
 }

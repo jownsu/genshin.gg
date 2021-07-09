@@ -24,9 +24,13 @@
                 <p>Posted by <?= $post->author()->username . " " .$post->date ?></p>
                 <?php
                  $tags = $post->post_tags();
+                 if($tags[0] != ""):
                  foreach($tags as $tag): ?>
                     <div class="chip"><?= $tag ?></div>
-                <?php endforeach ?>
+                <?php endforeach;
+                endif; ?>
+
+                
                 <img src="<?= $post->post_image_path() ?>" alt="img" class="responsive-img">
                 <p><?= $post->description ?></p>   
             </div>

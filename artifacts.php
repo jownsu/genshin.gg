@@ -29,8 +29,8 @@
                         <li><b>Circlet:</b> ATK% / DEF% / HP% / CRIT Chance / CRIT DMG / Elemental Mastery / Healing Bonus</li>
                     </ul>
                 </div>
-                <div class="weapon-table">
-                    <table class="highlight centered">
+                <div class="info-table">
+                    <table class="highlight responsive-table">
                         <thead>
                             <tr>
                                 <th>Set</th>
