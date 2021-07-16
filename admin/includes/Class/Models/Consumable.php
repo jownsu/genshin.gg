@@ -134,9 +134,9 @@ class Consumable extends Model{
     function consumables_img(){
         $name = str_replace(" ", "_", $this->name);
 
-        return !file_exists(IMAGES_ROOT . DS . 'consumables' . DS . $this->name . DS ."icon") 
+        return !file_exists(IMAGES_ROOT . DS . 'consumables' . DS . strtolower($this->name) . DS ."icon") 
         ? $this->image_path() . "consumables" . DS . $this->consumables_placeholder 
-        : $this->image_path() . "consumables" . DS . $this->name . DS ."icon";
+        : $this->image_path() . "consumables" . DS . strtolower($this->name) . DS ."icon";
     }
 
     function rarity(){

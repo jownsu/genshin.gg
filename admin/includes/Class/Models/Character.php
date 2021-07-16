@@ -191,9 +191,9 @@ class Character extends Model{
     }
 
     function Thumbnail(){
-        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . $this->name . DS . 'icon') 
+        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . strtolower($this->name) . DS . 'icon') 
         ? $this->image_path() . "characters" . DS . $this->icon_placeholder 
-        : $this->image_path() . "characters" . DS . $this->name . DS . 'icon';
+        : $this->image_path() . "characters" . DS . strtolower($this->name) . DS . 'icon';
     }
 
     function Vision(){
@@ -201,9 +201,9 @@ class Character extends Model{
     }
 
     function Portrait(){
-        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . $this->name . DS . 'portrait') 
+        return !file_exists(IMAGES_ROOT . DS . 'characters' . DS . strtolower($this->name) . DS . 'portrait') 
         ? $this->image_path() . "characters" . DS . $this->portrait_placeholder 
-        : $this->image_path() . "characters" . DS . $this->name . DS . 'portrait';
+        : $this->image_path() . "characters" . DS . strtolower($this->name) . DS . 'portrait';
     }
 
     function Weapon(){

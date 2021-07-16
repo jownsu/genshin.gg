@@ -124,9 +124,9 @@ class Artifact extends Model{
 
 
     function artifact_img(){
-        return !file_exists(IMAGES_ROOT . DS . 'artifacts' . DS . $this->name . DS . 'icon') 
+        return !file_exists(IMAGES_ROOT . DS . 'artifacts' . DS . strtolower($this->name) . DS . 'icon') 
         ? $this->image_path() . "artifacts" . DS . $this->artifact_placeholder 
-        : $this->image_path() . "artifacts" . DS . $this->name . DS . 'icon';
+        : $this->image_path() . "artifacts" . DS . strtolower($this->name) . DS . 'icon';
     }
 
     function rarity(){

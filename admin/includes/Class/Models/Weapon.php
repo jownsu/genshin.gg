@@ -136,9 +136,9 @@ class Weapon extends Model{
 
 
     function weapon_img(){
-        return !file_exists(IMAGES_ROOT . DS . 'weapons' . DS . $this->name . DS . 'icon') 
+        return !file_exists(IMAGES_ROOT . DS . 'weapons' . DS . strtolower($this->name) . DS . 'icon') 
         ? $this->image_path() . "weapons" . DS . $this->weapon_placeholder 
-        : $this->image_path() . "weapons" . DS . $this->name . DS . 'icon';
+        : $this->image_path() . "weapons" . DS . strtolower($this->name) . DS . 'icon';
     }
 
     function rarity(){
