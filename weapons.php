@@ -31,11 +31,11 @@
 
                 <div class="weaponNav row blue-grey darken-4 z-depth-2">
                     <div class="weapList">
-                        <a href="weapons.php?search=bow"> <img class="tooltipped <?= $search == 'bow' ? 'active' : '' ?>" src="admin/images/Weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'> </a>
-                        <a href="weapons.php?search=catalyst"> <img class="tooltipped <?= $search == 'catalyst' ? 'active' : '' ?>" src="admin/images/Weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'> </a>
-                        <a href="weapons.php?search=claymore"> <img class="tooltipped <?= $search == 'claymore' ? 'active' : '' ?>" src="admin/images/Weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'> </a>
-                        <a href="weapons.php?search=polearm"> <img class="tooltipped <?= $search == 'polearm' ? 'active' : '' ?>" src="admin/images/Weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'> </a>
-                        <a href="weapons.php?search=sword"> <img class="tooltipped <?= $search == 'sword' ? 'active' : '' ?>" src="admin/images/Weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'> </a>
+                        <a href="weapons.php?search=bow"> <img class="tooltipped <?= $search == 'bow' ? 'active' : '' ?>" src="admin/images/weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'> </a>
+                        <a href="weapons.php?search=catalyst"> <img class="tooltipped <?= $search == 'catalyst' ? 'active' : '' ?>" src="admin/images/weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'> </a>
+                        <a href="weapons.php?search=claymore"> <img class="tooltipped <?= $search == 'claymore' ? 'active' : '' ?>" src="admin/images/weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'> </a>
+                        <a href="weapons.php?search=polearm"> <img class="tooltipped <?= $search == 'polearm' ? 'active' : '' ?>" src="admin/images/weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'> </a>
+                        <a href="weapons.php?search=sword"> <img class="tooltipped <?= $search == 'sword' ? 'active' : '' ?>" src="admin/images/weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'> </a>
                     </div>
                 </div>
 

@@ -41,11 +41,11 @@ require_once("includes/navigation.php"); ?>
                         <img class="tooltipped" src="admin/images/Elements/Pyro.png" alt="pyro" data-position='top' data-tooltip='Pyro'>       
                     </div>
                     <div class="weapList">
-                        <img class="tooltipped" src="admin/images/Weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'>
-                        <img class="tooltipped" src="admin/images/Weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'>
-                        <img class="tooltipped" src="admin/images/Weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'>
-                        <img class="tooltipped" src="admin/images/Weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'>
-                        <img class="tooltipped" src="admin/images/Weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'>
+                        <img class="tooltipped" src="admin/images/weapons/Bow.png" alt="Bow" data-position='top' data-tooltip='Bow'>
+                        <img class="tooltipped" src="admin/images/weapons/Catalyst.png" alt="Catalyst" data-position='top' data-tooltip='Catalyst'>
+                        <img class="tooltipped" src="admin/images/weapons/Claymore.png" alt="Claymore" data-position='top' data-tooltip='Claymore'>
+                        <img class="tooltipped" src="admin/images/weapons/Polearm.png" alt="Polearm" data-position='top' data-tooltip='Polearm'>
+                        <img class="tooltipped" src="admin/images/weapons/Sword.png" alt="Sword" data-position='top' data-tooltip='Sword'>
                     </div>
             </div>
             

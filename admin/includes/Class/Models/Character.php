@@ -207,7 +207,7 @@ class Character extends Model{
     }
 
     function Weapon(){
-        return $this->image_path() . "Weapons" . DS  . $this->weapon . ".png";
+        return $this->image_path() . "weapons" . DS  . $this->weapon . ".png";
     }
 
     function Rarity(){
