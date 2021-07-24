@@ -16,6 +16,7 @@
                         }
                     }
                     $session->set_message("<p class='green-text'> Character $character->name was Added </p>");
+                    header("Refresh:0");
             }else{
                 $empty_err   = $character['error']['empty'] ?? "";
                 $name_err    = $character['error']['name'] ?? $empty_err;

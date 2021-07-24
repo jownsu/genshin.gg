@@ -14,7 +14,8 @@
                  }
          
                  $session->set_message("<p class='green-text'> Consumable $consumable->name was Added </p>");
-            }else{
+                 header("Refresh:0");
+                }else{
                 $empty_err   = $consumable['error']['empty'] ?? "";
                 $name_err    = $consumable['error']['name'] ?? $empty_err;
             }

@@ -11,7 +11,8 @@
                     } 
                  }
                  $session->set_message("<p class='green-text'> Artifact $artifact->name was Added </p>");
-            }else{
+                 header("Refresh:0");
+                }else{
                 $empty_err   = $artifact['error']['empty'] ?? "";
                 $name_err    = $artifact['error']['name'] ?? $empty_err;
             }

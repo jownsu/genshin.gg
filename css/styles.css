@@ -426,14 +426,12 @@ textarea.materialize-textarea{
 /*****end of artifacts*********/
 /*****Login Modal********/
 #login_modal{
-    width: 500px;
-    height: 500px;
     background: transparent;
     box-shadow: none;
 }
 
 .loginform{
-    position: absolute;
+    position: relative;
     background: #37474F;
     width: 300px;
     height: 400px;
@@ -446,11 +444,16 @@ textarea.materialize-textarea{
     border: 2px solid black;
     box-shadow: 5px 5px 0px 2px #657b86;
     text-align: center;
-
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
     overflow: hidden;
+    margin: 0 auto;
+}
+
+.closeLogin{
+    position: absolute;
+    color: red;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
 }
 
 .logo{
@@ -463,8 +466,18 @@ textarea.materialize-textarea{
 }
 
 .btnLogin{
-    width: 100%;
+    margin-top: 1.3em;
 }
+
+.forgotpass{
+    display: block;
+    text-align: right;
+    font-size: .8em;
+}
+
+.input-field{
+    margin: 1.2em 0 0 0 !important; 
+  }
 
 
 /***End of modal******/

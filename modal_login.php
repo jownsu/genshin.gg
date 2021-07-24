@@ -3,6 +3,7 @@
         <div class="loginform">
             <div class="logo"></div>
             <h5>Log In</h5>
+            <div class="closeLogin"><i class="material-icons">close</i></div>
             <form action="<?= "admin/login.php?location=".urlencode("http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) ?>" method="POST">
                 
                 <div class="input-field">
@@ -16,11 +17,11 @@
                     <input type="password" id="password" name="password">
                     <label for="password">Password</label>
                 </div>
+                <a href="admin/forgotpassword.php" class="forgotpass">Forgot Password</a>
 
                 <input type="submit" value="login" class="btn-small blue darken-2 btnLogin" name="submit-login">
-                <a href="#">Forgor Password</a>
             </form>
-            <a href="admin/login.php?signup" class="btn-small green darken-2">Sign up</a>
+            <p>Don't have an account? <a href="admin/signup.php">Sign up</a></p> 
 
         </div>
     </div>

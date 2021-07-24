@@ -11,6 +11,7 @@
                         } 
                     }
                     $session->set_message("<p class='green-text'> Weapon $weapon->name  was added </p>");
+                    header("Refresh:0");
                 }else{
                     $empty_err   = $weapon['error']['empty'] ?? "";
                     $name_err    = $weapon['error']['name'] ?? $empty_err;

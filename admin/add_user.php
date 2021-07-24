@@ -2,24 +2,21 @@
 <?php
     if(isset($_POST['submit'])){
 
+        if($user = User::add($_POST)){
+            if(is_object($user)){
+                $session->set_message("<p class='green-text'> $user->role $user->username  was added </p>");
+                header("Refresh:0");
+            }else{
+                $empty_err    = $user['error']['empty'] ?? "";
+                $email_err    = $user['error']['email'] ?? $empty_err;
+                $username_err = $user['error']['username'] ?? $empty_err;
+                $password_err = $user['error']['password'] ?? $empty_err;
+                $answer_err   = $user['error']['sec_answer'] ?? $empty_err;
+            }
+        }else{
+            $session->set_message("<p class='red-text'>There is an error adding the user</p>");
+        }
 
-
-                
-                if($user = User::add($_POST)){
-                    if(is_object($user)){
-                        $session->set_message("<p class='green-text'> $user->role $user->username  was added </p>");
-                    }else{
-                        $empty_err    = $user['error']['empty'] ?? "";
-                        $email_err    = $user['error']['email'] ?? $empty_err;
-                        $username_err = $user['error']['username'] ?? $empty_err;
-                        $password_err = $user['error']['password'] ?? $empty_err;
-                        $answer_err   = $user['error']['sec_answer'] ?? $empty_err;
-                    }
-                }else{
-                    $session->set_message("<p class='red-text'>There is an error adding the user</p>");
-                }
-
-            
     }
 ?>
 
@@ -37,40 +34,6 @@
                     <input type="text" id="lastname" name="lastname" value="<?= $_POST['lastname'] ?? '' ?>" class="<?= ( empty($_POST['lastname']) && isset($empty_err) ) ? 'invalid' : '' ?>">
                     <label for="lastname">Last Name</label>
                     <span class="helper-text" data-error="<?= $empty_err ?? '' ?>"></span>
-                </div>
-                
-                <div class="input-field col l2 s4">
-                    <select name="birthday[month]" id="birthday-month">
-                        <?php foreach(MONTHS as $month): ?>
-                            <option value="<?= $month ?>" <?= ( isset($_POST['birthday']['month']) && $_POST['birthday']['month'] == $month ) ? 'selected' : '' ?> ><?= $month ?></option>
-                        <?php endforeach ?>
-                    </select>
-                    <label for="birthday-month">Birthday</label>
-                </div>
-
-                <div class="input-field col l2 s4">
-                    <select name="birthday[day]" id="birthday-day">
-                        <?php foreach(DAYS as $day): ?>
-                            <option value="<?= $day ?>" <?= ( isset($_POST['birthday']['day']) && $_POST['birthday']['day'] == $day ) ? 'selected' : '' ?> ><?= $day ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-
-                <div class="input-field col l2 s4">
-                    <select name="birthday[year]" id="birthday-year">
-                        <?php foreach(B_YEARS as $year): ?>
-                            <option value="<?= $year ?>" <?= ( isset($_POST['birthday']['year']) && $_POST['birthday']['year'] == $year ) ? 'selected' : '' ?> ><?= $year ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-
-                <div class="input-field col l6 s12">
-                    <select name="gender" id="gender">
-                        <option value="Male"   <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Male' ) ? 'selected' : '' ?>>Male</option>
-                        <option value="Female" <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Female' ) ? 'selected' : '' ?>>Female</option>
-                        <option value="Secret" <?= ( isset($_POST['gender']) && $_POST['gender'] == 'Secret' ) ? 'selected' : '' ?>>Secret</option>
-                    </select>
-                    <label for="gender">Gender</label>
                 </div>
 
                 <div class="input-field col l6 s12">

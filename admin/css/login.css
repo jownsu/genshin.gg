@@ -7,6 +7,7 @@ body{
   font-family: Genshin, sans-serif;
   background: #263238;
 }
+
 .bgShape{
     background: #37474F;
     width: 100vw;
@@ -69,14 +70,15 @@ body{
     z-index: -1;
 }
 
-/* .forgotpass{
-  position: absolute;
-  bottom: 1em;
-  left: 1em;
-} */
+.forgotpass{
+   display: block;
+   text-align: right;
+   font-size: .8em;
+}
 
 .btnLogin{
-  width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 /**********End of Login Form****************/
 
@@ -86,12 +88,17 @@ body{
   color: #fff;
   position: relative;
   background: #37474F;
-  width: 450px;
+  width: 500px;
+  padding: 1em 2em;
   border-radius: 1em;
-  flex-direction: column;
   border: 2px solid black;
   box-shadow: 5px 5px 0px 2px #657b86;
   text-align: center;
+  
+}
+
+.input-field{
+  margin: 1.2em 0 0 0 !important; 
 }
 
 
@@ -101,7 +108,7 @@ body{
 
 
 .forgot-password-container{
-  padding: 1em;
+  padding: 2em;
   color: #fff;
   background: #37474F;
   width: 400px;
@@ -111,14 +118,6 @@ body{
   box-shadow: 5px 5px 0px 2px #657b86;
   text-align: center;
 }
-
-
-
-
-
-
-
-
 
 /******End of forgot password form***************/
 input:-webkit-autofill,
@@ -144,6 +143,8 @@ select:-webkit-autofill:focus {
   color: rgb(187, 187, 187);
 }
 
+
+
   /* icon prefix focus color */
   /* .input-field .prefix.active {
     color: #fff !important;
@@ -151,5 +152,17 @@ select:-webkit-autofill:focus {
 
 .input-field .prefix{
   color: white;
+}
+
+@media screen and (max-width: 700px) {
+
+.signup-container{
+  width: 90%;
+}
+
+.forgot-password-container{
+  width: 90%;
+}
+  
 }
 

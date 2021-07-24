@@ -100,45 +100,10 @@
                             <label for="email">Email</label>
                             <span class="helper-text" data-error="<?= $email_err ?? '' ?>"></span>
                         </div>
-                        
-                        <?php $birthday = $user->get_birthday(); ?>
-                        <div class="input-field col l2 s4">
-                            <select name="birthday[month]" id="birthday-month">
-                                <?php foreach(MONTHS as $month): ?>
-                                    <option value="<?= $month ?>" <?= ( ($_POST['birthday']['month'] ?? $birthday[0]) == $month) ? 'selected' : '' ?>><?=  $month ?></option>
-                                <?php endforeach ?>
-                            </select>
-                            <label for="release-date-month">Birthday</label>
-                        </div>
-
-                        <div class="input-field col l2 s4">
-                            <select name="birthday[day]" id="birthday-day">
-                                <?php foreach(DAYS as $day): ?>
-                                    <option value="<?= $day ?>" <?= ( ($_POST['birthday']['day'] ?? $birthday[1]) == $day) ? 'selected' : '' ?>><?= $day ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-
-                        <div class="input-field col l2 s4">
-                            <select name="birthday[year]" id="birthday-year">
-                                <?php foreach(B_YEARS as $year): ?>
-                                    <option value="<?= $year ?>" <?= ( ($_POST['birthday']['year'] ?? $birthday[2]) == $year) ? 'selected' : '' ?>><?= $year ?></option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-
-                        <div class="input-field col l6 s12">
-                            <select name="gender" id="gender">
-                                <option value="Male" <?= ($_POST['gender'] ?? $user->gender) == 'Male' ? 'Selected' : '' ?>>Male</option>
-                                <option value="Female" <?= ($_POST['gender'] ?? $user->gender) == 'Female' ? 'Selected' : '' ?>>Female</option>
-                                <option value="Secret" <?= ($_POST['gender'] ?? $user->gender) == 'Secret' ? 'Selected' : '' ?>>Secret</option>
-                            </select>
-                            <label for="gender">Gender</label>
-                        </div>
+        
                             <input type="submit" value="Update" name="update" class="btn-small green">
+                            <button href="#modalReset" class="modal-trigger btn-small orange" id="btnResetPass">Reset Password</button>
                             <button data-target="delete-user-modal" class="btn-small red modal-trigger btn-delete">Delete</button>
-                        <br>
-                        <a href="#modalReset" class="modal-trigger btn-small orange" id="btnResetPass">Reset Password</a>
                     </div>
                 </form>
             </div>

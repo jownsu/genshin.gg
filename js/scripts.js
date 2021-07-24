@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /*****End of Materialize init */
 
+    var closeLoginModal = document.querySelector('.closeLogin');
+
+    closeLoginModal.addEventListener('click', () => {
+        modalLoginInstance.close();
+    });
 
 
     /*****Nav Char filter***********/
