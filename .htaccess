@@ -3,7 +3,7 @@ RewriteEngine on
 RewriteCond %{ENV:REDIRECT_STATUS} 200
 RewriteRule .* - [L]
 
-RewriteRule ^api/(characters|weapons|artifacts|consumables)/*$ api/index.php?type=$1 [NC,L]
+RewriteRule ^api/(characters|weapons|artifacts|consumables)/*$ api/get.php?type=$1 [NC,L]
 
 RewriteRule ^api/(characters|weapons|artifacts|consumables)/([a-zA-Z-'\s]+)/(icon|portrait)$ api/image.php?type=$1&name=$2&img=$3 [NC,L]
 
