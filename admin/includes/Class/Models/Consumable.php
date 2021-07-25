@@ -71,7 +71,7 @@ class Consumable extends Model{
             return $err;
         }
 
-        $oldName = $consumable->name;
+        $oldName = strtolower($consumable->name);
 
         $consumable->name        = trim($input['name']);
         $consumable->category    = trim($input['category']);

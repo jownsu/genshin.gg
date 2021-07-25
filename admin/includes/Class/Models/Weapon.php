@@ -73,7 +73,7 @@ class Weapon extends Model{
             return $err;
         }
 
-        $oldName = $weapon->name;
+        $oldName = strtolower($weapon->name);
 
         $weapon->name        = trim($input['name']);
         $weapon->type        = trim($input['type']);

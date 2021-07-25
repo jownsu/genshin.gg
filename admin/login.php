@@ -1,6 +1,4 @@
-<?php require_once("includes/Class/init.php"); ?>
-
-<?php
+<?php require_once("includes/Class/init.php"); 
 
 if($session->is_signed_in()){
     header("location: index.php");

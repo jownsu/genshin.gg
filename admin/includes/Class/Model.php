@@ -174,6 +174,7 @@ class Model{
         global $db;
 
         $properties = $this->get_property_values();
+        unset($properties[self::id()]);
 
         $sql = "INSERT INTO " . static::table() . " (". implode(", ", array_keys($properties)) .") ";
         $sql .= "VALUES (:". implode(", :", array_keys($properties)) .") ";

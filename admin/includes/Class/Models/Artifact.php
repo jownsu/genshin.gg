@@ -65,7 +65,7 @@ class Artifact extends Model{
             return $err;
         }
 
-        $oldName = $artifact->name;
+        $oldName = strtolower($artifact->name);
 
         $artifact->name             = trim($input['name']);
         $artifact->max_rarity       = trim($input['max_rarity']);

@@ -47,7 +47,7 @@
                             <tr>
                                 <td>
                                     <div class="weapon-container">
-                                        <img src="admin/images/artifacts/<?= $artifact->name ?>/icon" class="character-icon" alt="">
+                                        <img src="<?= $artifact->artifact_img() ?>" class="character-icon" alt="">
                                         <p><?= $artifact->name ?></p> 
                                     </div>    
                                 </td>

@@ -121,7 +121,7 @@ class Character extends Model{
             return $err;
         }
 
-        $oldName = $character->name;
+        $oldName = strtolower($character->name);
 
         $character->name           = trim($input['name']);
         $character->nickname       = trim($input['nickname']);
