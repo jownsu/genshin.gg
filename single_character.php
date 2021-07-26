@@ -78,7 +78,7 @@
             <div class="col s12 m12 l4">
                 <div class="talent-info blue-grey darken-4 center-align z-depth-2">
                     <h6 class="yellow-text"><?= $passive->name ?></h6>
-                    <p class="grey-text">Unlock: <? $passive->unlock ?></h6>
+                    <p class="grey-text">Unlock: <?= $passive->unlock ?></h6>
                     <p class="left-align"><?= nl2br($passive->description) ?></p>
                 </div>
             </div>  

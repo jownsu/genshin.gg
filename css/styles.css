@@ -177,8 +177,8 @@ ul li a.active::after{
 }
 
 .character-icon{
-    height: 70px;
-    width: 70px;
+    height: 70px !important;
+    width: 70px !important;
     background: #546e7a;
 }
 
